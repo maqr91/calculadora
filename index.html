@@ -131,9 +131,7 @@
       flex-direction:column;
       gap:4px;
     }
-    .result-block:last-child{
-      border-bottom:none;
-    }
+    .result-block:last-child{ border-bottom:none; }
     .result-block p{
       margin:2px 0;
       line-height:1.2;
@@ -202,7 +200,6 @@
 
     /* ======= CALCULADORA ======= */
     .calc-wrap{ padding:12px; }
-
     .calc-title{
       font-size:16px;
       font-weight:900;
@@ -218,7 +215,7 @@
     }
     .calc-tab{
       flex:1;
-      min-width: 120px;
+      min-width: 150px;
       padding:12px 12px;
       border:1px solid var(--gris2);
       border-radius:12px;
@@ -235,6 +232,31 @@
     .calc-panel{ display:none; }
     .calc-panel.active{ display:block; }
 
+    /* Subtabs (dentro de Marítimo) */
+    .calc-subtabs{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin: 6px 0 12px;
+    }
+    .calc-subtab{
+      flex:1;
+      min-width: 160px;
+      padding:10px 12px;
+      border:1px solid var(--gris2);
+      border-radius:12px;
+      background:#fff;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .calc-subtab.active{
+      background: var(--celesteBg);
+      border-color: rgba(14,165,233,.35);
+      color: var(--texto);
+    }
+    .calc-subpanel{ display:none; }
+    .calc-subpanel.active{ display:block; }
+
     .calc-grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -250,7 +272,6 @@
       margin:0 0 6px;
     }
 
-    /* ✅ inputs más pequeños */
     .calc-input{
       width:100%;
       border:1px solid var(--gris2);
@@ -310,7 +331,6 @@
       padding:10px 12px;
     }
 
-    /* ✅ select con mismo estilo */
     .calc-select{
       width:100%;
       border:1px solid var(--gris2);
@@ -367,58 +387,35 @@
 
   <!-- ================== BLOQUE RASTREO ================== -->
   <div id="mainTrack">
-
     <section class="card">
       <div class="card-title">🚢 Rastreo Marítimo</div>
-
       <div class="card-header">
-        <div class="input">
-          <input id="searchMaritimo" placeholder="Número de rastreo marítimo">
-        </div>
+        <div class="input"><input id="searchMaritimo" placeholder="Número de rastreo marítimo"></div>
         <button class="btn" onclick="searchTracking('Maritimo')">Buscar</button>
       </div>
-
       <div id="resultsMaritimo"></div>
-
-      <div id="emptyMaritimo" style="display:none; padding:14px; text-align:center;">
-        ❌ No encontramos ese número.
-      </div>
+      <div id="emptyMaritimo" style="display:none; padding:14px; text-align:center;">❌ No encontramos ese número.</div>
     </section>
 
     <section class="card">
       <div class="card-title">✈️ Rastreo Aéreo</div>
-
       <div class="card-header">
-        <div class="input">
-          <input id="searchAereo" placeholder="Número de rastreo aéreo">
-        </div>
+        <div class="input"><input id="searchAereo" placeholder="Número de rastreo aéreo"></div>
         <button class="btn" onclick="searchTracking('Aereo')">Buscar</button>
       </div>
-
       <div id="resultsAereo"></div>
-
-      <div id="emptyAereo" style="display:none; padding:14px; text-align:center;">
-        ❌ No encontramos ese número.
-      </div>
+      <div id="emptyAereo" style="display:none; padding:14px; text-align:center;">❌ No encontramos ese número.</div>
     </section>
 
     <section class="card">
       <div class="card-title">🛍️ Rastreo de compras en línea</div>
-
       <div class="card-header">
-        <div class="input">
-          <input id="searchCompra" placeholder="Nombre o número de tracking">
-        </div>
+        <div class="input"><input id="searchCompra" placeholder="Nombre o número de tracking"></div>
         <button class="btn" onclick="searchTracking('Compra')">Buscar</button>
       </div>
-
       <div id="resultsCompra"></div>
-
-      <div id="emptyCompra" style="display:none; padding:14px; text-align:center;">
-        ⚠️ Sin resultados.
-      </div>
+      <div id="emptyCompra" style="display:none; padding:14px; text-align:center;">⚠️ Sin resultados.</div>
     </section>
-
   </div>
 
   <!-- ================== BLOQUE CALCULADORA ================== -->
@@ -429,10 +426,10 @@
       <div class="calc-wrap">
         <p class="calc-title">Seleccioná un tipo y meté libras/medidas (ideal para teléfono).</p>
 
-        <div class="calc-tabs" role="tablist" aria-label="Tipos de cálculo">
+        <!-- Tabs principales: Aéreo / Marítimo -->
+        <div class="calc-tabs" role="tablist" aria-label="Tipos de envío">
           <button type="button" class="calc-tab active" id="calcTabA">✈️ Aéreo</button>
           <button type="button" class="calc-tab" id="calcTabM">🚢 Marítimo</button>
-          <button type="button" class="calc-tab" id="calcTabV">📦 Volumen</button>
         </div>
 
         <!-- AÉREO -->
@@ -458,68 +455,78 @@
 
         <!-- MARÍTIMO -->
         <div class="calc-panel" id="calcPanelM">
-          <div class="calc-grid">
-            <div>
-              <div class="calc-label">Libras (lbs)</div>
-              <input class="calc-input" type="number" id="calcMarLbs" placeholder="Ej: 120" min="0" step="0.1" inputmode="decimal">
+
+          <!-- Subcategorías: Peso / Volumen -->
+          <div class="calc-subtabs" role="tablist" aria-label="Marítimo por peso o volumen">
+            <button type="button" class="calc-subtab active" id="calcSubTabPeso">⚖️ Por peso (lbs)</button>
+            <button type="button" class="calc-subtab" id="calcSubTabVol">📦 Por volumen (medidas)</button>
+          </div>
+
+          <!-- Marítimo por peso -->
+          <div class="calc-subpanel active" id="calcMarPesoPanel">
+            <div class="calc-grid">
+              <div>
+                <div class="calc-label">Libras (lbs)</div>
+                <input class="calc-input" type="number" id="calcMarLbs" placeholder="Ej: 120" min="0" step="0.1" inputmode="decimal">
+              </div>
+            </div>
+
+            <div class="calc-actions">
+              <button class="calc-btn" type="button" id="calcBtnMarPeso">Calcular</button>
+              <button class="calc-btn clear" type="button" id="calcBtnMarPesoClear">Limpiar</button>
+            </div>
+
+            <div class="calc-result" id="calcResM"></div>
+
+            <div class="calc-note">
+              Reglas por libra:
+              <br>• Hasta 100 lbs: <b>$2.05/lb</b>
+              <br>• Más de 100 lbs: <b>$2.00/lb</b>
+              <br>• Más de 300 lbs: <b>$1.90/lb</b>
+              <br>• Más de 500 lbs: <b>$1.80/lb</b>
             </div>
           </div>
 
-          <div class="calc-actions">
-            <button class="calc-btn" type="button" id="calcBtnMar">Calcular</button>
-            <button class="calc-btn clear" type="button" id="calcBtnMarClear">Limpiar</button>
-          </div>
+          <!-- Marítimo por volumen -->
+          <div class="calc-subpanel" id="calcMarVolPanel">
+            <div class="calc-grid">
+              <div>
+                <div class="calc-label">Tipo de artículo</div>
+                <select class="calc-select" id="calcItemType">
+                  <option value="mueble_10">Mueble</option>
+                  <option value="ropa_30">Caja con ropa y artículos varios</option>
+                  <option value="refri_12">Electrodoméstico (refrigeradora)</option>
+                  <option value="lavadora_15">Electrodoméstico (lavadora / secadora / cocina)</option>
+                </select>
+              </div>
 
-          <div class="calc-result" id="calcResM"></div>
-
-          <div class="calc-note">
-            Reglas por libra:
-            <br>• Hasta 100 lbs: <b>$2.05/lb</b>
-            <br>• Más de 100 lbs: <b>$2.00/lb</b>
-            <br>• Más de 300 lbs: <b>$1.90/lb</b>
-            <br>• Más de 500 lbs: <b>$1.80/lb</b>
-          </div>
-        </div>
-
-        <!-- VOLUMEN -->
-        <div class="calc-panel" id="calcPanelV">
-          <div class="calc-grid">
-            <div>
-              <div class="calc-label">Tipo de artículo</div>
-              <select class="calc-select" id="calcItemType">
-  <option value="mueble_10">Mueble</option>
-  <option value="ropa_30">Caja con ropa y artículos varios</option>
-  <option value="refri_12">Electrodoméstico (refrigeradora)</option>
-  <option value="lavadora_15">Electrodoméstico (lavadora / secadora / cocina)</option>
-</select>
-
+              <div>
+                <div class="calc-label">Largo (pulgadas - in)</div>
+                <input class="calc-input" type="number" id="calcL" placeholder="L" min="0" step="0.1" inputmode="decimal">
+              </div>
+              <div>
+                <div class="calc-label">Ancho (pulgadas - in)</div>
+                <input class="calc-input" type="number" id="calcW" placeholder="W" min="0" step="0.1" inputmode="decimal">
+              </div>
+              <div>
+                <div class="calc-label">Alto (pulgadas - in)</div>
+                <input class="calc-input" type="number" id="calcH" placeholder="H" min="0" step="0.1" inputmode="decimal">
+              </div>
             </div>
 
-            <div>
-              <div class="calc-label">Largo (pulgadas - in)</div>
-              <input class="calc-input" type="number" id="calcL" placeholder="L" min="0" step="0.1" inputmode="decimal">
+            <div class="calc-actions">
+              <button class="calc-btn" type="button" id="calcBtnMarVol">Calcular</button>
+              <button class="calc-btn clear" type="button" id="calcBtnMarVolClear">Limpiar</button>
             </div>
-            <div>
-              <div class="calc-label">Ancho (pulgadas - in)</div>
-              <input class="calc-input" type="number" id="calcW" placeholder="W" min="0" step="0.1" inputmode="decimal">
-            </div>
-            <div>
-              <div class="calc-label">Alto (pulgadas - in)</div>
-              <input class="calc-input" type="number" id="calcH" placeholder="H" min="0" step="0.1" inputmode="decimal">
+
+            <div class="calc-result" id="calcResV"></div>
+
+            <div class="calc-note">
+              El precio puede variar si las cantidades no están correctas, el artículo no está empacado,
+              o si el peso es demasiado para el artículo.
             </div>
           </div>
 
-          <div class="calc-actions">
-            <button class="calc-btn" type="button" id="calcBtnVol">Calcular</button>
-            <button class="calc-btn clear" type="button" id="calcBtnVolClear">Limpiar</button>
-          </div>
-
-          <div class="calc-result" id="calcResV"></div>
-
-          <div class="calc-note">
-            El precio puede variar si las cantidades no están correctas, el artículo no está empacado,
-            o si el peso es demasiado para el artículo.
-          </div>
         </div>
 
       </div>
@@ -613,7 +620,6 @@ function renderTable(list,type){
     const firma = normalizeImageUrl(safe(r,["Firma url","Firma URL"]));
 
     let html = `<div class="result-block">`;
-
     html += `<p><strong>Fecha:</strong> ${fecha}</p>`;
     html += `<p><strong>Tracking:</strong> ${track}</p>`;
 
@@ -626,15 +632,12 @@ function renderTable(list,type){
     }
 
     html += `<div class="detail-actions">`;
-
     if(foto){
       html += `<button class="view-btn" onclick="window.open('${foto}','_blank')">📷 Ver foto</button>`;
     }
-
     if(type !== "Compra" && firma){
       html += `<button class="view-btn" onclick="window.open('${firma}','_blank')">✍️ Ver firma</button>`;
     }
-
     html += `</div></div>`;
 
     container.innerHTML += html;
@@ -673,10 +676,9 @@ async function searchTracking(type){
 }
 
 ["Maritimo","Aereo","Compra"].forEach(t=>{
-  document.getElementById(`search${t}`)
-    .addEventListener("keydown",e=>{
-      if(e.key==="Enter") searchTracking(t);
-    });
+  document.getElementById(`search${t}`).addEventListener("keydown",e=>{
+    if(e.key==="Enter") searchTracking(t);
+  });
 });
 
 /* ========================= NAV PRINCIPAL (Rastreo / Calculadora) ========================= */
@@ -701,26 +703,37 @@ async function searchTracking(type){
 
 /* ========================= CALCULADORA ========================= */
 document.addEventListener("DOMContentLoaded", () => {
+  // Tabs principales calculadora
   const tabA = document.getElementById("calcTabA");
   const tabM = document.getElementById("calcTabM");
-  const tabV = document.getElementById("calcTabV");
-
   const panelA = document.getElementById("calcPanelA");
   const panelM = document.getElementById("calcPanelM");
-  const panelV = document.getElementById("calcPanelV");
 
   function openCalc(which){
-    [panelA, panelM, panelV].forEach(p => p.classList.remove("active"));
-    [tabA, tabM, tabV].forEach(b => b.classList.remove("active"));
-
+    [panelA, panelM].forEach(p => p.classList.remove("active"));
+    [tabA, tabM].forEach(b => b.classList.remove("active"));
     if(which === "a"){ panelA.classList.add("active"); tabA.classList.add("active"); }
     if(which === "m"){ panelM.classList.add("active"); tabM.classList.add("active"); }
-    if(which === "v"){ panelV.classList.add("active"); tabV.classList.add("active"); }
   }
 
   tabA.addEventListener("click", ()=>openCalc("a"));
   tabM.addEventListener("click", ()=>openCalc("m"));
-  tabV.addEventListener("click", ()=>openCalc("v"));
+
+  // Subtabs Marítimo: Peso / Volumen
+  const subPeso = document.getElementById("calcSubTabPeso");
+  const subVol  = document.getElementById("calcSubTabVol");
+  const marPesoPanel = document.getElementById("calcMarPesoPanel");
+  const marVolPanel  = document.getElementById("calcMarVolPanel");
+
+  function openMarSub(which){
+    [marPesoPanel, marVolPanel].forEach(p=>p.classList.remove("active"));
+    [subPeso, subVol].forEach(b=>b.classList.remove("active"));
+    if(which==="peso"){ marPesoPanel.classList.add("active"); subPeso.classList.add("active"); }
+    if(which==="vol"){ marVolPanel.classList.add("active"); subVol.classList.add("active"); }
+  }
+
+  subPeso.addEventListener("click", ()=>openMarSub("peso"));
+  subVol.addEventListener("click", ()=>openMarSub("vol"));
 
   const money = (n) => (Number.isFinite(n) ? n.toFixed(2) : "0.00");
   const num = (id) => {
@@ -735,45 +748,43 @@ document.addEventListener("DOMContentLoaded", () => {
     if(lbs <= 0){ out.textContent = "Ingresá un peso válido."; return; }
     const rate = (lbs > 20) ? 6.5 : 7;
     const total = lbs * rate;
-    out.innerHTML = `Tarifa aplicada: <b>$${money(rate)}</b> por lb<br>Total aproximado: <b>$${money(total)}</b>`;
+    out.innerHTML = `Total aproximado: <b>$${money(total)}</b>`;
   });
   document.getElementById("calcBtnAereoClear").addEventListener("click", () => {
     document.getElementById("calcAereoLbs").value = "";
     document.getElementById("calcResA").textContent = "";
   });
 
-  // Marítimo (✅ >500 = 1.8)
+  // Marítimo por peso (✅ >500 = 1.8)
   function rateMar(lbs){
     if(lbs > 500) return 1.8;
     if(lbs > 300) return 1.9;
     if(lbs > 100) return 2.0;
     return 2.05;
   }
-  document.getElementById("calcBtnMar").addEventListener("click", () => {
+  document.getElementById("calcBtnMarPeso").addEventListener("click", () => {
     const lbs = num("calcMarLbs");
     const out = document.getElementById("calcResM");
     if(lbs <= 0){ out.textContent = "Ingresá un peso válido."; return; }
-    const rate = rateMar(lbs);
-    const total = lbs * rate;
-    out.innerHTML = `Tarifa aplicada: <b>$${money(rate)}</b> por lb<br>Total aproximado: <b>$${money(total)}</b>`;
+    const total = lbs * rateMar(lbs);
+    out.innerHTML = `Total aproximado: <b>$${money(total)}</b>`;
   });
-  document.getElementById("calcBtnMarClear").addEventListener("click", () => {
+  document.getElementById("calcBtnMarPesoClear").addEventListener("click", () => {
     document.getElementById("calcMarLbs").value = "";
     document.getElementById("calcResM").textContent = "";
   });
 
-  // Volumen con tipo de artículo (multiplicador)
+  // Marítimo por volumen (multiplicador por tipo)
   function getMultiplier(){
     const v = (document.getElementById("calcItemType").value || "");
-    // valores: ropa_30, mueble_10, refri_12, lavadora_15
-    if(v === "ropa_30") return { mult: 30, label: "Caja con ropa y artículos varios" };
     if(v === "mueble_10") return { mult: 10, label: "Mueble" };
+    if(v === "ropa_30") return { mult: 30, label: "Caja con ropa y artículos varios" };
     if(v === "refri_12") return { mult: 12, label: "Electrodoméstico (refrigeradora)" };
-    if(v === "lavadora_15") return { mult: 20, label: "Electrodoméstico (lavadora/secadora/cocina)" };
+    if(v === "lavadora_15") return { mult: 15, label: "Electrodoméstico (lavadora/secadora/cocina)" };
     return { mult: 10, label: "Mueble" };
   }
 
-  document.getElementById("calcBtnVol").addEventListener("click", () => {
+  document.getElementById("calcBtnMarVol").addEventListener("click", () => {
     const L = num("calcL"), W = num("calcW"), H = num("calcH");
     const out = document.getElementById("calcResV");
     if(L<=0 || W<=0 || H<=0){ out.textContent = "Ingresá las 3 medidas (en pulgadas)."; return; }
@@ -782,19 +793,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const { mult, label } = getMultiplier();
     const total = cft * mult;
 
-    out.innerHTML =
-      `Tipo: <b>${label}</b><br>` +
-      `Total aproximado: <b>$${money(total)}</b>`;
+    // ✅ Solo tipo + total (sin cubicaje ni tarifa)
+    out.innerHTML = `Tipo: <b>${label}</b><br>Total aproximado: <b>$${money(total)}</b>`;
   });
 
-  document.getElementById("calcBtnVolClear").addEventListener("click", () => {
+  document.getElementById("calcBtnMarVolClear").addEventListener("click", () => {
     ["calcL","calcW","calcH"].forEach(id => document.getElementById(id).value = "");
     document.getElementById("calcResV").textContent = "";
     document.getElementById("calcItemType").value = "mueble_10";
   });
 
-  // Default
+  // Defaults
   openCalc("a");
+  openMarSub("peso");
 });
 </script>
 
