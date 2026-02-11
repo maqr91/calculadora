@@ -784,15 +784,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     out.innerHTML =
       `Tipo: <b>${label}</b><br>` +
-      `Cubicaje: <b>${money(cft)}</b> pies³ (CFT)<br>` +
-      `Tarifa aplicada: <b>$${money(mult)}</b> por CFT<br>` +
       `Total aproximado: <b>$${money(total)}</b>`;
   });
 
   document.getElementById("calcBtnVolClear").addEventListener("click", () => {
     ["calcL","calcW","calcH"].forEach(id => document.getElementById(id).value = "");
     document.getElementById("calcResV").textContent = "";
-    document.getElementById("calcItemType").value = "ropa_30";
+    document.getElementById("calcItemType").value = "mueble_10";
   });
 
   // Default
