@@ -1,169 +1,769 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Calculadora MIR</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>MiRCargoTrack | Rastreo</title>
+
   <style>
-    body{font-family:Arial,sans-serif;background:#f4f6f9;padding:40px}
-    .container{max-width:760px;margin:auto;background:#fff;padding:20px;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
-    h2{text-align:center;margin:0 0 18px}
-    .tabs{display:flex;gap:10px;margin-bottom:18px}
-    .tabs button{flex:1;padding:10px;border:0;border-radius:10px;font-weight:700;cursor:pointer;background:#ddd}
-    .tabs button.active{background:#0f2f57;color:#fff}
-    .section{display:none}
-    .section.active{display:block}
-    input{width:100%;padding:10px;margin:10px 0;border-radius:8px;border:1px solid #ccc}
-    button.calc{background:#ffc83d;border:0;padding:10px;border-radius:8px;font-weight:800;cursor:pointer;width:100%}
-    button.clear{background:#eee;border:0;padding:10px;border-radius:8px;font-weight:700;cursor:pointer;width:100%;margin-top:8px}
-    .result{margin-top:15px;padding:10px;border-radius:8px;background:#0f2f57;color:#fff;min-height:20px}
-    .note{margin-top:10px;font-size:12px;color:#555}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    @media (max-width:700px){.row{grid-template-columns:1fr}}
+    :root{
+      --azulClaro:#38bdf8;
+      --azulOscuro:#1e3a8a;
+      --celesteTxt:#0ea5e9;
+      --celesteBg:#e0f2fe;
+      --gris:#f1f5f9;
+      --gris2:#e2e8f0;
+      --blanco:#ffffff;
+      --texto:#0f172a;
+      --amarillo:#fde68a;
+      --amarilloH:#fcd34d;
+    }
+
+    body{
+      margin:0;
+      background:var(--gris);
+      font-family: system-ui, -apple-system, Roboto, Arial;
+      color:var(--texto);
+    }
+
+    header{
+      background:linear-gradient(90deg,var(--azulClaro),var(--azulOscuro));
+      color:white;
+      padding:20px 12px 35px;
+      text-align:center;
+      position:relative;
+      box-shadow:0 2px 6px rgba(0,0,0,.25);
+    }
+
+    @media(min-width:700px){
+      header{ padding:15px 12px 25px; }
+    }
+
+    .flag-left, .flag-right{
+      position:absolute;
+      top:10px;
+      width:120px;
+      border-radius:10px;
+      box-shadow:0 0 6px rgba(0,0,0,.4);
+    }
+    .flag-left{ left:12px; }
+    .flag-right{ right:12px; }
+
+    .logo svg{
+      width:80%;
+      max-width:380px;
+      margin-top:20px;
+    }
+
+    @media(min-width:700px){
+      .logo svg{ max-width:360px; margin-top:10px; }
+    }
+
+    .container{
+      max-width:900px;
+      margin:20px auto;
+      padding:0 12px;
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+    }
+
+    .card{
+      background:white;
+      border-radius:14px;
+      box-shadow:0 3px 14px rgba(0,0,0,.08);
+      border:1px solid var(--gris2);
+      padding-bottom:5px;
+      overflow:hidden;
+    }
+
+    .card-title{
+      padding:14px;
+      font-size:19px;
+      font-weight:800;
+      background:#fafafa;
+      border-bottom:1px solid var(--gris2);
+    }
+
+    .card-header{
+      padding:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      border-bottom:1px solid var(--gris2);
+    }
+
+    .input{
+      flex:1;
+      background:white;
+      border-radius:10px;
+      border:1px solid var(--gris2);
+      padding:10px 14px;
+      display:flex;
+      align-items:center;
+      min-width: 220px;
+    }
+    .input input{
+      border:none;
+      width:100%;
+      font-size:16px;
+      outline:none;
+      background:transparent;
+    }
+
+    .btn{
+      background:var(--amarillo);
+      border:none;
+      padding:12px 16px;
+      border-radius:10px;
+      font-weight:800;
+      cursor:pointer;
+      font-size:16px;
+      width:auto;
+    }
+    .btn:hover{ background:var(--amarilloH); }
+
+    .result-block{
+      padding:10px 16px;
+      border-bottom:1px solid var(--gris2);
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .result-block:last-child{
+      border-bottom:none;
+    }
+    .result-block p{
+      margin:2px 0;
+      line-height:1.2;
+      word-break: break-word;
+    }
+
+    .status-pill{
+      background:var(--celesteBg);
+      color:var(--celesteTxt);
+      padding:4px 10px;
+      border-radius:20px;
+      font-weight:700;
+      display:inline-block;
+    }
+
+    .view-btn{
+      background:var(--celesteTxt);
+      color:white;
+      padding:10px 14px;
+      border-radius:10px;
+      border:none;
+      font-size:15px;
+      cursor:pointer;
+      font-weight:700;
+      width:100%;
+      margin-top:6px;
+    }
+
+    .detail-actions{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-top:6px;
+    }
+
+    @media(min-width:620px){
+      .detail-actions{ flex-direction:row; }
+      .detail-actions .view-btn{ width:auto; }
+    }
+
+    /* ======= NAV PRINCIPAL (Rastreo / Calculadora) ======= */
+    .main-tabs{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-top:12px;
+      padding:0 12px;
+    }
+    .main-tab{
+      border:1px solid rgba(255,255,255,.35);
+      background:rgba(255,255,255,.18);
+      color:#fff;
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:900;
+      cursor:pointer;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .main-tab.active{
+      background: var(--amarillo);
+      color: var(--texto);
+      border-color: rgba(0,0,0,.12);
+    }
+
+    /* ======= CALCULADORA (scoped, sin chocar con .container) ======= */
+    .calc-wrap{
+      padding:12px;
+    }
+
+    .calc-title{
+      font-size:16px;
+      font-weight:900;
+      margin:0 0 10px;
+      color:var(--texto);
+    }
+
+    .calc-tabs{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .calc-tab{
+      flex:1;
+      min-width: 120px;
+      padding:12px 12px;
+      border:1px solid var(--gris2);
+      border-radius:12px;
+      background:#fafafa;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .calc-tab.active{
+      background: linear-gradient(90deg,var(--azulClaro),var(--azulOscuro));
+      color:#fff;
+      border-color: rgba(0,0,0,.06);
+    }
+
+    .calc-panel{ display:none; }
+    .calc-panel.active{ display:block; }
+
+    .calc-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media(max-width:700px){
+      .calc-grid{ grid-template-columns:1fr; }
+    }
+
+    .calc-label{
+      font-weight:800;
+      font-size:14px;
+      margin:0 0 6px;
+    }
+    .calc-input{
+      width:100%;
+      border:1px solid var(--gris2);
+      border-radius:12px;
+      padding:12px 14px;
+      font-size:16px;
+      outline:none;
+      background:#fff;
+      box-sizing:border-box;
+    }
+
+    .calc-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .calc-btn{
+      flex:1;
+      min-width: 160px;
+      background:var(--amarillo);
+      border:none;
+      padding:12px 16px;
+      border-radius:12px;
+      font-weight:900;
+      cursor:pointer;
+      font-size:16px;
+    }
+    .calc-btn:hover{ background:var(--amarilloH); }
+    .calc-btn.clear{
+      background:#eef2f7;
+      border:1px solid var(--gris2);
+    }
+
+    .calc-result{
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:12px;
+      background: var(--celesteBg);
+      border:1px solid rgba(14,165,233,.25);
+      color:var(--texto);
+      font-weight:700;
+      line-height:1.35;
+      word-break: break-word;
+      min-height: 44px;
+    }
+    .calc-result b{ color: var(--azulOscuro); }
+
+    .calc-note{
+      margin-top:10px;
+      font-size:12.5px;
+      color:#475569;
+      line-height:1.35;
+      background:#fff7e6;
+      border:1px solid rgba(255, 167, 0, .35);
+      border-radius:12px;
+      padding:10px 12px;
+    }
+
+    @media(max-width:700px){
+      .container{ padding:0 10px; margin-top:10px; gap:14px; }
+      header{ padding:14px 12px 22px; }
+      .flag-left, .flag-right{ width:88px; top:6px; }
+      .logo svg{ margin-top:6px; max-width:260px; }
+    }
   </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
+
 <body>
-  <div class="container">
-    <h2>Calculadora de Envíos</h2>
 
-    <div class="tabs">
-      <button type="button" class="active" id="tabA">✈️ Aéreo</button>
-      <button type="button" id="tabM">🚢 Marítimo</button>
-      <button type="button" id="tabV">📦 Volumen</button>
-    </div>
+<header>
+  <img class="flag-left" src="https://flagcdn.com/us.svg" alt="USA">
+  <img class="flag-right" src="https://flagcdn.com/ni.svg" alt="Nicaragua">
 
-    <!-- AEREO -->
-    <div id="aereo" class="section active">
-      <div class="row">
-        <div>
-          <label>Libras (lbs)</label>
-          <input type="number" id="aereoLbs" placeholder="Ej: 15" min="0" step="0.1">
-        </div>
-      </div>
-      <button type="button" class="calc" id="btnAereo">Calcular</button>
-      <button type="button" class="clear" id="btnAereoClear">Limpiar</button>
-      <div class="result" id="resA"></div>
-    </div>
-
-    <!-- MARITIMO -->
-    <div id="maritimo" class="section">
-      <div class="row">
-        <div>
-          <label>Libras (lbs)</label>
-          <input type="number" id="marLbs" placeholder="Ej: 120" min="0" step="0.1">
-        </div>
-      </div>
-      <button type="button" class="calc" id="btnMar">Calcular</button>
-      <button type="button" class="clear" id="btnMarClear">Limpiar</button>
-      <div class="result" id="resM"></div>
-    </div>
-
-    <!-- VOLUMEN -->
-    <div id="volumen" class="section">
-      <div class="row">
-        <div>
-          <label>Largo (in)</label>
-          <input type="number" id="L" placeholder="L" min="0" step="0.1">
-        </div>
-        <div>
-          <label>Ancho (in)</label>
-          <input type="number" id="W" placeholder="W" min="0" step="0.1">
-        </div>
-      </div>
-      <div class="row">
-        <div>
-          <label>Alto (in)</label>
-          <input type="number" id="H" placeholder="H" min="0" step="0.1">
-        </div>
-      </div>
-
-      <button type="button" class="calc" id="btnVol">Calcular</button>
-      <button type="button" class="clear" id="btnVolClear">Limpiar</button>
-
-      <div class="result" id="resV"></div>
-      <div class="note">
-        El precio puede variar si las cantidades no están correctas, el artículo no está empacado o si el peso es demasiado para el artículo.
-      </div>
-    </div>
+  <div class="logo">
+    <svg viewBox="0 0 520 120">
+      <defs><linearGradient id="g" x1="0" x2="1">
+        <stop offset="0" stop-color="#38bdf8"/>
+        <stop offset="1" stop-color="#1e3a8a"/>
+      </linearGradient></defs>
+      <g font-family="Inter" text-anchor="middle">
+        <text x="260" y="54" font-size="48" font-weight="900" fill="#fff" style="letter-spacing:1px; font-style:italic;">
+          MiR<tspan fill="#fde68a">CargoTrack</tspan>
+        </text>
+        <path d="M70 70 L450 70 L466 86 L70 86 Z" fill="url(#g)" opacity="0.9">
+          <animate attributeName="opacity" values="0.4;1;0.4" dur="2.5s" repeatCount="indefinite"/>
+        </path>
+      </g>
+    </svg>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const tabA = document.getElementById("tabA");
-      const tabM = document.getElementById("tabM");
-      const tabV = document.getElementById("tabV");
+  <!-- Pestañas principales -->
+  <div class="main-tabs" role="tablist" aria-label="Secciones">
+    <button class="main-tab active" id="mainTabTrack" type="button">📍 Rastreo</button>
+    <button class="main-tab" id="mainTabCalc" type="button">🧮 Calcular costo de envío</button>
+  </div>
+</header>
 
-      const secA = document.getElementById("aereo");
-      const secM = document.getElementById("maritimo");
-      const secV = document.getElementById("volumen");
+<main class="container">
 
-      function openTab(which){
-        [secA, secM, secV].forEach(s => s.classList.remove("active"));
-        [tabA, tabM, tabV].forEach(b => b.classList.remove("active"));
+  <!-- ================== BLOQUE RASTREO (3 cards) ================== -->
+  <div id="mainTrack">
 
-        if(which === "aereo"){ secA.classList.add("active"); tabA.classList.add("active"); }
-        if(which === "maritimo"){ secM.classList.add("active"); tabM.classList.add("active"); }
-        if(which === "volumen"){ secV.classList.add("active"); tabV.classList.add("active"); }
-      }
+    <!-- ================= MARÍTIMO ================= -->
+    <section class="card">
+      <div class="card-title">🚢 Rastreo Marítimo</div>
 
-      tabA.addEventListener("click", () => openTab("aereo"));
-      tabM.addEventListener("click", () => openTab("maritimo"));
-      tabV.addEventListener("click", () => openTab("volumen"));
+      <div class="card-header">
+        <div class="input">
+          <input id="searchMaritimo" placeholder="Número de rastreo marítimo">
+        </div>
+        <button class="btn" onclick="searchTracking('Maritimo')">Buscar</button>
+      </div>
 
-      const money = (n) => (Number.isFinite(n) ? n.toFixed(2) : "0.00");
-      const num = (id) => {
-        const v = parseFloat(document.getElementById(id).value);
-        return Number.isFinite(v) ? v : 0;
-      };
+      <div id="resultsMaritimo"></div>
 
-      // Aéreo
-      document.getElementById("btnAereo").addEventListener("click", () => {
-        const lbs = num("aereoLbs");
-        const out = document.getElementById("resA");
-        if(lbs <= 0){ out.textContent = "Ingresá un peso válido."; return; }
-        const rate = (lbs > 20) ? 6.5 : 7;
-        const total = lbs * rate;
-        out.innerHTML = `Tarifa aplicada: <b>$${money(rate)}</b> por lb<br>Total: <b>$${money(total)}</b>`;
-      });
-      document.getElementById("btnAereoClear").addEventListener("click", () => {
-        document.getElementById("aereoLbs").value = "";
-        document.getElementById("resA").textContent = "";
-      });
+      <div id="emptyMaritimo" style="display:none; padding:14px; text-align:center;">
+        ❌ No encontramos ese número.
+      </div>
+    </section>
 
-      // Marítimo
-      function rateMar(lbs){
-        if(lbs > 500) return 1.5;
-        if(lbs > 300) return 1.9;
-        if(lbs > 100) return 2.0;
-        return 2.05;
-      }
-      document.getElementById("btnMar").addEventListener("click", () => {
-        const lbs = num("marLbs");
-        const out = document.getElementById("resM");
-        if(lbs <= 0){ out.textContent = "Ingresá un peso válido."; return; }
-        const rate = rateMar(lbs);
-        const total = lbs * rate;
-        out.innerHTML = `Tarifa aplicada: <b>$${money(rate)}</b> por lb<br>Total: <b>$${money(total)}</b>`;
-      });
-      document.getElementById("btnMarClear").addEventListener("click", () => {
-        document.getElementById("marLbs").value = "";
-        document.getElementById("resM").textContent = "";
-      });
+    <!-- ================= AÉREO ================= -->
+    <section class="card">
+      <div class="card-title">✈️ Rastreo Aéreo</div>
 
-      // Volumen
-      document.getElementById("btnVol").addEventListener("click", () => {
-        const L = num("L"), W = num("W"), H = num("H");
-        const out = document.getElementById("resV");
-        if(L<=0 || W<=0 || H<=0){ out.textContent = "Ingresá las 3 medidas."; return; }
-        const cft = (L * W * H) / 1728;
-        const total = cft * 10;
-        out.innerHTML = `Cubicaje: <b>${money(cft)}</b> pies³ (CFT)<br>Total: <b>$${money(total)}</b>`;
-      });
-      document.getElementById("btnVolClear").addEventListener("click", () => {
-        ["L","W","H"].forEach(id => document.getElementById(id).value = "");
-        document.getElementById("resV").textContent = "";
+      <div class="card-header">
+        <div class="input">
+          <input id="searchAereo" placeholder="Número de rastreo aéreo">
+        </div>
+        <button class="btn" onclick="searchTracking('Aereo')">Buscar</button>
+      </div>
+
+      <div id="resultsAereo"></div>
+
+      <div id="emptyAereo" style="display:none; padding:14px; text-align:center;">
+        ❌ No encontramos ese número.
+      </div>
+    </section>
+
+    <!-- ================= COMPRAS ================= -->
+    <section class="card">
+      <div class="card-title">🛍️ Rastreo de compras en línea</div>
+
+      <div class="card-header">
+        <div class="input">
+          <input id="searchCompra" placeholder="Nombre o número de tracking">
+        </div>
+        <button class="btn" onclick="searchTracking('Compra')">Buscar</button>
+      </div>
+
+      <div id="resultsCompra"></div>
+
+      <div id="emptyCompra" style="display:none; padding:14px; text-align:center;">
+        ⚠️ Sin resultados.
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ================== BLOQUE CALCULADORA (1 card) ================== -->
+  <div id="mainCalc" style="display:none;">
+    <section class="card">
+      <div class="card-title">🧮 Calcular costo de envío</div>
+
+      <div class="calc-wrap">
+        <p class="calc-title">Seleccioná un tipo y meté libras/medidas (ideal para teléfono).</p>
+
+        <div class="calc-tabs" role="tablist" aria-label="Tipos de cálculo">
+          <button type="button" class="calc-tab active" id="calcTabA">✈️ Aéreo</button>
+          <button type="button" class="calc-tab" id="calcTabM">🚢 Marítimo</button>
+          <button type="button" class="calc-tab" id="calcTabV">📦 Volumen</button>
+        </div>
+
+        <!-- AÉREO -->
+        <div class="calc-panel active" id="calcPanelA">
+          <div class="calc-grid">
+            <div>
+              <div class="calc-label">Libras (lbs)</div>
+              <input class="calc-input" type="number" id="calcAereoLbs" placeholder="Ej: 15" min="0" step="0.1" inputmode="decimal">
+            </div>
+          </div>
+
+          <div class="calc-actions">
+            <button class="calc-btn" type="button" id="calcBtnAereo">Calcular</button>
+            <button class="calc-btn clear" type="button" id="calcBtnAereoClear">Limpiar</button>
+          </div>
+
+          <div class="calc-result" id="calcResA"></div>
+
+          <div class="calc-note">
+            Regla: hasta 20 lbs se cobra a <b>$7.00/lb</b>. Si es <b>más de 20 lbs</b>, se cobra a <b>$6.50/lb</b>.
+          </div>
+        </div>
+
+        <!-- MARÍTIMO -->
+        <div class="calc-panel" id="calcPanelM">
+          <div class="calc-grid">
+            <div>
+              <div class="calc-label">Libras (lbs)</div>
+              <input class="calc-input" type="number" id="calcMarLbs" placeholder="Ej: 120" min="0" step="0.1" inputmode="decimal">
+            </div>
+          </div>
+
+          <div class="calc-actions">
+            <button class="calc-btn" type="button" id="calcBtnMar">Calcular</button>
+            <button class="calc-btn clear" type="button" id="calcBtnMarClear">Limpiar</button>
+          </div>
+
+          <div class="calc-result" id="calcResM"></div>
+
+          <div class="calc-note">
+            Reglas por libra:
+            <br>• Hasta 100 lbs: <b>$2.05/lb</b>
+            <br>• Más de 100 lbs: <b>$2.00/lb</b>
+            <br>• Más de 300 lbs: <b>$1.90/lb</b>
+            <br>• Más de 500 lbs: <b>$1.50/lb</b>
+          </div>
+        </div>
+
+        <!-- VOLUMEN -->
+        <div class="calc-panel" id="calcPanelV">
+          <div class="calc-grid">
+            <div>
+              <div class="calc-label">Largo (in)</div>
+              <input class="calc-input" type="number" id="calcL" placeholder="L" min="0" step="0.1" inputmode="decimal">
+            </div>
+            <div>
+              <div class="calc-label">Ancho (in)</div>
+              <input class="calc-input" type="number" id="calcW" placeholder="W" min="0" step="0.1" inputmode="decimal">
+            </div>
+            <div>
+              <div class="calc-label">Alto (in)</div>
+              <input class="calc-input" type="number" id="calcH" placeholder="H" min="0" step="0.1" inputmode="decimal">
+            </div>
+          </div>
+
+          <div class="calc-actions">
+            <button class="calc-btn" type="button" id="calcBtnVol">Calcular</button>
+            <button class="calc-btn clear" type="button" id="calcBtnVolClear">Limpiar</button>
+          </div>
+
+          <div class="calc-result" id="calcResV"></div>
+
+          <div class="calc-note">
+            Fórmula: <b>(L × W × H) ÷ 1728</b> = pies³ (CFT). Luego: <b>CFT × $10</b>.
+            <br><br>
+            <b>Nota:</b> El precio puede variar si las cantidades no están correctas, el artículo no está empacado,
+            o si el peso es demasiado para el artículo.
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<script>
+/* ========================= RASTREO (TU CÓDIGO) ========================= */
+
+const urls = {
+  Maritimo:[
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=0&single=true&output=csv",
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=135469883&single=true&output=csv"
+  ],
+  Aereo:[
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=1149417296&single=true&output=csv",
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=1429832468&single=true&output=csv"
+  ],
+  Compra:
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=532919355&single=true&output=csv"
+};
+
+function normalizeImageUrl(url){
+  if(!url) return "";
+  url = url.trim();
+
+  let m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
+
+  m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
+
+  if(url.includes("googleusercontent")) return url;
+
+  return url;
+}
+
+function safe(r,keys){
+  for(const k of keys){ if(r[k]) return r[k]; }
+  return "";
+}
+
+function parseDate(dateString){
+  if(!dateString) return 0;
+  const [datePart, timePart] = dateString.split(" ");
+  if(!datePart || !timePart) return 0;
+  const [day, month, year] = datePart.split("/");
+  const [hour, minute, second] = timePart.split(":");
+  return new Date(
+    parseInt(year),
+    parseInt(month)-1,
+    parseInt(day),
+    parseInt(hour),
+    parseInt(minute),
+    parseInt(second)
+  ).getTime();
+}
+
+function renderTable(list,type){
+  const container = document.getElementById(`results${type}`);
+  const empty = document.getElementById(`empty${type}`);
+
+  container.innerHTML="";
+  empty.style.display="none";
+
+  if(!list.length){
+    empty.style.display="block";
+    return;
+  }
+
+  list.sort((a,b)=>{
+    const da = parseDate(safe(a,["Fecha","FECHA"]));
+    const db = parseDate(safe(b,["Fecha","FECHA"]));
+    return db - da;
+  });
+
+  if(type === "Compra"){
+    list = list.slice(0,40);
+  }
+
+  list.forEach(r=>{
+    const fecha = safe(r,["Fecha","FECHA"]);
+    const track = safe(r,["Tracking","Tracking #","Orden","ORDEN"]);
+    const nombre = safe(r,["Nombre","Cliente","CLIENTE"]);
+    const status = safe(r,["Status","STATUS"]);
+    const agente = safe(r,["Agente","AGENTE","Usuario"]);
+
+    const foto = normalizeImageUrl(safe(r,["Web url","Web URL"]));
+    const firma = normalizeImageUrl(safe(r,["Firma url","Firma URL"]));
+
+    let html = `<div class="result-block">`;
+
+    html += `<p><strong>Fecha:</strong> ${fecha}</p>`;
+    html += `<p><strong>Tracking:</strong> ${track}</p>`;
+
+    if(type === "Compra"){
+      html += `<p><strong>Nombre:</strong> ${nombre}</p>`;
+      html += `<p><strong>Agente:</strong> ${agente}</p>`;
+    } else {
+      html += `<p><strong>Status:</strong> <span class="status-pill">${status}</span></p>`;
+      html += `<p><strong>Agente:</strong> ${agente}</p>`;
+    }
+
+    html += `<div class="detail-actions">`;
+
+    if(foto){
+      html += `<button class="view-btn" onclick="window.open('${foto}','_blank')">📷 Ver foto</button>`;
+    }
+
+    if(type !== "Compra" && firma){
+      html += `<button class="view-btn" onclick="window.open('${firma}','_blank')">✍️ Ver firma</button>`;
+    }
+
+    html += `</div></div>`;
+
+    container.innerHTML += html;
+  });
+}
+
+async function searchTracking(type){
+  const input=document.getElementById(`search${type}`);
+  const code=input.value.trim().toLowerCase();
+  if(!code) return;
+
+  let data=[];
+  const links = Array.isArray(urls[type]) ? urls[type] : [urls[type]];
+
+  for(const link of links){
+    await new Promise(resolve=>{
+      Papa.parse(link+"&t="+Date.now(),{
+        download:true,
+        header:true,
+        skipEmptyLines:true,
+        complete:res=>{
+          data=data.concat(res.data);
+          resolve();
+        }
       });
     });
-  </script>
+  }
+
+  const filtered = data.filter(r=>{
+    const track=safe(r,["Tracking","Tracking #","Orden","ORDEN"]).toLowerCase();
+    const name=safe(r,["Nombre","Cliente"]).toLowerCase();
+    return track.includes(code) || name.includes(code);
+  });
+
+  renderTable(filtered,type);
+}
+
+["Maritimo","Aereo","Compra"].forEach(t=>{
+  document.getElementById(`search${t}`)
+    .addEventListener("keydown",e=>{
+      if(e.key==="Enter") searchTracking(t);
+    });
+});
+
+/* ========================= NAV PRINCIPAL (Rastreo / Calculadora) ========================= */
+
+(function(){
+  const tabTrack = document.getElementById("mainTabTrack");
+  const tabCalc  = document.getElementById("mainTabCalc");
+  const mainTrack = document.getElementById("mainTrack");
+  const mainCalc  = document.getElementById("mainCalc");
+
+  function showMain(which){
+    const isTrack = which === "track";
+    mainTrack.style.display = isTrack ? "block" : "none";
+    mainCalc.style.display  = isTrack ? "none" : "block";
+    tabTrack.classList.toggle("active", isTrack);
+    tabCalc.classList.toggle("active", !isTrack);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  tabTrack.addEventListener("click", ()=>showMain("track"));
+  tabCalc.addEventListener("click", ()=>showMain("calc"));
+})();
+
+/* ========================= CALCULADORA ========================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const tabA = document.getElementById("calcTabA");
+  const tabM = document.getElementById("calcTabM");
+  const tabV = document.getElementById("calcTabV");
+
+  const panelA = document.getElementById("calcPanelA");
+  const panelM = document.getElementById("calcPanelM");
+  const panelV = document.getElementById("calcPanelV");
+
+  function openCalc(which){
+    [panelA, panelM, panelV].forEach(p => p.classList.remove("active"));
+    [tabA, tabM, tabV].forEach(b => b.classList.remove("active"));
+
+    if(which === "a"){ panelA.classList.add("active"); tabA.classList.add("active"); }
+    if(which === "m"){ panelM.classList.add("active"); tabM.classList.add("active"); }
+    if(which === "v"){ panelV.classList.add("active"); tabV.classList.add("active"); }
+  }
+
+  tabA.addEventListener("click", ()=>openCalc("a"));
+  tabM.addEventListener("click", ()=>openCalc("m"));
+  tabV.addEventListener("click", ()=>openCalc("v"));
+
+  const money = (n) => (Number.isFinite(n) ? n.toFixed(2) : "0.00");
+  const num = (id) => {
+    const v = parseFloat(document.getElementById(id).value);
+    return Number.isFinite(v) ? v : 0;
+  };
+
+  // Aéreo: <=20 => 7, >20 => 6.5
+  document.getElementById("calcBtnAereo").addEventListener("click", () => {
+    const lbs = num("calcAereoLbs");
+    const out = document.getElementById("calcResA");
+    if(lbs <= 0){ out.textContent = "Ingresá un peso válido."; return; }
+    const rate = (lbs > 20) ? 6.5 : 7;
+    const total = lbs * rate;
+    out.innerHTML = `Tarifa aplicada: <b>$${money(rate)}</b> por lb<br>Total aproximado: <b>$${money(total)}</b>`;
+  });
+  document.getElementById("calcBtnAereoClear").addEventListener("click", () => {
+    document.getElementById("calcAereoLbs").value = "";
+    document.getElementById("calcResA").textContent = "";
+  });
+
+  // Marítimo: <=100 => 2.05, >100 => 2.0, >300 => 1.9, >500 => 1.5
+  function rateMar(lbs){
+    if(lbs > 500) return 1.5;
+    if(lbs > 300) return 1.9;
+    if(lbs > 100) return 2.0;
+    return 2.05;
+  }
+  document.getElementById("calcBtnMar").addEventListener("click", () => {
+    const lbs = num("calcMarLbs");
+    const out = document.getElementById("calcResM");
+    if(lbs <= 0){ out.textContent = "Ingresá un peso válido."; return; }
+    const rate = rateMar(lbs);
+    const total = lbs * rate;
+    out.innerHTML = `Tarifa aplicada: <b>$${money(rate)}</b> por lb<br>Total aproximado: <b>$${money(total)}</b>`;
+  });
+  document.getElementById("calcBtnMarClear").addEventListener("click", () => {
+    document.getElementById("calcMarLbs").value = "";
+    document.getElementById("calcResM").textContent = "";
+  });
+
+  // Volumen: (L*W*H)/1728 * 10
+  document.getElementById("calcBtnVol").addEventListener("click", () => {
+    const L = num("calcL"), W = num("calcW"), H = num("calcH");
+    const out = document.getElementById("calcResV");
+    if(L<=0 || W<=0 || H<=0){ out.textContent = "Ingresá las 3 medidas (L, W, H)."; return; }
+    const cft = (L * W * H) / 1728;
+    const total = cft * 10;
+    out.innerHTML = `Cubicaje: <b>${money(cft)}</b> pies³ (CFT)<br>Total aproximado: <b>$${money(total)}</b>`;
+  });
+  document.getElementById("calcBtnVolClear").addEventListener("click", () => {
+    ["calcL","calcW","calcH"].forEach(id => document.getElementById(id).value = "");
+    document.getElementById("calcResV").textContent = "";
+  });
+
+  // Default
+  openCalc("a");
+});
+</script>
+
 </body>
 </html>
