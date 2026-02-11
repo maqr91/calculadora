@@ -200,10 +200,8 @@
       border-color: rgba(0,0,0,.12);
     }
 
-    /* ======= CALCULADORA (scoped, sin chocar con .container) ======= */
-    .calc-wrap{
-      padding:12px;
-    }
+    /* ======= CALCULADORA ======= */
+    .calc-wrap{ padding:12px; }
 
     .calc-title{
       font-size:16px;
@@ -251,12 +249,14 @@
       font-size:14px;
       margin:0 0 6px;
     }
+
+    /* ✅ inputs más pequeños */
     .calc-input{
       width:100%;
       border:1px solid var(--gris2);
-      border-radius:12px;
-      padding:12px 14px;
-      font-size:16px;
+      border-radius:10px;
+      padding:8px 10px;
+      font-size:14px;
       outline:none;
       background:#fff;
       box-sizing:border-box;
@@ -310,6 +310,19 @@
       padding:10px 12px;
     }
 
+    /* ✅ select con mismo estilo */
+    .calc-select{
+      width:100%;
+      border:1px solid var(--gris2);
+      border-radius:10px;
+      padding:8px 10px;
+      font-size:14px;
+      outline:none;
+      background:#fff;
+      box-sizing:border-box;
+      appearance:auto;
+    }
+
     @media(max-width:700px){
       .container{ padding:0 10px; margin-top:10px; gap:14px; }
       header{ padding:14px 12px 22px; }
@@ -344,7 +357,6 @@
     </svg>
   </div>
 
-  <!-- Pestañas principales -->
   <div class="main-tabs" role="tablist" aria-label="Secciones">
     <button class="main-tab active" id="mainTabTrack" type="button">📍 Rastreo</button>
     <button class="main-tab" id="mainTabCalc" type="button">🧮 Calcular costo de envío</button>
@@ -353,10 +365,9 @@
 
 <main class="container">
 
-  <!-- ================== BLOQUE RASTREO (3 cards) ================== -->
+  <!-- ================== BLOQUE RASTREO ================== -->
   <div id="mainTrack">
 
-    <!-- ================= MARÍTIMO ================= -->
     <section class="card">
       <div class="card-title">🚢 Rastreo Marítimo</div>
 
@@ -374,7 +385,6 @@
       </div>
     </section>
 
-    <!-- ================= AÉREO ================= -->
     <section class="card">
       <div class="card-title">✈️ Rastreo Aéreo</div>
 
@@ -392,7 +402,6 @@
       </div>
     </section>
 
-    <!-- ================= COMPRAS ================= -->
     <section class="card">
       <div class="card-title">🛍️ Rastreo de compras en línea</div>
 
@@ -412,7 +421,7 @@
 
   </div>
 
-  <!-- ================== BLOQUE CALCULADORA (1 card) ================== -->
+  <!-- ================== BLOQUE CALCULADORA ================== -->
   <div id="mainCalc" style="display:none;">
     <section class="card">
       <div class="card-title">🧮 Calcular costo de envío</div>
@@ -476,15 +485,25 @@
         <div class="calc-panel" id="calcPanelV">
           <div class="calc-grid">
             <div>
-              <div class="calc-label">Largo (in)</div>
+              <div class="calc-label">Tipo de artículo</div>
+              <select class="calc-select" id="calcItemType">
+                <option value="ropa_30">Caja con ropa y artículos varios</option>
+                <option value="mueble_10">Mueble</option>
+                <option value="refri_12">Electrodoméstico (refrigeradora)</option>
+                <option value="lavadora_15">Electrodoméstico (lavadora / secadora / cocina)</option>
+              </select>
+            </div>
+
+            <div>
+              <div class="calc-label">Largo (pulgadas - in)</div>
               <input class="calc-input" type="number" id="calcL" placeholder="L" min="0" step="0.1" inputmode="decimal">
             </div>
             <div>
-              <div class="calc-label">Ancho (in)</div>
+              <div class="calc-label">Ancho (pulgadas - in)</div>
               <input class="calc-input" type="number" id="calcW" placeholder="W" min="0" step="0.1" inputmode="decimal">
             </div>
             <div>
-              <div class="calc-label">Alto (in)</div>
+              <div class="calc-label">Alto (pulgadas - in)</div>
               <input class="calc-input" type="number" id="calcH" placeholder="H" min="0" step="0.1" inputmode="decimal">
             </div>
           </div>
@@ -497,7 +516,7 @@
           <div class="calc-result" id="calcResV"></div>
 
           <div class="calc-note">
-            <b>Nota:</b> El precio puede variar si las cantidades no están correctas, el artículo no está empacado,
+            El precio puede variar si las cantidades no están correctas, el artículo no está empacado,
             o si el peso es demasiado para el artículo.
           </div>
         </div>
@@ -509,7 +528,7 @@
 </main>
 
 <script>
-/* ========================= RASTREO (TU CÓDIGO) ========================= */
+/* ========================= RASTREO ========================= */
 
 const urls = {
   Maritimo:[
@@ -660,7 +679,6 @@ async function searchTracking(type){
 });
 
 /* ========================= NAV PRINCIPAL (Rastreo / Calculadora) ========================= */
-
 (function(){
   const tabTrack = document.getElementById("mainTabTrack");
   const tabCalc  = document.getElementById("mainTabCalc");
@@ -681,7 +699,6 @@ async function searchTracking(type){
 })();
 
 /* ========================= CALCULADORA ========================= */
-
 document.addEventListener("DOMContentLoaded", () => {
   const tabA = document.getElementById("calcTabA");
   const tabM = document.getElementById("calcTabM");
@@ -710,7 +727,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return Number.isFinite(v) ? v : 0;
   };
 
-  // Aéreo: <=20 => 7, >20 => 6.5
+  // Aéreo
   document.getElementById("calcBtnAereo").addEventListener("click", () => {
     const lbs = num("calcAereoLbs");
     const out = document.getElementById("calcResA");
@@ -724,9 +741,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("calcResA").textContent = "";
   });
 
-  // Marítimo: <=100 => 2.05, >100 => 2.0, >300 => 1.9, >500 => 1.5
+  // Marítimo (✅ >500 = 1.8)
   function rateMar(lbs){
-    if(lbs > 500) return 1.5;
+    if(lbs > 500) return 1.8;
     if(lbs > 300) return 1.9;
     if(lbs > 100) return 2.0;
     return 2.05;
@@ -744,18 +761,37 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("calcResM").textContent = "";
   });
 
-  // Volumen: (L*W*H)/1728 * 10
+  // Volumen con tipo de artículo (multiplicador)
+  function getMultiplier(){
+    const v = (document.getElementById("calcItemType").value || "");
+    // valores: ropa_30, mueble_10, refri_12, lavadora_15
+    if(v === "ropa_30") return { mult: 30, label: "Caja con ropa y artículos varios" };
+    if(v === "mueble_10") return { mult: 10, label: "Mueble" };
+    if(v === "refri_12") return { mult: 12, label: "Electrodoméstico (refrigeradora)" };
+    if(v === "lavadora_15") return { mult: 15, label: "Electrodoméstico (lavadora/secadora/cocina)" };
+    return { mult: 10, label: "Mueble" };
+  }
+
   document.getElementById("calcBtnVol").addEventListener("click", () => {
     const L = num("calcL"), W = num("calcW"), H = num("calcH");
     const out = document.getElementById("calcResV");
-    if(L<=0 || W<=0 || H<=0){ out.textContent = "Ingresá las 3 medidas (L, W, H)."; return; }
+    if(L<=0 || W<=0 || H<=0){ out.textContent = "Ingresá las 3 medidas (en pulgadas)."; return; }
+
     const cft = (L * W * H) / 1728;
-    const total = cft * 10;
-    out.innerHTML = `Cubicaje: <b>${money(cft)}</b> pies³ (CFT)<br>Total aproximado: <b>$${money(total)}</b>`;
+    const { mult, label } = getMultiplier();
+    const total = cft * mult;
+
+    out.innerHTML =
+      `Tipo: <b>${label}</b><br>` +
+      `Cubicaje: <b>${money(cft)}</b> pies³ (CFT)<br>` +
+      `Tarifa aplicada: <b>$${money(mult)}</b> por CFT<br>` +
+      `Total aproximado: <b>$${money(total)}</b>`;
   });
+
   document.getElementById("calcBtnVolClear").addEventListener("click", () => {
     ["calcL","calcW","calcH"].forEach(id => document.getElementById(id).value = "");
     document.getElementById("calcResV").textContent = "";
+    document.getElementById("calcItemType").value = "ropa_30";
   });
 
   // Default
