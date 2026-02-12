@@ -437,6 +437,23 @@
       .header-contact{ margin-top:8px; }
       .contact-btn{ width:100%; } /* ✅ botones full-width en teléfono */
     }
+    /* ✅ FORZAR: desktop = 3 columnas, tablet = 2, teléfono = 1 */
+@media (min-width: 980px){
+  .contact-grid{
+    grid-template-columns: 1.2fr 1.2fr 1fr !important;
+  }
+}
+@media (min-width: 620px) and (max-width: 979px){
+  .contact-grid{
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+@media (max-width: 619px){
+  .contact-grid{
+    grid-template-columns: 1fr !important;
+  }
+}
+
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
