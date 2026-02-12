@@ -7,24 +7,23 @@
 
   <style>
     :root{
-  /* NAVY (difuminado) */
-  --azulClaro:#1b3a6b;     /* navy claro */
-  --azulOscuro:#0b1f3a;    /* navy profundo */
+      /* NAVY (difuminado) */
+      --azulClaro:#1b3a6b;     /* navy claro */
+      --azulOscuro:#0b1f3a;    /* navy profundo */
 
-  /* CELESTE (si lo querés mantener para pills/acentos) */
-  --celesteTxt:#4db6ff;
-  --celesteBg:rgba(77,182,255,.16);
+      /* CELESTE (pills/acentos) */
+      --celesteTxt:#4db6ff;
+      --celesteBg:rgba(77,182,255,.16);
 
-  --gris:#f1f5f9;
-  --gris2:#e2e8f0;
-  --blanco:#ffffff;
-  --texto:#0f172a;
+      --gris:#f1f5f9;
+      --gris2:#e2e8f0;
+      --blanco:#ffffff;
+      --texto:#0f172a;
 
-  /* NARANJA PASTEL (reemplaza el amarillo) */
-  --amarillo:#ffd1a6;   /* naranja pastel */
-  --amarilloH:#ffbf85;  /* hover un poquito más fuerte */
-}
-
+      /* NARANJA PASTEL */
+      --amarillo:#ffd1a6;
+      --amarilloH:#ffbf85;
+    }
 
     body{
       margin:0;
@@ -205,38 +204,39 @@
       border-color: rgba(0,0,0,.12);
     }
 
-    /* ======= CONTACTO EN HEADER (con botones) ======= */
+    /* ======= CONTACTO EN HEADER (✅ FORZADO HORIZONTAL EN DESKTOP) ======= */
     .header-contact{
       margin-top:10px;
       padding:0 12px;
     }
-  .contact-grid{
-  max-width:900px;
-  margin:0 auto;
-  width:100%;
-  display:grid;
-  gap:10px;
-  grid-template-columns: 1fr; /* teléfono */
-}
 
-@media(min-width:620px){
-  .contact-grid{ grid-template-columns: 1fr 1fr; } /* tablet */
-}
-
-@media(min-width:980px){
-  .contact-grid{ grid-template-columns: 1.2fr 1.2fr 1fr; } /* desktop (como antes) */
-}
+    /* Usamos FLEX para que NUNCA se te vaya vertical en compu */
+    .contact-grid{
+      max-width:900px;
+      margin:0 auto;
+      width:100%;
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      align-items:stretch;
+      flex-wrap:wrap;
+    }
 
     .contact-card{
       background: rgba(255,255,255,.14);
       border: 1px solid rgba(255,255,255,.25);
       border-radius:14px;
-      padding:10px 12px;
+      padding:12px 14px;
       text-align:left;
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
       box-shadow: 0 2px 10px rgba(0,0,0,.15);
+
+      flex: 1 1 260px;   /* base 260px */
+      min-width:260px;
+      max-width:420px;
     }
+
     .contact-title{
       font-weight:900;
       font-size:14px;
@@ -244,7 +244,7 @@
       color:#fff;
     }
     .contact-line{
-      font-size:13px;
+      font-size:13.5px;
       line-height:1.25;
       color: rgba(255,255,255,.92);
       word-break: break-word;
@@ -275,13 +275,28 @@
       border-color: rgba(0,0,0,.12);
     }
     .contact-btn.call:hover{ background: var(--amarilloH); }
+
     .contact-btn.map{
       background: rgba(255,255,255,.18);
       color:#fff;
     }
     .contact-btn.map:hover{ background: rgba(255,255,255,.28); }
-      .contact-card{ padding:12px 14px; }
-      .contact-line{ font-size:13.5px; }
+
+    /* ✅ WhatsApp verde oficial */
+    .contact-btn.wa{
+      background:#25D366;
+      border-color:#25D366;
+      color:#fff;
+    }
+    .contact-btn.wa:hover{
+      background:#1EBE57;
+      border-color:#1EBE57;
+    }
+
+    /* ✅ Desktop: 3 tarjetas en una fila, sí o sí */
+    @media(min-width:980px){
+      .contact-grid{ flex-wrap:nowrap; }
+      .contact-card{ max-width:none; }
     }
 
     /* ======= CALCULADORA ======= */
@@ -435,25 +450,10 @@
       .flag-left, .flag-right{ width:88px; top:6px; }
       .logo svg{ margin-top:6px; max-width:260px; }
       .header-contact{ margin-top:8px; }
-      .contact-btn{ width:100%; } /* ✅ botones full-width en teléfono */
+      .contact-grid{ flex-direction:column; }  /* teléfono */
+      .contact-card{ min-width:0; width:100%; }
+      .contact-btn{ width:100%; }
     }
-    /* ✅ FORZAR: desktop = 3 columnas, tablet = 2, teléfono = 1 */
-@media (min-width: 980px){
-  .contact-grid{
-    grid-template-columns: 1.2fr 1.2fr 1fr !important;
-  }
-}
-@media (min-width: 620px) and (max-width: 979px){
-  .contact-grid{
-    grid-template-columns: 1fr 1fr !important;
-  }
-}
-@media (max-width: 619px){
-  .contact-grid{
-    grid-template-columns: 1fr !important;
-  }
-}
-
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
@@ -491,16 +491,12 @@
         <div class="contact-line">2035 W Flagler St, Miami, FL 33135.</div>
         <div class="contact-line"><b>Tel:</b> 305-631-0701 / 786-853-4444.</div>
         <div class="contact-actions">
-          <div class="contact-actions">
-  <a class="contact-btn call" href="tel:+13056310701">📞 Llamar</a>
-
-  <a class="contact-btn wa" target="_blank" rel="noopener"
-     href="https://wa.me/13056310701?text=Hola%20MiR%20CargoTrack%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20env%C3%ADo.">💬 WhatsApp</a>
-
-  <a class="contact-btn map" target="_blank" rel="noopener"
-     href="https://www.google.com/maps/search/?api=1&query=2035%20W%20Flagler%20St%20Miami%20FL%2033135">📍 Maps</a>
-</div>
-
+          <a class="contact-btn call" href="tel:+13056310701">📞 Llamar</a>
+          <a class="contact-btn wa" target="_blank" rel="noopener"
+             href="https://wa.me/13056310701?text=Hola%20MiR%20CargoTrack%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20env%C3%ADo.">💬 WhatsApp</a>
+          <a class="contact-btn map" target="_blank" rel="noopener"
+             href="https://www.google.com/maps/search/?api=1&query=2035%20W%20Flagler%20St%20Miami%20FL%2033135">📍 Maps</a>
+        </div>
       </div>
 
       <div class="contact-card">
@@ -509,9 +505,8 @@
         <div class="contact-line"><b>Tel:</b> 8785-3842 / 8781-2066.</div>
         <div class="contact-actions">
           <a class="contact-btn call" href="tel:+50587853842">📞 Llamar</a>
-        <a class="contact-btn map" target="_blank" rel="noopener"
-href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5">📍 Maps</a>
-
+          <a class="contact-btn map" target="_blank" rel="noopener"
+             href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5">📍 Maps</a>
         </div>
       </div>
 
@@ -522,8 +517,7 @@ href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5">📍 Maps</a>
         <div class="contact-actions">
           <a class="contact-btn call" href="tel:+50523468244">📞 Llamar</a>
           <a class="contact-btn map" target="_blank" rel="noopener"
-href="https://maps.app.goo.gl/PVczh5oMTN3kp53R6">📍 Maps</a>
-
+             href="https://maps.app.goo.gl/PVczh5oMTN3kp53R6">📍 Maps</a>
         </div>
       </div>
 
@@ -908,7 +902,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("calcResA").textContent = "";
   });
 
-  // Marítimo por peso (✅ >500 = 1.8)
+  // Marítimo por peso
   function rateMar(lbs){
     if(lbs > 500) return 1.8;
     if(lbs > 300) return 1.9;
@@ -927,7 +921,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("calcResM").textContent = "";
   });
 
-  // Marítimo por volumen (multiplicador por tipo)
+  // Marítimo por volumen
   function getMultiplier(){
     const v = (document.getElementById("calcItemType").value || "");
     if(v === "mueble_10") return { mult: 10, label: "Mueble" };
@@ -946,7 +940,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const { mult, label } = getMultiplier();
     const total = cft * mult;
 
-    // ✅ Solo tipo + total (sin cubicaje ni tarifa)
     out.innerHTML = `Tipo: <b>${label}</b><br>Total aproximado: <b>$${money(total)}</b>`;
   });
 
