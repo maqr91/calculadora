@@ -477,7 +477,6 @@
       </defs>
 
       <g text-anchor="middle">
-        <!-- ✅ Texto responsive para que NO se corte -->
         <text x="260" y="52" font-weight="900" fill="#fff"
               style="letter-spacing:.6px; font-style:italic; font-size:38px;">
           MIR CARGO <tspan fill="var(--amarillo)">NICARAGUA</tspan>
@@ -490,19 +489,66 @@
     </svg>
   </div>
 
-  <!-- ✅ PESTAÑAS PRINCIPALES -->
+  <!-- ✅ ORDEN NUEVO: 1 Contacto, 2 Rastreo, 3 Calcular, 4 Agendar -->
   <div class="main-tabs" role="tablist" aria-label="Secciones">
-    <button class="main-tab active" id="tabTrack" type="button">📍 Rastreo de carga</button>
+    <button class="main-tab active" id="tabContact" type="button">☎️ Contacto</button>
+    <button class="main-tab" id="tabTrack" type="button">📍 Rastreo de carga</button>
     <button class="main-tab" id="tabCalc" type="button">🧮 Calcular costo</button>
-    <button class="main-tab" id="tabContact" type="button">☎️ Contacto</button>
     <button class="main-tab" id="tabCita" type="button">📆 Agendar cita</button>
   </div>
 </header>
 
 <main class="container">
 
+  <!-- ================== TAB: CONTACTO (DEFAULT) ================== -->
+  <div id="viewContact">
+    <section class="card">
+      <div class="card-title">☎️ Contacto</div>
+      <div class="contact-wrap">
+        <div class="contact-grid">
+
+          <div class="contact-card">
+            <div class="contact-title">📍 Miami</div>
+            <div class="contact-line">2035 W Flagler St, Miami, FL 33135.</div>
+            <div class="contact-line"><b>Tel:</b> 305-631-0701 / 786-853-4444.</div>
+            <div class="contact-actions">
+              <a class="contact-btn call" href="tel:+13056310701">📞 Llamar</a>
+              <a class="contact-btn wa" target="_blank" rel="noopener"
+                 href="https://wa.me/13056310701?text=Hola,%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n:%20_____________.%20Mi%20nombre%20es:%20____________.%20Mi%20tel%C3%A9fono%20es:%20____________.">💬 WhatsApp</a>
+              <a class="contact-btn map" target="_blank" rel="noopener"
+                 href="https://www.google.com/maps/search/?api=1&query=2035%20W%20Flagler%20St%20Miami%20FL%2033135">📍 Maps</a>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-title">📍 Managua</div>
+            <div class="contact-line">Comtech Altamira, 1c arriba, 2c lago, 1c abajo. Casa #698.</div>
+            <div class="contact-line"><b>Tel:</b> 8785-3842 / 8781-2066.</div>
+            <div class="contact-actions">
+              <a class="contact-btn call" href="tel:+50587853842">📞 Llamar</a>
+              <a class="contact-btn map" target="_blank" rel="noopener"
+                 href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5">📍 Maps</a>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-title">📍 Chinandega</div>
+            <div class="contact-line">Esquina Suroeste de la Escuela El Rosario.</div>
+            <div class="contact-line"><b>Tel:</b> 2346-8244 / 8899-9548.</div>
+            <div class="contact-actions">
+              <a class="contact-btn call" href="tel:+50523468244">📞 Llamar</a>
+              <a class="contact-btn map" target="_blank" rel="noopener"
+                 href="https://maps.app.goo.gl/PVczh5oMTN3kp53R6">📍 Maps</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
   <!-- ================== TAB: RASTREO ================== -->
-  <div id="viewTrack">
+  <div id="viewTrack" style="display:none;">
     <section class="card">
       <div class="card-title">🚢 Rastreo Marítimo</div>
       <div class="card-header">
@@ -638,53 +684,6 @@
             <div class="calc-note">
               El precio puede variar si las cantidades no están correctas, el artículo no está empacado,
               o si el peso es demasiado para el artículo.
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- ================== TAB: CONTACTO ================== -->
-  <div id="viewContact" style="display:none;">
-    <section class="card">
-      <div class="card-title">☎️ Contacto</div>
-      <div class="contact-wrap">
-        <div class="contact-grid">
-
-          <div class="contact-card">
-            <div class="contact-title">📍 Miami</div>
-            <div class="contact-line">2035 W Flagler St, Miami, FL 33135.</div>
-            <div class="contact-line"><b>Tel:</b> 305-631-0701 / 786-853-4444.</div>
-            <div class="contact-actions">
-              <a class="contact-btn call" href="tel:+13056310701">📞 Llamar</a>
-              <a class="contact-btn wa" target="_blank" rel="noopener"
-                 href="https://wa.me/13056310701?text=Hola,%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n:%20_____________.%20Mi%20nombre%20es:%20____________.%20Mi%20tel%C3%A9fono%20es:%20____________.">💬 WhatsApp</a>
-              <a class="contact-btn map" target="_blank" rel="noopener"
-                 href="https://www.google.com/maps/search/?api=1&query=2035%20W%20Flagler%20St%20Miami%20FL%2033135">📍 Maps</a>
-            </div>
-          </div>
-
-          <div class="contact-card">
-            <div class="contact-title">📍 Managua</div>
-            <div class="contact-line">Comtech Altamira, 1c arriba, 2c lago, 1c abajo. Casa #698.</div>
-            <div class="contact-line"><b>Tel:</b> 8785-3842 / 8781-2066.</div>
-            <div class="contact-actions">
-              <a class="contact-btn call" href="tel:+50587853842">📞 Llamar</a>
-              <a class="contact-btn map" target="_blank" rel="noopener"
-                 href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5">📍 Maps</a>
-            </div>
-          </div>
-
-          <div class="contact-card">
-            <div class="contact-title">📍 Chinandega</div>
-            <div class="contact-line">Esquina Suroeste de la Escuela El Rosario.</div>
-            <div class="contact-line"><b>Tel:</b> 2346-8244 / 8899-9548.</div>
-            <div class="contact-actions">
-              <a class="contact-btn call" href="tel:+50523468244">📞 Llamar</a>
-              <a class="contact-btn map" target="_blank" rel="noopener"
-                 href="https://maps.app.goo.gl/PVczh5oMTN3kp53R6">📍 Maps</a>
             </div>
           </div>
 
@@ -856,22 +855,22 @@ async function searchTracking(type){
   });
 });
 
-/* ========================= PESTAÑAS PRINCIPALES ========================= */
+/* ========================= PESTAÑAS PRINCIPALES (CONTACTO ES DEFAULT) ========================= */
 (function(){
+  const tabContact = document.getElementById("tabContact");
   const tabTrack = document.getElementById("tabTrack");
   const tabCalc  = document.getElementById("tabCalc");
-  const tabContact = document.getElementById("tabContact");
   const tabCita  = document.getElementById("tabCita");
 
+  const viewContact = document.getElementById("viewContact");
   const viewTrack = document.getElementById("viewTrack");
   const viewCalc  = document.getElementById("viewCalc");
-  const viewContact = document.getElementById("viewContact");
   const viewCita  = document.getElementById("viewCita");
 
   const tabs = [
+    {btn: tabContact, view: viewContact, key:"contact"},
     {btn: tabTrack, view: viewTrack, key:"track"},
     {btn: tabCalc, view: viewCalc, key:"calc"},
-    {btn: tabContact, view: viewContact, key:"contact"},
     {btn: tabCita, view: viewCita, key:"cita"}
   ];
 
@@ -883,10 +882,13 @@ async function searchTracking(type){
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  tabContact.addEventListener("click", ()=>show("contact"));
   tabTrack.addEventListener("click", ()=>show("track"));
   tabCalc.addEventListener("click", ()=>show("calc"));
-  tabContact.addEventListener("click", ()=>show("contact"));
   tabCita.addEventListener("click", ()=>show("cita"));
+
+  /* default: contacto */
+  show("contact");
 })();
 
 /* ========================= CALCULADORA ========================= */
