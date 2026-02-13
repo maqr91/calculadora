@@ -1,327 +1,351 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>MIR CARGO NICARAGUA | MiRCargoTrack</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>MIR CARGO NICARAGUA | Rastreo</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <style>
     :root{
-      /* AZUL ROYAL (menos oscuro) */
-      --azulClaro:#2563eb;   /* royal */
-      --azulOscuro:#1d4ed8;  /* royal profundo */
+      /* ✅ Tus colores (royal + naranja pastel + whatsapp) */
+      --azulClaro:#2563eb;
+      --azulOscuro:#1d4ed8;
 
-      /* CELESTE (pills/acentos) */
-      --celesteTxt:#4db6ff;
-      --celesteBg:rgba(77,182,255,.16);
-
-      --gris:#f1f5f9;
-      --gris2:#e2e8f0;
-      --blanco:#ffffff;
-      --texto:#0f172a;
-
-      /* NARANJA PASTEL */
       --amarillo:#ffd1a6;
       --amarilloH:#ffbf85;
 
-      /* WHATSAPP */
       --wa:#25D366;
       --waH:#1ebe57;
+
+      --celesteTxt:#4db6ff;
+      --celesteBg:rgba(77,182,255,.16);
+
+      --texto:#0b1220;
+      --muted:#526176;
+
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --stroke:rgba(15,23,42,.10);
+
+      --shadow: 0 18px 60px rgba(15, 23, 42, .08);
+      --shadow2: 0 10px 30px rgba(15, 23, 42, .08);
+      --radius: 18px;
     }
 
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
-      background:var(--gris);
-      font-family: system-ui, -apple-system, Roboto, Arial;
       color:var(--texto);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(37,99,235,.18), transparent 60%),
+        radial-gradient(900px 500px at 80% 0%, rgba(255,209,166,.28), transparent 55%),
+        linear-gradient(#ffffff, var(--bg));
+      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Display","SF Pro Text", Roboto, Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
 
-    header{
-      background:linear-gradient(90deg,var(--azulClaro),var(--azulOscuro));
-      color:white;
-      padding:20px 12px 18px;
-      text-align:center;
-      position:relative;
-      box-shadow:0 2px 6px rgba(0,0,0,.25);
-      overflow:hidden;
+    /* ======= TOP BAR (APPLE-LIKE) ======= */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(255,255,255,.70);
+      border-bottom: 1px solid var(--stroke);
     }
-
-    @media(min-width:700px){
-      header{ padding:16px 12px 14px; }
-    }
-
-    .flag-left, .flag-right{
-      position:absolute;
-      top:10px;
-      width:120px;
-      border-radius:10px;
-      box-shadow:0 0 6px rgba(0,0,0,.4);
-      z-index:1;
-    }
-    .flag-left{ left:12px; }
-    .flag-right{ right:12px; }
-
-    @media(max-width:700px){
-      .flag-left, .flag-right{ width:88px; top:6px; }
-    }
-
-    .logo{
-      position:relative;
-      z-index:2;
-      margin-top:6px;
-      padding:0 8px;
-    }
-
-    .logo svg{
-      width:92%;
-      max-width:520px;
+    .topbar-inner{
+      max-width: 1100px;
       margin:0 auto;
-      display:block;
-    }
-
-    /* ======= NAV PRINCIPAL ======= */
-    .main-tabs{
+      padding: 10px 14px;
       display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:center;
-      margin-top:12px;
-      padding:0 12px;
-      position:relative;
-      z-index:2;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
     }
-    .main-tab{
-      border:1px solid rgba(255,255,255,.35);
-      background:rgba(255,255,255,.18);
-      color:#fff;
-      padding:10px 14px;
-      border-radius:999px;
-      font-weight:900;
-      cursor:pointer;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      white-space:nowrap;
-    }
-    .main-tab.active{
-      background: var(--amarillo);
-      color: var(--texto);
-      border-color: rgba(0,0,0,.12);
-    }
-
-    /* ======= LAYOUT ======= */
-    .container{
-      max-width:900px;
-      margin:18px auto;
-      padding:0 12px;
+    .brand{
       display:flex;
       flex-direction:column;
-      gap:18px;
+      align-items:flex-start;
+      line-height:1.05;
+      gap:2px;
+      min-width: 180px;
+    }
+    .brand-title{
+      font-weight:900;
+      letter-spacing:.3px;
+      font-size:14px;
+    }
+    .brand-sub{
+      font-size:12px;
+      color: var(--muted);
+      font-weight:700;
+    }
+
+    .tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .tab{
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.65);
+      color: var(--texto);
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-weight:850;
+      cursor:pointer;
+      font-size:13px;
+      user-select:none;
+      transition: transform .12s ease, background .12s ease;
+      white-space:nowrap;
+    }
+    .tab:hover{ transform: translateY(-1px); background: rgba(255,255,255,.92); }
+    .tab.active{
+      background: linear-gradient(90deg, var(--azulClaro), var(--azulOscuro));
+      color:#fff;
+      border-color: rgba(29,78,216,.25);
+      box-shadow: 0 10px 30px rgba(29,78,216,.18);
+    }
+
+    /* ======= HERO ======= */
+    header.hero{
+      position:relative;
+      overflow:hidden;
+      padding: 22px 14px 10px;
+    }
+    .hero-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding: 18px;
+      border-radius: 24px;
+      background:
+        linear-gradient(135deg, rgba(37,99,235,.16), rgba(255,209,166,.18)),
+        radial-gradient(900px 300px at 20% 0%, rgba(37,99,235,.22), transparent 60%),
+        radial-gradient(700px 260px at 90% 30%, rgba(255,209,166,.28), transparent 55%),
+        rgba(255,255,255,.65);
+      border: 1px solid rgba(15,23,42,.10);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .hero-copy{
+      text-align:left;
+    }
+    .hero-h1{
+      margin:0;
+      font-size: clamp(20px, 3.2vw, 34px);
+      font-weight: 950;
+      letter-spacing: -.4px;
+    }
+    .hero-h1 span{
+      color: var(--azulOscuro);
+    }
+    .hero-p{
+      margin:8px 0 0;
+      color: var(--muted);
+      font-weight:700;
+      line-height:1.4;
+      font-size: 13.5px;
+      max-width: 740px;
+    }
+
+    .flags{
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .flag{
+      width:54px;
+      height:36px;
+      border-radius: 10px;
+      object-fit:cover;
+      box-shadow: 0 10px 18px rgba(0,0,0,.12);
+      border: 1px solid rgba(255,255,255,.55);
+    }
+
+    /* ======= MAIN LAYOUT ======= */
+    main{
+      max-width:1100px;
+      margin: 12px auto 60px;
+      padding: 0 14px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
     }
 
     .card{
-      background:white;
-      border-radius:14px;
-      box-shadow:0 3px 14px rgba(0,0,0,.08);
-      border:1px solid var(--gris2);
-      padding-bottom:5px;
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow2);
       overflow:hidden;
     }
-
-    .card-title{
-      padding:14px;
-      font-size:19px;
-      font-weight:800;
-      background:#fafafa;
-      border-bottom:1px solid var(--gris2);
+    .card-hd{
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--stroke);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      background: linear-gradient(180deg, rgba(245,247,251,.9), rgba(255,255,255,.65));
     }
+    .card-title{
+      margin:0;
+      font-weight: 950;
+      letter-spacing: -.2px;
+      font-size: 15px;
+    }
+    .card-body{ padding: 14px 16px; }
 
-    .card-header{
-      padding:12px;
+    /* ======= Inputs / buttons ======= */
+    .row{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
       align-items:center;
-      border-bottom:1px solid var(--gris2);
     }
-
-    .input{
+    .field{
       flex:1;
-      background:white;
-      border-radius:10px;
-      border:1px solid var(--gris2);
-      padding:10px 14px;
+      min-width: 220px;
+      background:#fff;
+      border: 1px solid var(--stroke);
+      border-radius: 14px;
+      padding: 11px 12px;
       display:flex;
       align-items:center;
-      min-width: 220px;
+      gap:10px;
     }
-    .input input{
+    .field input{
       border:none;
-      width:100%;
-      font-size:16px;
       outline:none;
+      width:100%;
+      font-size:15px;
       background:transparent;
     }
 
     .btn{
-      background:var(--amarillo);
       border:none;
-      padding:12px 16px;
-      border-radius:10px;
-      font-weight:800;
       cursor:pointer;
-      font-size:16px;
-      width:auto;
+      font-weight: 900;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      transition: transform .12s ease, filter .12s ease;
+      user-select:none;
+      white-space:nowrap;
     }
-    .btn:hover{ background:var(--amarilloH); }
-
-    /* ======= RESULTADOS ======= */
-    .result-block{
-      padding:10px 16px;
-      border-bottom:1px solid var(--gris2);
-      display:flex;
-      flex-direction:column;
-      gap:4px;
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
+    .btn.primary{
+      background: linear-gradient(90deg, var(--amarillo), var(--amarilloH));
+      color: var(--texto);
+      border: 1px solid rgba(0,0,0,.08);
     }
-    .result-block:last-child{ border-bottom:none; }
-    .result-block p{
-      margin:2px 0;
-      line-height:1.2;
-      word-break: break-word;
+    .btn.ghost{
+      background: rgba(37,99,235,.10);
+      color: var(--azulOscuro);
+      border: 1px solid rgba(37,99,235,.20);
     }
-
-    .status-pill{
-      background:var(--celesteBg);
-      color:var(--celesteTxt);
-      padding:4px 10px;
-      border-radius:20px;
-      font-weight:700;
-      display:inline-block;
+    .btn.wa{
+      background: var(--wa);
+      color:#fff;
+      border: 1px solid rgba(0,0,0,.10);
     }
+    .btn.wa:hover{ background: var(--waH); }
 
-    .view-btn{
-      background:var(--celesteTxt);
-      color:white;
-      padding:10px 14px;
-      border-radius:10px;
-      border:none;
-      font-size:15px;
-      cursor:pointer;
-      font-weight:700;
-      width:100%;
-      margin-top:6px;
+    /* ======= Results ======= */
+    .result{
+      padding: 12px 16px;
+      border-top: 1px solid var(--stroke);
     }
-
-    .detail-actions{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      margin-top:6px;
-    }
-
-    @media(min-width:620px){
-      .detail-actions{ flex-direction:row; }
-      .detail-actions .view-btn{ width:auto; }
-    }
-
-    /* ======= CONTACTO (TAB) ======= */
-    .contact-wrap{ padding:12px; }
-
-    .contact-grid{
-      width:100%;
+    .result + .result{ border-top: 1px solid var(--stroke); }
+    .kvs{
       display:grid;
-      gap:10px;
-      grid-template-columns: 1fr; /* teléfono */
-    }
-    @media(min-width:620px){
-      .contact-grid{ grid-template-columns: 1fr 1fr; } /* tablet */
-    }
-    @media(min-width:980px){
-      .contact-grid{ grid-template-columns: 1.2fr 1.2fr 1fr; } /* desktop */
-    }
-
-    .contact-card{
-      background:#fff;
-      border:1px solid var(--gris2);
-      border-radius:14px;
-      padding:12px 14px;
-      text-align:left;
-      box-shadow:0 2px 10px rgba(0,0,0,.06);
-    }
-    .contact-title{
-      font-weight:900;
-      font-size:15px;
-      margin-bottom:6px;
-      color:var(--azulOscuro);
-    }
-    .contact-line{
-      font-size:13.5px;
+      grid-template-columns: 1fr;
+      gap:6px;
+      font-size: 13.5px;
       line-height:1.35;
-      color:#1f2937;
-      word-break: break-word;
-      margin:2px 0;
+    }
+    .kv b{ font-weight: 900; }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 12.5px;
+      background: var(--celesteBg);
+      color: var(--celesteTxt);
+      border: 1px solid rgba(77,182,255,.25);
     }
 
-    .contact-actions{
+    .actions{
       margin-top:10px;
       display:flex;
       gap:10px;
       flex-wrap:wrap;
     }
+    .actions .btn{ padding: 10px 12px; font-size: 13px; }
 
-    .contact-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
-      padding:10px 12px;
-      border-radius:12px;
-      font-weight:900;
-      text-decoration:none;
-      border:1px solid var(--gris2);
-      cursor:pointer;
-      user-select:none;
-      font-size:13px;
-      background:#fff;
-      color:var(--texto);
-      flex:1;
-      min-width: 140px;
+    .empty{
+      display:none;
+      padding: 14px 16px;
+      color: var(--muted);
+      font-weight: 800;
+      text-align:center;
     }
 
-    .contact-btn.call{
-      background: var(--amarillo);
-      border-color: rgba(0,0,0,.10);
+    /* ======= CONTACTO ======= */
+    .contact-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
     }
-    .contact-btn.call:hover{ background: var(--amarilloH); }
-
-    .contact-btn.map{
-      background: rgba(37,99,235,.10);
+    @media(min-width:820px){
+      .contact-grid{ grid-template-columns: 1.2fr 1.2fr 1fr; }
+    }
+    .contact-card{
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      padding: 14px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,1), rgba(245,247,251,.65));
+    }
+    .contact-title{
+      font-weight: 950;
+      letter-spacing: -.2px;
+      margin:0 0 8px;
       color: var(--azulOscuro);
-      border-color: rgba(37,99,235,.20);
+      font-size: 14.5px;
     }
-    .contact-btn.map:hover{ background: rgba(37,99,235,.16); }
-
-    .contact-btn.wa{
-      background: var(--wa);
-      color: #fff;
-      border-color: rgba(0,0,0,.10);
+    .contact-line{
+      margin: 3px 0;
+      color: var(--texto);
+      font-size: 13.5px;
+      line-height: 1.35;
     }
-    .contact-btn.wa:hover{ background: var(--waH); }
-
-    @media(max-width:700px){
-      .container{ padding:0 10px; margin-top:12px; gap:14px; }
-      .logo svg{ max-width:520px; }
-      .contact-btn{ width:100%; min-width:0; flex:unset; }
-    }
+    .contact-line small{ color: var(--muted); font-weight:800; }
 
     /* ======= CALCULADORA ======= */
-    .calc-wrap{ padding:12px; }
-    .calc-title{
-      font-size:16px;
-      font-weight:900;
-      margin:0 0 10px;
-      color:var(--texto);
-    }
-
     .calc-tabs{
       display:flex;
       gap:10px;
@@ -330,20 +354,22 @@
     }
     .calc-tab{
       flex:1;
-      min-width: 150px;
-      padding:12px 12px;
-      border:1px solid var(--gris2);
-      border-radius:12px;
-      background:#fafafa;
-      font-weight:900;
+      min-width: 160px;
+      padding: 12px 12px;
+      border: 1px solid var(--stroke);
+      border-radius: 14px;
+      background: rgba(255,255,255,.75);
+      font-weight: 950;
       cursor:pointer;
+      transition: transform .12s ease;
     }
+    .calc-tab:hover{ transform: translateY(-1px); }
     .calc-tab.active{
-      background: linear-gradient(90deg,var(--azulClaro),var(--azulOscuro));
+      background: linear-gradient(90deg, var(--azulClaro), var(--azulOscuro));
       color:#fff;
-      border-color: rgba(0,0,0,.06);
+      border-color: rgba(29,78,216,.22);
+      box-shadow: 0 10px 25px rgba(29,78,216,.18);
     }
-
     .calc-panel{ display:none; }
     .calc-panel.active{ display:block; }
 
@@ -351,650 +377,657 @@
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin: 6px 0 12px;
+      margin: 4px 0 12px;
     }
     .calc-subtab{
       flex:1;
-      min-width: 160px;
-      padding:10px 12px;
-      border:1px solid var(--gris2);
-      border-radius:12px;
+      min-width: 170px;
+      padding: 10px 12px;
+      border: 1px solid var(--stroke);
+      border-radius: 14px;
       background:#fff;
-      font-weight:900;
+      font-weight: 950;
       cursor:pointer;
     }
     .calc-subtab.active{
-      background: var(--celesteBg);
-      border-color: rgba(77,182,255,.35);
-      color: var(--texto);
+      background: rgba(77,182,255,.14);
+      border-color: rgba(77,182,255,.28);
     }
-    .calc-subpanel{ display:none; }
-    .calc-subpanel.active{ display:block; }
 
     .calc-grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:10px;
     }
-    @media(max-width:700px){
-      .calc-grid{ grid-template-columns:1fr; }
+    @media(max-width:720px){
+      .calc-grid{ grid-template-columns: 1fr; }
+      .tabs{ justify-content:flex-start; }
+      .brand{ min-width:unset; }
     }
 
-    .calc-label{
-      font-weight:800;
-      font-size:14px;
-      margin:0 0 6px;
+    .label{
+      font-weight: 900;
+      font-size: 13px;
+      margin: 0 0 6px;
+      color: var(--muted);
     }
-
-    .calc-input{
+    .input{
       width:100%;
-      border:1px solid var(--gris2);
-      border-radius:10px;
-      padding:8px 10px;
-      font-size:14px;
+      border: 1px solid var(--stroke);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 14px;
       outline:none;
       background:#fff;
-      box-sizing:border-box;
     }
+    select.input{ appearance:auto; }
 
-    .calc-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
-    .calc-btn{
-      flex:1;
-      min-width: 160px;
-      background:var(--amarillo);
-      border:none;
-      padding:12px 16px;
-      border-radius:12px;
-      font-weight:900;
-      cursor:pointer;
-      font-size:16px;
-    }
-    .calc-btn:hover{ background:var(--amarilloH); }
-    .calc-btn.clear{
-      background:#eef2f7;
-      border:1px solid var(--gris2);
+    .note{
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      background: rgba(255,209,166,.25);
+      border: 1px solid rgba(255,191,133,.45);
+      color: #3b2b20;
+      font-weight: 800;
+      font-size: 12.8px;
+      line-height: 1.4;
     }
 
     .calc-result{
-      margin-top:12px;
-      padding:12px 14px;
-      border-radius:12px;
-      background: var(--celesteBg);
-      border:1px solid rgba(77,182,255,.25);
-      color:var(--texto);
-      font-weight:700;
-      line-height:1.35;
-      word-break: break-word;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      background: rgba(37,99,235,.08);
+      border: 1px solid rgba(37,99,235,.14);
+      font-weight: 900;
       min-height: 44px;
-    }
-    .calc-result b{ color: var(--azulOscuro); }
-
-    .calc-note{
-      margin-top:10px;
-      font-size:12.5px;
-      color:#475569;
-      line-height:1.35;
-      background:#fff7e6;
-      border:1px solid rgba(255, 167, 0, .35);
-      border-radius:12px;
-      padding:10px 12px;
+      display:flex;
+      align-items:center;
     }
 
-    .calc-select{
-      width:100%;
-      border:1px solid var(--gris2);
-      border-radius:10px;
-      padding:8px 10px;
-      font-size:14px;
-      outline:none;
-      background:#fff;
-      box-sizing:border-box;
-      appearance:auto;
-    }
+    /* ======= helpers ======= */
+    .muted{ color: var(--muted); font-weight:800; }
+    .hide{ display:none !important; }
   </style>
-
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 
 <body>
 
-<header>
-  <img class="flag-left" src="https://flagcdn.com/us.svg" alt="USA">
-  <img class="flag-right" src="https://flagcdn.com/ni.svg" alt="Nicaragua">
+  <!-- ✅ NAV MODERNA -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-title">MIR CARGO NICARAGUA</div>
+        <div class="brand-sub">Rastreo • Contacto • Calculadora • Citas</div>
+      </div>
 
-  <div class="logo">
-    <svg viewBox="0 0 520 120" aria-label="MIR CARGO NICARAGUA">
-      <defs>
-        <linearGradient id="g" x1="0" x2="1">
-          <stop offset="0" stop-color="var(--azulClaro)"/>
-          <stop offset="1" stop-color="var(--azulOscuro)"/>
-        </linearGradient>
-      </defs>
-
-      <g text-anchor="middle">
-        <text x="260" y="52" font-weight="900" fill="#fff"
-              style="letter-spacing:.6px; font-style:italic; font-size:38px;">
-          MIR CARGO <tspan fill="var(--amarillo)">NICARAGUA</tspan>
-        </text>
-
-        <path d="M70 70 L450 70 L466 86 L70 86 Z" fill="url(#g)" opacity="0.9">
-          <animate attributeName="opacity" values="0.45;1;0.45" dur="2.5s" repeatCount="indefinite"/>
-        </path>
-      </g>
-    </svg>
+      <!-- ✅ ORDEN: 1 Rastreo, 2 Contacto, 3 Calcular, 4 Agendar -->
+      <div class="tabs" role="tablist" aria-label="Secciones">
+        <button class="tab active" id="tabTrack" type="button">📦 Rastreo</button>
+        <button class="tab" id="tabContact" type="button">☎️ Contacto</button>
+        <button class="tab" id="tabCalc" type="button">🧮 Calcular</button>
+        <button class="tab" id="tabCita" type="button">📆 Agendar</button>
+      </div>
+    </div>
   </div>
 
-  <!-- ✅ ORDEN NUEVO: 1 Contacto, 2 Rastreo, 3 Calcular, 4 Agendar -->
-  <div class="main-tabs" role="tablist" aria-label="Secciones">
-    <button class="main-tab active" id="tabContact" type="button">☎️ Contacto</button>
-    <button class="main-tab" id="tabTrack" type="button">📍 Rastreo de carga</button>
-    <button class="main-tab" id="tabCalc" type="button">🧮 Calcular costo</button>
-    <button class="main-tab" id="tabCita" type="button">📆 Agendar cita</button>
-  </div>
-</header>
-
-<main class="container">
-
-  <!-- ================== TAB: CONTACTO (DEFAULT) ================== -->
-  <div id="viewContact">
-    <section class="card">
-      <div class="card-title">☎️ Contacto</div>
-      <div class="contact-wrap">
-        <div class="contact-grid">
-
-          <div class="contact-card">
-            <div class="contact-title">📍 Miami</div>
-            <div class="contact-line">2035 W Flagler St, Miami, FL 33135.</div>
-            <div class="contact-line"><b>Tel:</b> 305-631-0701 / 786-853-4444.</div>
-            <div class="contact-actions">
-              <a class="contact-btn call" href="tel:+13056310701">📞 Llamar</a>
-              <a class="contact-btn wa" target="_blank" rel="noopener"
-                 href="https://wa.me/13056310701?text=Hola,%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n:%20_____________.%20Mi%20nombre%20es:%20____________.%20Mi%20tel%C3%A9fono%20es:%20____________.">💬 WhatsApp</a>
-              <a class="contact-btn map" target="_blank" rel="noopener"
-                 href="https://www.google.com/maps/search/?api=1&query=2035%20W%20Flagler%20St%20Miami%20FL%2033135">📍 Maps</a>
-            </div>
-          </div>
-
-          <div class="contact-card">
-            <div class="contact-title">📍 Managua</div>
-            <div class="contact-line">Comtech Altamira, 1c arriba, 2c lago, 1c abajo. Casa #698.</div>
-            <div class="contact-line"><b>Tel:</b> 8785-3842 / 8781-2066.</div>
-            <div class="contact-actions">
-              <a class="contact-btn call" href="tel:+50587853842">📞 Llamar</a>
-              <a class="contact-btn map" target="_blank" rel="noopener"
-                 href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5">📍 Maps</a>
-            </div>
-          </div>
-
-          <div class="contact-card">
-            <div class="contact-title">📍 Chinandega</div>
-            <div class="contact-line">Esquina Suroeste de la Escuela El Rosario.</div>
-            <div class="contact-line"><b>Tel:</b> 2346-8244 / 8899-9548.</div>
-            <div class="contact-actions">
-              <a class="contact-btn call" href="tel:+50523468244">📞 Llamar</a>
-              <a class="contact-btn map" target="_blank" rel="noopener"
-                 href="https://maps.app.goo.gl/PVczh5oMTN3kp53R6">📍 Maps</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- ================== TAB: RASTREO ================== -->
-  <div id="viewTrack" style="display:none;">
-    <section class="card">
-      <div class="card-title">🚢 Rastreo Marítimo</div>
-      <div class="card-header">
-        <div class="input"><input id="searchMaritimo" placeholder="Número de rastreo marítimo"></div>
-        <button class="btn" onclick="searchTracking('Maritimo')">Buscar</button>
-      </div>
-      <div id="resultsMaritimo"></div>
-      <div id="emptyMaritimo" style="display:none; padding:14px; text-align:center;">❌ No encontramos ese número.</div>
-    </section>
-
-    <section class="card">
-      <div class="card-title">✈️ Rastreo Aéreo</div>
-      <div class="card-header">
-        <div class="input"><input id="searchAereo" placeholder="Número de rastreo aéreo"></div>
-        <button class="btn" onclick="searchTracking('Aereo')">Buscar</button>
-      </div>
-      <div id="resultsAereo"></div>
-      <div id="emptyAereo" style="display:none; padding:14px; text-align:center;">❌ No encontramos ese número.</div>
-    </section>
-
-    <section class="card">
-      <div class="card-title">🛍️ Rastreo de compras en línea</div>
-      <div class="card-header">
-        <div class="input"><input id="searchCompra" placeholder="Nombre o número de tracking"></div>
-        <button class="btn" onclick="searchTracking('Compra')">Buscar</button>
-      </div>
-      <div id="resultsCompra"></div>
-      <div id="emptyCompra" style="display:none; padding:14px; text-align:center;">⚠️ Sin resultados.</div>
-    </section>
-  </div>
-
-  <!-- ================== TAB: CALCULADORA ================== -->
-  <div id="viewCalc" style="display:none;">
-    <section class="card">
-      <div class="card-title">🧮 Calcular costo de envío</div>
-
-      <div class="calc-wrap">
-        <p class="calc-title">Seleccioná un tipo de envío. Meté las libras de la caja o las medidas del artículo para calcular el precio.</p>
-
-        <div class="calc-tabs" role="tablist" aria-label="Tipos de envío">
-          <button type="button" class="calc-tab active" id="calcTabA">✈️ Aéreo</button>
-          <button type="button" class="calc-tab" id="calcTabM">🚢 Marítimo</button>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-top">
+        <div class="hero-copy">
+          <h1 class="hero-h1">Rastreo y envíos con <span>MiR</span></h1>
+          <p class="hero-p">
+            Consultá tu carga, calculá costos y agendá recolección. Diseño limpio, rápido y adaptado a celular.
+          </p>
         </div>
 
-        <!-- AÉREO -->
-        <div class="calc-panel active" id="calcPanelA">
-          <div class="calc-grid">
-            <div>
-              <div class="calc-label">Libras (lbs)</div>
-              <input class="calc-input" type="number" id="calcAereoLbs" placeholder="Ej: 15" min="0" step="0.1" inputmode="decimal">
+        <div class="flags" aria-hidden="true">
+          <img class="flag" src="https://flagcdn.com/us.svg" alt="USA">
+          <img class="flag" src="https://flagcdn.com/ni.svg" alt="Nicaragua">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================== VIEW: RASTREO ================== -->
+    <div id="viewTrack" class="grid">
+      <section class="card">
+        <div class="card-hd">
+          <h2 class="card-title">🚢 Rastreo Marítimo</h2>
+          <span class="muted">Buscá por tracking</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="field">
+              <input id="searchMaritimo" placeholder="Número de rastreo marítimo" />
             </div>
-          </div>
-
-          <div class="calc-actions">
-            <button class="calc-btn" type="button" id="calcBtnAereo">Calcular</button>
-            <button class="calc-btn clear" type="button" id="calcBtnAereoClear">Limpiar</button>
-          </div>
-
-          <div class="calc-result" id="calcResA"></div>
-
-          <div class="calc-note">
-            Regla: hasta 20 lbs se cobra a <b>$7.00/lb</b>. Si es <b>más de 20 lbs</b>, se cobra a <b>$6.50/lb</b>.
+            <button class="btn primary" onclick="searchTracking('Maritimo')">Buscar</button>
           </div>
         </div>
+        <div id="resultsMaritimo"></div>
+        <div id="emptyMaritimo" class="empty">❌ No encontramos ese número.</div>
+      </section>
 
-        <!-- MARÍTIMO -->
-        <div class="calc-panel" id="calcPanelM">
+      <section class="card">
+        <div class="card-hd">
+          <h2 class="card-title">✈️ Rastreo Aéreo</h2>
+          <span class="muted">Buscá por tracking</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="field">
+              <input id="searchAereo" placeholder="Número de rastreo aéreo" />
+            </div>
+            <button class="btn primary" onclick="searchTracking('Aereo')">Buscar</button>
+          </div>
+        </div>
+        <div id="resultsAereo"></div>
+        <div id="emptyAereo" class="empty">❌ No encontramos ese número.</div>
+      </section>
 
-          <div class="calc-subtabs" role="tablist" aria-label="Marítimo por peso o volumen">
-            <button type="button" class="calc-subtab active" id="calcSubTabPeso">⚖️ Por peso (lbs)</button>
-            <button type="button" class="calc-subtab" id="calcSubTabVol">📦 Por volumen (medidas)</button>
+      <section class="card">
+        <div class="card-hd">
+          <h2 class="card-title">🛍️ Compras en línea</h2>
+          <span class="muted">Por nombre o tracking</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="field">
+              <input id="searchCompra" placeholder="Nombre o número de tracking" />
+            </div>
+            <button class="btn primary" onclick="searchTracking('Compra')">Buscar</button>
+          </div>
+        </div>
+        <div id="resultsCompra"></div>
+        <div id="emptyCompra" class="empty">⚠️ Sin resultados.</div>
+      </section>
+    </div>
+
+    <!-- ================== VIEW: CONTACTO ================== -->
+    <div id="viewContact" class="grid" style="display:none;">
+      <section class="card">
+        <div class="card-hd">
+          <h2 class="card-title">☎️ Contacto</h2>
+          <span class="muted">Llamar • WhatsApp • Maps</span>
+        </div>
+        <div class="card-body">
+          <div class="contact-grid">
+
+            <div class="contact-card">
+              <div class="contact-title">📍 Miami</div>
+              <p class="contact-line">2035 W Flagler St, Miami, FL 33135.</p>
+              <p class="contact-line"><small><b>Tel:</b> 305-631-0701 / 786-853-4444</small></p>
+              <div class="actions">
+                <a class="btn primary" href="tel:+13056310701" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">📞 Llamar</a>
+                <a class="btn wa" target="_blank" rel="noopener"
+                   href="https://wa.me/13056310701?text=Hola,%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n:%20_____________.%20Mi%20nombre%20es:%20____________.%20Mi%20tel%C3%A9fono%20es:%20____________."
+                   style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">💬 WhatsApp</a>
+                <a class="btn ghost" target="_blank" rel="noopener"
+                   href="https://www.google.com/maps/search/?api=1&query=2035%20W%20Flagler%20St%20Miami%20FL%2033135"
+                   style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">📍 Maps</a>
+              </div>
+            </div>
+
+            <div class="contact-card">
+              <div class="contact-title">📍 Managua</div>
+              <p class="contact-line">Comtech Altamira, 1c arriba, 2c lago, 1c abajo. Casa #698.</p>
+              <p class="contact-line"><small><b>Tel:</b> 8785-3842 / 8781-2066</small></p>
+              <div class="actions">
+                <a class="btn primary" href="tel:+50587853842" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">📞 Llamar</a>
+                <a class="btn ghost" target="_blank" rel="noopener"
+                   href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5"
+                   style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">📍 Maps</a>
+              </div>
+            </div>
+
+            <div class="contact-card">
+              <div class="contact-title">📍 Chinandega</div>
+              <p class="contact-line">Esquina Suroeste de la Escuela El Rosario.</p>
+              <p class="contact-line"><small><b>Tel:</b> 2346-8244 / 8899-9548</small></p>
+              <div class="actions">
+                <a class="btn primary" href="tel:+50523468244" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">📞 Llamar</a>
+                <a class="btn ghost" target="_blank" rel="noopener"
+                   href="https://maps.app.goo.gl/PVczh5oMTN3kp53R6"
+                   style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">📍 Maps</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ================== VIEW: CALCULADORA ================== -->
+    <div id="viewCalc" class="grid" style="display:none;">
+      <section class="card">
+        <div class="card-hd">
+          <h2 class="card-title">🧮 Calcular costo</h2>
+          <span class="muted">Aéreo / Marítimo</span>
+        </div>
+
+        <div class="card-body">
+          <div class="calc-tabs" role="tablist" aria-label="Tipos de envío">
+            <button type="button" class="calc-tab active" id="calcTabA">✈️ Aéreo</button>
+            <button type="button" class="calc-tab" id="calcTabM">🚢 Marítimo</button>
           </div>
 
-          <!-- Marítimo por peso -->
-          <div class="calc-subpanel active" id="calcMarPesoPanel">
+          <!-- AÉREO -->
+          <div class="calc-panel active" id="calcPanelA">
             <div class="calc-grid">
               <div>
-                <div class="calc-label">Libras (lbs)</div>
-                <input class="calc-input" type="number" id="calcMarLbs" placeholder="Ej: 120" min="0" step="0.1" inputmode="decimal">
+                <div class="label">Libras (lbs)</div>
+                <input class="input" type="number" id="calcAereoLbs" placeholder="Ej: 15" min="0" step="0.1" inputmode="decimal" />
               </div>
             </div>
 
-            <div class="calc-actions">
-              <button class="calc-btn" type="button" id="calcBtnMarPeso">Calcular</button>
-              <button class="calc-btn clear" type="button" id="calcBtnMarPesoClear">Limpiar</button>
+            <div class="actions" style="margin-top:12px;">
+              <button class="btn primary" type="button" id="calcBtnAereo">Calcular</button>
+              <button class="btn ghost" type="button" id="calcBtnAereoClear">Limpiar</button>
             </div>
 
-            <div class="calc-result" id="calcResM"></div>
+            <div class="calc-result" id="calcResA"></div>
 
-            <div class="calc-note">
-              Reglas por libra:
-              <br>• Hasta 100 lbs: <b>$2.05/lb</b>
-              <br>• Más de 100 lbs: <b>$2.00/lb</b>
-              <br>• Más de 300 lbs: <b>$1.90/lb</b>
-              <br>• Más de 500 lbs: <b>$1.80/lb</b>
+            <div class="note">
+              Regla: hasta 20 lbs = <b>$7.00/lb</b>. Más de 20 lbs = <b>$6.50/lb</b>.
             </div>
           </div>
 
-          <!-- Marítimo por volumen -->
-          <div class="calc-subpanel" id="calcMarVolPanel">
-            <div class="calc-grid">
-              <div>
-                <div class="calc-label">Tipo de artículo</div>
-                <select class="calc-select" id="calcItemType">
-                  <option value="mueble_10">Mueble</option>
-                  <option value="ropa_30">Caja con ropa y artículos varios</option>
-                  <option value="refri_12">Electrodoméstico (refrigeradora)</option>
-                  <option value="lavadora_15">Electrodoméstico (lavadora / secadora / cocina)</option>
-                </select>
+          <!-- MARÍTIMO -->
+          <div class="calc-panel" id="calcPanelM">
+            <div class="calc-subtabs" role="tablist" aria-label="Marítimo por peso o volumen">
+              <button type="button" class="calc-subtab active" id="calcSubTabPeso">⚖️ Por peso</button>
+              <button type="button" class="calc-subtab" id="calcSubTabVol">📦 Por volumen</button>
+            </div>
+
+            <!-- por peso -->
+            <div class="calc-panel active" id="calcMarPesoPanel" style="display:block;">
+              <div class="calc-grid">
+                <div>
+                  <div class="label">Libras (lbs)</div>
+                  <input class="input" type="number" id="calcMarLbs" placeholder="Ej: 120" min="0" step="0.1" inputmode="decimal" />
+                </div>
               </div>
 
-              <div>
-                <div class="calc-label">Largo (pulgadas - in)</div>
-                <input class="calc-input" type="number" id="calcL" placeholder="L" min="0" step="0.1" inputmode="decimal">
+              <div class="actions" style="margin-top:12px;">
+                <button class="btn primary" type="button" id="calcBtnMarPeso">Calcular</button>
+                <button class="btn ghost" type="button" id="calcBtnMarPesoClear">Limpiar</button>
               </div>
-              <div>
-                <div class="calc-label">Ancho (pulgadas - in)</div>
-                <input class="calc-input" type="number" id="calcW" placeholder="W" min="0" step="0.1" inputmode="decimal">
-              </div>
-              <div>
-                <div class="calc-label">Alto (pulgadas - in)</div>
-                <input class="calc-input" type="number" id="calcH" placeholder="H" min="0" step="0.1" inputmode="decimal">
+
+              <div class="calc-result" id="calcResM"></div>
+
+              <div class="note">
+                Reglas:
+                <br>• Hasta 100 lbs: <b>$2.05/lb</b>
+                <br>• Más de 100 lbs: <b>$2.00/lb</b>
+                <br>• Más de 300 lbs: <b>$1.90/lb</b>
+                <br>• Más de 500 lbs: <b>$1.80/lb</b>
               </div>
             </div>
 
-            <div class="calc-actions">
-              <button class="calc-btn" type="button" id="calcBtnMarVol">Calcular</button>
-              <button class="calc-btn clear" type="button" id="calcBtnMarVolClear">Limpiar</button>
+            <!-- por volumen -->
+            <div class="calc-panel" id="calcMarVolPanel" style="display:none;">
+              <div class="calc-grid">
+                <div>
+                  <div class="label">Tipo de artículo</div>
+                  <select class="input" id="calcItemType">
+                    <option value="mueble_10">Mueble</option>
+                    <option value="ropa_30">Caja con ropa y artículos varios</option>
+                    <option value="refri_12">Electrodoméstico (refrigeradora)</option>
+                    <option value="lavadora_15">Electrodoméstico (lavadora / secadora / cocina)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <div class="label">Largo (in)</div>
+                  <input class="input" type="number" id="calcL" placeholder="L" min="0" step="0.1" inputmode="decimal" />
+                </div>
+                <div>
+                  <div class="label">Ancho (in)</div>
+                  <input class="input" type="number" id="calcW" placeholder="W" min="0" step="0.1" inputmode="decimal" />
+                </div>
+                <div>
+                  <div class="label">Alto (in)</div>
+                  <input class="input" type="number" id="calcH" placeholder="H" min="0" step="0.1" inputmode="decimal" />
+                </div>
+              </div>
+
+              <div class="actions" style="margin-top:12px;">
+                <button class="btn primary" type="button" id="calcBtnMarVol">Calcular</button>
+                <button class="btn ghost" type="button" id="calcBtnMarVolClear">Limpiar</button>
+              </div>
+
+              <div class="calc-result" id="calcResV"></div>
+
+              <div class="note">
+                El precio puede variar si las cantidades no están correctas, el artículo no está empacado,
+                o si el peso es demasiado para el artículo.
+              </div>
             </div>
 
-            <div class="calc-result" id="calcResV"></div>
-
-            <div class="calc-note">
-              El precio puede variar si las cantidades no están correctas, el artículo no está empacado,
-              o si el peso es demasiado para el artículo.
-            </div>
           </div>
-
         </div>
-      </div>
-    </section>
-  </div>
+      </section>
+    </div>
 
-  <!-- ================== TAB: AGENDAR CITA ================== -->
-  <div id="viewCita" style="display:none;">
-    <section class="card">
-      <div class="card-title">📆 Agendar cita para recoger tu carga</div>
-      <div class="contact-wrap">
-        <div class="contact-card">
-          <div class="contact-title">Agendar por WhatsApp (Miami)</div>
-          <div class="contact-line">Toca el botón y te abre WhatsApp con el mensaje listo para completar.</div>
-          <div class="contact-actions">
-            <a class="contact-btn wa" target="_blank" rel="noopener"
-               href="https://wa.me/13056310701?text=Hola,%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n:%20_____________.%20Mi%20nombre%20es:%20____________.%20Mi%20tel%C3%A9fono%20es:%20____________.">💬 Agendar por WhatsApp</a>
-            <a class="contact-btn call" href="tel:+13056310701">📞 Llamar</a>
+    <!-- ================== VIEW: AGENDAR ================== -->
+    <div id="viewCita" class="grid" style="display:none;">
+      <section class="card">
+        <div class="card-hd">
+          <h2 class="card-title">📆 Agendar recolección</h2>
+          <span class="muted">WhatsApp Miami</span>
+        </div>
+        <div class="card-body">
+          <p class="muted" style="margin:0 0 10px;">
+            Tocá el botón y se abre WhatsApp con el mensaje listo para completar.
+          </p>
+
+          <div class="actions">
+            <a class="btn wa" target="_blank" rel="noopener"
+               href="https://wa.me/13056310701?text=Hola,%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n:%20_____________.%20Mi%20nombre%20es:%20____________.%20Mi%20tel%C3%A9fono%20es:%20____________."
+               style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">💬 Agendar por WhatsApp</a>
+
+            <a class="btn primary" href="tel:+13056310701"
+               style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">📞 Llamar</a>
+
+            <a class="btn ghost" target="_blank" rel="noopener"
+               href="https://www.google.com/maps/search/?api=1&query=2035%20W%20Flagler%20St%20Miami%20FL%2033135"
+               style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">📍 Maps</a>
           </div>
         </div>
-      </div>
-    </section>
-  </div>
+      </section>
+    </div>
 
-</main>
+  </main>
 
-<script>
-/* ========================= RASTREO ========================= */
-const urls = {
-  Maritimo:[
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=0&single=true&output=csv",
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=135469883&single=true&output=csv"
-  ],
-  Aereo:[
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=1149417296&single=true&output=csv",
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=1429832468&single=true&output=csv"
-  ],
-  Compra:
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=532919355&single=true&output=csv"
-};
+  <script>
+    /* ========================= RASTREO ========================= */
 
-function normalizeImageUrl(url){
-  if(!url) return "";
-  url = String(url).trim();
+    const urls = {
+      Maritimo:[
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=0&single=true&output=csv",
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=135469883&single=true&output=csv"
+      ],
+      Aereo:[
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=1149417296&single=true&output=csv",
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=1429832468&single=true&output=csv"
+      ],
+      Compra:
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=532919355&single=true&output=csv"
+    };
 
-  let m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-  if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
+    function normalizeImageUrl(url){
+      if(!url) return "";
+      url = String(url).trim();
 
-  m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-  if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
+      let m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+      if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
 
-  if(url.includes("googleusercontent")) return url;
+      m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
 
-  return url;
-}
-
-function safe(r,keys){
-  for(const k of keys){ if(r && r[k]) return r[k]; }
-  return "";
-}
-
-function parseDate(dateString){
-  if(!dateString) return 0;
-  const [datePart, timePart] = String(dateString).split(" ");
-  if(!datePart || !timePart) return 0;
-  const [day, month, year] = datePart.split("/");
-  const [hour, minute, second] = timePart.split(":");
-  return new Date(
-    parseInt(year,10),
-    parseInt(month,10)-1,
-    parseInt(day,10),
-    parseInt(hour,10),
-    parseInt(minute,10),
-    parseInt(second,10)
-  ).getTime();
-}
-
-function renderTable(list,type){
-  const container = document.getElementById(`results${type}`);
-  const empty = document.getElementById(`empty${type}`);
-
-  container.innerHTML="";
-  empty.style.display="none";
-
-  if(!list.length){
-    empty.style.display="block";
-    return;
-  }
-
-  list.sort((a,b)=>{
-    const da = parseDate(safe(a,["Fecha","FECHA"]));
-    const db = parseDate(safe(b,["Fecha","FECHA"]));
-    return db - da;
-  });
-
-  if(type === "Compra") list = list.slice(0,40);
-
-  list.forEach(r=>{
-    const fecha = safe(r,["Fecha","FECHA"]);
-    const track = safe(r,["Tracking","Tracking #","Orden","ORDEN"]);
-    const nombre = safe(r,["Nombre","Cliente","CLIENTE"]);
-    const status = safe(r,["Status","STATUS"]);
-    const agente = safe(r,["Agente","AGENTE","Usuario"]);
-
-    const foto = normalizeImageUrl(safe(r,["Web url","Web URL"]));
-    const firma = normalizeImageUrl(safe(r,["Firma url","Firma URL"]));
-
-    let html = `<div class="result-block">`;
-    html += `<p><strong>Fecha:</strong> ${fecha}</p>`;
-    html += `<p><strong>Tracking:</strong> ${track}</p>`;
-
-    if(type === "Compra"){
-      html += `<p><strong>Nombre:</strong> ${nombre}</p>`;
-      html += `<p><strong>Agente:</strong> ${agente}</p>`;
-    } else {
-      html += `<p><strong>Status:</strong> <span class="status-pill">${status}</span></p>`;
-      html += `<p><strong>Agente:</strong> ${agente}</p>`;
+      if(url.includes("googleusercontent")) return url;
+      return url;
     }
 
-    html += `<div class="detail-actions">`;
-    if(foto){
-      html += `<button class="view-btn" onclick="window.open('${foto}','_blank')">📷 Ver foto</button>`;
+    function safe(r,keys){
+      for(const k of keys){ if(r && r[k]) return r[k]; }
+      return "";
     }
-    if(type !== "Compra" && firma){
-      html += `<button class="view-btn" onclick="window.open('${firma}','_blank')">✍️ Ver firma</button>`;
+
+    function parseDate(dateString){
+      if(!dateString) return 0;
+      const [datePart, timePart] = String(dateString).split(" ");
+      if(!datePart || !timePart) return 0;
+      const [day, month, year] = datePart.split("/");
+      const [hour, minute, second] = timePart.split(":");
+      return new Date(
+        parseInt(year,10),
+        parseInt(month,10)-1,
+        parseInt(day,10),
+        parseInt(hour,10),
+        parseInt(minute,10),
+        parseInt(second,10)
+      ).getTime();
     }
-    html += `</div></div>`;
 
-    container.innerHTML += html;
-  });
-}
+    function renderTable(list,type){
+      const container = document.getElementById(`results${type}`);
+      const empty = document.getElementById(`empty${type}`);
 
-async function searchTracking(type){
-  const input=document.getElementById(`search${type}`);
-  const code=input.value.trim().toLowerCase();
-  if(!code) return;
+      container.innerHTML = "";
+      empty.style.display = "none";
 
-  let data=[];
-  const links = Array.isArray(urls[type]) ? urls[type] : [urls[type]];
+      if(!list.length){
+        empty.style.display = "block";
+        return;
+      }
 
-  for(const link of links){
-    await new Promise(resolve=>{
-      Papa.parse(link+"&t="+Date.now(),{
-        download:true,
-        header:true,
-        skipEmptyLines:true,
-        complete:res=>{
-          data=data.concat(res.data || []);
-          resolve();
+      list.sort((a,b)=>{
+        const da = parseDate(safe(a,["Fecha","FECHA"]));
+        const db = parseDate(safe(b,["Fecha","FECHA"]));
+        return db - da;
+      });
+
+      if(type === "Compra") list = list.slice(0,40);
+
+      list.forEach(r=>{
+        const fecha = safe(r,["Fecha","FECHA"]);
+        const track = safe(r,["Tracking","Tracking #","Orden","ORDEN"]);
+        const nombre = safe(r,["Nombre","Cliente","CLIENTE"]);
+        const status = safe(r,["Status","STATUS"]);
+        const agente = safe(r,["Agente","AGENTE","Usuario"]);
+
+        const foto = normalizeImageUrl(safe(r,["Web url","Web URL"]));
+        const firma = normalizeImageUrl(safe(r,["Firma url","Firma URL"]));
+
+        const wrap = document.createElement("div");
+        wrap.className = "result";
+
+        let html = `<div class="kvs">`;
+        html += `<div class="kv"><b>Fecha:</b> ${fecha}</div>`;
+        html += `<div class="kv"><b>Tracking:</b> ${track}</div>`;
+
+        if(type === "Compra"){
+          html += `<div class="kv"><b>Nombre:</b> ${nombre}</div>`;
+          html += `<div class="kv"><b>Agente:</b> ${agente}</div>`;
+        } else {
+          html += `<div class="kv"><b>Status:</b> <span class="pill">${status}</span></div>`;
+          html += `<div class="kv"><b>Agente:</b> ${agente}</div>`;
         }
+        html += `</div>`;
+
+        html += `<div class="actions">`;
+        if(foto){
+          html += `<button class="btn ghost" onclick="window.open('${foto}','_blank')">📷 Ver foto</button>`;
+        }
+        if(type !== "Compra" && firma){
+          html += `<button class="btn ghost" onclick="window.open('${firma}','_blank')">✍️ Ver firma</button>`;
+        }
+        html += `</div>`;
+
+        wrap.innerHTML = html;
+        container.appendChild(wrap);
+      });
+    }
+
+    async function searchTracking(type){
+      const input = document.getElementById(`search${type}`);
+      const code = (input.value || "").trim().toLowerCase();
+      if(!code) return;
+
+      let data = [];
+      const links = Array.isArray(urls[type]) ? urls[type] : [urls[type]];
+
+      for(const link of links){
+        await new Promise(resolve=>{
+          Papa.parse(link + "&t=" + Date.now(), {
+            download:true,
+            header:true,
+            skipEmptyLines:true,
+            complete:res=>{
+              data = data.concat(res.data || []);
+              resolve();
+            }
+          });
+        });
+      }
+
+      const filtered = data.filter(r=>{
+        const track = (safe(r,["Tracking","Tracking #","Orden","ORDEN"]) || "").toLowerCase();
+        const name  = (safe(r,["Nombre","Cliente"]) || "").toLowerCase();
+        return track.includes(code) || name.includes(code);
+      });
+
+      renderTable(filtered, type);
+    }
+
+    ["Maritimo","Aereo","Compra"].forEach(t=>{
+      document.getElementById(`search${t}`).addEventListener("keydown", e=>{
+        if(e.key === "Enter") searchTracking(t);
       });
     });
-  }
 
-  const filtered = data.filter(r=>{
-    const track=(safe(r,["Tracking","Tracking #","Orden","ORDEN"]) || "").toLowerCase();
-    const name=(safe(r,["Nombre","Cliente"]) || "").toLowerCase();
-    return track.includes(code) || name.includes(code);
-  });
+    /* ========================= TABS PRINCIPALES ========================= */
+    (function(){
+      const tabTrack   = document.getElementById("tabTrack");
+      const tabContact = document.getElementById("tabContact");
+      const tabCalc    = document.getElementById("tabCalc");
+      const tabCita    = document.getElementById("tabCita");
 
-  renderTable(filtered,type);
-}
+      const viewTrack   = document.getElementById("viewTrack");
+      const viewContact = document.getElementById("viewContact");
+      const viewCalc    = document.getElementById("viewCalc");
+      const viewCita    = document.getElementById("viewCita");
 
-["Maritimo","Aereo","Compra"].forEach(t=>{
-  document.getElementById(`search${t}`).addEventListener("keydown",e=>{
-    if(e.key==="Enter") searchTracking(t);
-  });
-});
+      const tabs = [
+        {btn: tabTrack,   view: viewTrack,   key:"track"},
+        {btn: tabContact, view: viewContact, key:"contact"},
+        {btn: tabCalc,    view: viewCalc,    key:"calc"},
+        {btn: tabCita,    view: viewCita,    key:"cita"},
+      ];
 
-/* ========================= PESTAÑAS PRINCIPALES (CONTACTO ES DEFAULT) ========================= */
-(function(){
-  const tabContact = document.getElementById("tabContact");
-  const tabTrack = document.getElementById("tabTrack");
-  const tabCalc  = document.getElementById("tabCalc");
-  const tabCita  = document.getElementById("tabCita");
+      function show(which){
+        tabs.forEach(t=>{
+          t.view.style.display = (t.key === which) ? "grid" : "none";
+          t.btn.classList.toggle("active", t.key === which);
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
 
-  const viewContact = document.getElementById("viewContact");
-  const viewTrack = document.getElementById("viewTrack");
-  const viewCalc  = document.getElementById("viewCalc");
-  const viewCita  = document.getElementById("viewCita");
+      tabTrack.addEventListener("click",   ()=>show("track"));
+      tabContact.addEventListener("click", ()=>show("contact"));
+      tabCalc.addEventListener("click",    ()=>show("calc"));
+      tabCita.addEventListener("click",    ()=>show("cita"));
 
-  const tabs = [
-    {btn: tabContact, view: viewContact, key:"contact"},
-    {btn: tabTrack, view: viewTrack, key:"track"},
-    {btn: tabCalc, view: viewCalc, key:"calc"},
-    {btn: tabCita, view: viewCita, key:"cita"}
-  ];
+      // default: rastreo
+      show("track");
+    })();
 
-  function show(which){
-    tabs.forEach(t=>{
-      t.view.style.display = (t.key === which) ? "block" : "none";
-      t.btn.classList.toggle("active", t.key === which);
+    /* ========================= CALCULADORA ========================= */
+    document.addEventListener("DOMContentLoaded", () => {
+      const tabA = document.getElementById("calcTabA");
+      const tabM = document.getElementById("calcTabM");
+      const panelA = document.getElementById("calcPanelA");
+      const panelM = document.getElementById("calcPanelM");
+
+      function openCalc(which){
+        [panelA, panelM].forEach(p => p.classList.remove("active"));
+        [tabA, tabM].forEach(b => b.classList.remove("active"));
+        if(which === "a"){ panelA.classList.add("active"); tabA.classList.add("active"); }
+        if(which === "m"){ panelM.classList.add("active"); tabM.classList.add("active"); }
+      }
+      tabA.addEventListener("click", ()=>openCalc("a"));
+      tabM.addEventListener("click", ()=>openCalc("m"));
+
+      const subPeso = document.getElementById("calcSubTabPeso");
+      const subVol  = document.getElementById("calcSubTabVol");
+      const marPesoPanel = document.getElementById("calcMarPesoPanel");
+      const marVolPanel  = document.getElementById("calcMarVolPanel");
+
+      function openMarSub(which){
+        subPeso.classList.toggle("active", which==="peso");
+        subVol.classList.toggle("active", which==="vol");
+        marPesoPanel.style.display = (which==="peso") ? "block" : "none";
+        marVolPanel.style.display  = (which==="vol")  ? "block" : "none";
+      }
+      subPeso.addEventListener("click", ()=>openMarSub("peso"));
+      subVol.addEventListener("click",  ()=>openMarSub("vol"));
+
+      const money = (n) => (Number.isFinite(n) ? n.toFixed(2) : "0.00");
+      const num = (id) => {
+        const v = parseFloat(document.getElementById(id).value);
+        return Number.isFinite(v) ? v : 0;
+      };
+
+      // Aéreo
+      document.getElementById("calcBtnAereo").addEventListener("click", () => {
+        const lbs = num("calcAereoLbs");
+        const out = document.getElementById("calcResA");
+        if(lbs <= 0){ out.textContent = "Ingresá un peso válido."; return; }
+        const rate = (lbs > 20) ? 6.5 : 7;
+        const total = lbs * rate;
+        out.innerHTML = `Total aproximado: $${money(total)}`;
+      });
+      document.getElementById("calcBtnAereoClear").addEventListener("click", () => {
+        document.getElementById("calcAereoLbs").value = "";
+        document.getElementById("calcResA").textContent = "";
+      });
+
+      // Marítimo por peso
+      function rateMar(lbs){
+        if(lbs > 500) return 1.8;
+        if(lbs > 300) return 1.9;
+        if(lbs > 100) return 2.0;
+        return 2.05;
+      }
+      document.getElementById("calcBtnMarPeso").addEventListener("click", () => {
+        const lbs = num("calcMarLbs");
+        const out = document.getElementById("calcResM");
+        if(lbs <= 0){ out.textContent = "Ingresá un peso válido."; return; }
+        const total = lbs * rateMar(lbs);
+        out.innerHTML = `Total aproximado: $${money(total)}`;
+      });
+      document.getElementById("calcBtnMarPesoClear").addEventListener("click", () => {
+        document.getElementById("calcMarLbs").value = "";
+        document.getElementById("calcResM").textContent = "";
+      });
+
+      // Marítimo por volumen
+      function getMultiplier(){
+        const v = (document.getElementById("calcItemType").value || "");
+        if(v === "mueble_10") return { mult: 10, label: "Mueble" };
+        if(v === "ropa_30") return { mult: 30, label: "Caja con ropa y artículos varios" };
+        if(v === "refri_12") return { mult: 12, label: "Electrodoméstico (refrigeradora)" };
+        if(v === "lavadora_15") return { mult: 20, label: "Electrodoméstico (lavadora/secadora/cocina)" };
+        return { mult: 10, label: "Mueble" };
+      }
+
+      document.getElementById("calcBtnMarVol").addEventListener("click", () => {
+        const L = num("calcL"), W = num("calcW"), H = num("calcH");
+        const out = document.getElementById("calcResV");
+        if(L<=0 || W<=0 || H<=0){ out.textContent = "Ingresá las 3 medidas (en pulgadas)."; return; }
+
+        const cft = (L * W * H) / 1728;
+        const { mult, label } = getMultiplier();
+        const total = cft * mult;
+
+        out.innerHTML = `Tipo: ${label} — Total aproximado: $${money(total)}`;
+      });
+
+      document.getElementById("calcBtnMarVolClear").addEventListener("click", () => {
+        ["calcL","calcW","calcH"].forEach(id => document.getElementById(id).value = "");
+        document.getElementById("calcResV").textContent = "";
+        document.getElementById("calcItemType").value = "mueble_10";
+      });
+
+      // Defaults
+      openCalc("a");
+      openMarSub("peso");
     });
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  tabContact.addEventListener("click", ()=>show("contact"));
-  tabTrack.addEventListener("click", ()=>show("track"));
-  tabCalc.addEventListener("click", ()=>show("calc"));
-  tabCita.addEventListener("click", ()=>show("cita"));
-
-  /* default: contacto */
-  show("contact");
-})();
-
-/* ========================= CALCULADORA ========================= */
-document.addEventListener("DOMContentLoaded", () => {
-  const tabA = document.getElementById("calcTabA");
-  const tabM = document.getElementById("calcTabM");
-  const panelA = document.getElementById("calcPanelA");
-  const panelM = document.getElementById("calcPanelM");
-
-  function openCalc(which){
-    [panelA, panelM].forEach(p => p.classList.remove("active"));
-    [tabA, tabM].forEach(b => b.classList.remove("active"));
-    if(which === "a"){ panelA.classList.add("active"); tabA.classList.add("active"); }
-    if(which === "m"){ panelM.classList.add("active"); tabM.classList.add("active"); }
-  }
-
-  tabA.addEventListener("click", ()=>openCalc("a"));
-  tabM.addEventListener("click", ()=>openCalc("m"));
-
-  const subPeso = document.getElementById("calcSubTabPeso");
-  const subVol  = document.getElementById("calcSubTabVol");
-  const marPesoPanel = document.getElementById("calcMarPesoPanel");
-  const marVolPanel  = document.getElementById("calcMarVolPanel");
-
-  function openMarSub(which){
-    [marPesoPanel, marVolPanel].forEach(p=>p.classList.remove("active"));
-    [subPeso, subVol].forEach(b=>b.classList.remove("active"));
-    if(which==="peso"){ marPesoPanel.classList.add("active"); subPeso.classList.add("active"); }
-    if(which==="vol"){ marVolPanel.classList.add("active"); subVol.classList.add("active"); }
-  }
-
-  subPeso.addEventListener("click", ()=>openMarSub("peso"));
-  subVol.addEventListener("click", ()=>openMarSub("vol"));
-
-  const money = (n) => (Number.isFinite(n) ? n.toFixed(2) : "0.00");
-  const num = (id) => {
-    const v = parseFloat(document.getElementById(id).value);
-    return Number.isFinite(v) ? v : 0;
-  };
-
-  // Aéreo
-  document.getElementById("calcBtnAereo").addEventListener("click", () => {
-    const lbs = num("calcAereoLbs");
-    const out = document.getElementById("calcResA");
-    if(lbs <= 0){ out.textContent = "Ingresá un peso válido."; return; }
-    const rate = (lbs > 20) ? 6.5 : 7;
-    const total = lbs * rate;
-    out.innerHTML = `Total aproximado: <b>$${money(total)}</b>`;
-  });
-  document.getElementById("calcBtnAereoClear").addEventListener("click", () => {
-    document.getElementById("calcAereoLbs").value = "";
-    document.getElementById("calcResA").textContent = "";
-  });
-
-  // Marítimo por peso
-  function rateMar(lbs){
-    if(lbs > 500) return 1.8;
-    if(lbs > 300) return 1.9;
-    if(lbs > 100) return 2.0;
-    return 2.05;
-  }
-  document.getElementById("calcBtnMarPeso").addEventListener("click", () => {
-    const lbs = num("calcMarLbs");
-    const out = document.getElementById("calcResM");
-    if(lbs <= 0){ out.textContent = "Ingresá un peso válido."; return; }
-    const total = lbs * rateMar(lbs);
-    out.innerHTML = `Total aproximado: <b>$${money(total)}</b>`;
-  });
-  document.getElementById("calcBtnMarPesoClear").addEventListener("click", () => {
-    document.getElementById("calcMarLbs").value = "";
-    document.getElementById("calcResM").textContent = "";
-  });
-
-  // Marítimo por volumen (multiplicador por tipo)
-  function getMultiplier(){
-    const v = (document.getElementById("calcItemType").value || "");
-    if(v === "mueble_10") return { mult: 10, label: "Mueble" };
-    if(v === "ropa_30") return { mult: 30, label: "Caja con ropa y artículos varios" };
-    if(v === "refri_12") return { mult: 12, label: "Electrodoméstico (refrigeradora)" };
-    if(v === "lavadora_15") return { mult: 20, label: "Electrodoméstico (lavadora/secadora/cocina)" };
-    return { mult: 10, label: "Mueble" };
-  }
-
-  document.getElementById("calcBtnMarVol").addEventListener("click", () => {
-    const L = num("calcL"), W = num("calcW"), H = num("calcH");
-    const out = document.getElementById("calcResV");
-    if(L<=0 || W<=0 || H<=0){ out.textContent = "Ingresá las 3 medidas (en pulgadas)."; return; }
-
-    const cft = (L * W * H) / 1728;
-    const { mult, label } = getMultiplier();
-    const total = cft * mult;
-
-    out.innerHTML = `Tipo: <b>${label}</b><br>Total aproximado: <b>$${money(total)}</b>`;
-  });
-
-  document.getElementById("calcBtnMarVolClear").addEventListener("click", () => {
-    ["calcL","calcW","calcH"].forEach(id => document.getElementById(id).value = "");
-    document.getElementById("calcResV").textContent = "";
-    document.getElementById("calcItemType").value = "mueble_10";
-  });
-
-  // Defaults
-  openCalc("a");
-  openMarSub("peso");
-});
-</script>
-
+  </script>
 </body>
 </html>
