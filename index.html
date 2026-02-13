@@ -9,7 +9,7 @@
 
   <style>
     :root{
-      /* ✅ Tus colores (royal + naranja pastel + whatsapp) */
+      /* ✅ Royal + naranja pastel + whatsapp */
       --azulClaro:#2563eb;
       --azulOscuro:#1d4ed8;
 
@@ -48,7 +48,7 @@
       -moz-osx-font-smoothing:grayscale;
     }
 
-    /* ======= TOP BAR (APPLE-LIKE) ======= */
+    /* ======= TOP BAR (solo marca) ======= */
     .topbar{
       position:sticky;
       top:0;
@@ -73,7 +73,6 @@
       align-items:flex-start;
       line-height:1.05;
       gap:2px;
-      min-width: 180px;
     }
     .brand-title{
       font-weight:900;
@@ -86,38 +85,41 @@
       font-weight:700;
     }
 
+    /* ======= TABS (ahora arriba del encabezado dentro del HERO) ======= */
     .tabs{
       display:flex;
-      gap:8px;
+      gap:10px;
       flex-wrap:wrap;
-      justify-content:flex-end;
+      justify-content:flex-start;
+      margin-bottom: 12px;
     }
     .tab{
       border:1px solid var(--stroke);
-      background: rgba(255,255,255,.65);
+      background: rgba(255,255,255,.78);
       color: var(--texto);
-      padding: 9px 12px;
+      padding: 12px 16px;          /* ✅ más grandes */
       border-radius: 999px;
-      font-weight:850;
+      font-weight:900;
       cursor:pointer;
-      font-size:13px;
+      font-size:14.5px;            /* ✅ más grandes */
       user-select:none;
       transition: transform .12s ease, background .12s ease;
       white-space:nowrap;
+      box-shadow: 0 10px 22px rgba(15,23,42,.06);
     }
-    .tab:hover{ transform: translateY(-1px); background: rgba(255,255,255,.92); }
+    .tab:hover{ transform: translateY(-1px); background: rgba(255,255,255,.95); }
     .tab.active{
       background: linear-gradient(90deg, var(--azulClaro), var(--azulOscuro));
       color:#fff;
       border-color: rgba(29,78,216,.25);
-      box-shadow: 0 10px 30px rgba(29,78,216,.18);
+      box-shadow: 0 14px 34px rgba(29,78,216,.18);
     }
 
     /* ======= HERO ======= */
     header.hero{
       position:relative;
       overflow:hidden;
-      padding: 22px 14px 10px;
+      padding: 18px 14px 10px;
     }
     .hero-inner{
       max-width:1100px;
@@ -137,37 +139,34 @@
 
     .hero-top{
       display:flex;
-      align-items:center;
+      align-items:flex-start;
       justify-content:space-between;
       gap:12px;
       flex-wrap:wrap;
     }
 
-    .hero-copy{
-      text-align:left;
-    }
+    .hero-copy{ text-align:left; }
     .hero-h1{
       margin:0;
       font-size: clamp(20px, 3.2vw, 34px);
       font-weight: 950;
       letter-spacing: -.4px;
     }
-    .hero-h1 span{
-      color: var(--azulOscuro);
-    }
+    .hero-h1 span{ color: var(--azulOscuro); }
     .hero-p{
       margin:8px 0 0;
       color: var(--muted);
-      font-weight:700;
+      font-weight:750;
       line-height:1.4;
-      font-size: 13.5px;
-      max-width: 740px;
+      font-size: 13.8px;
+      max-width: 820px;
     }
 
     .flags{
       display:flex;
       gap:10px;
       align-items:center;
+      margin-top: 6px;
     }
     .flag{
       width:54px;
@@ -184,7 +183,6 @@
       margin: 12px auto 60px;
       padding: 0 14px;
     }
-
     .grid{
       display:grid;
       grid-template-columns: 1fr;
@@ -275,7 +273,6 @@
       padding: 12px 16px;
       border-top: 1px solid var(--stroke);
     }
-    .result + .result{ border-top: 1px solid var(--stroke); }
     .kvs{
       display:grid;
       grid-template-columns: 1fr;
@@ -284,11 +281,9 @@
       line-height:1.35;
     }
     .kv b{ font-weight: 900; }
-
     .pill{
       display:inline-flex;
       align-items:center;
-      gap:8px;
       padding: 6px 10px;
       border-radius: 999px;
       font-weight: 900;
@@ -297,7 +292,6 @@
       color: var(--celesteTxt);
       border: 1px solid rgba(77,182,255,.25);
     }
-
     .actions{
       margin-top:10px;
       display:flex;
@@ -310,7 +304,7 @@
       display:none;
       padding: 14px 16px;
       color: var(--muted);
-      font-weight: 800;
+      font-weight: 850;
       text-align:center;
     }
 
@@ -327,8 +321,7 @@
       border: 1px solid var(--stroke);
       border-radius: var(--radius);
       padding: 14px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,1), rgba(245,247,251,.65));
+      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(245,247,251,.65));
     }
     .contact-title{
       font-weight: 950;
@@ -346,6 +339,13 @@
     .contact-line small{ color: var(--muted); font-weight:800; }
 
     /* ======= CALCULADORA ======= */
+    .calc-head{
+      color: var(--muted);
+      font-weight: 850;
+      margin: 0 0 10px;
+      line-height:1.35;
+      font-size: 13.5px;
+    }
     .calc-tabs{
       display:flex;
       gap:10px;
@@ -402,7 +402,7 @@
     @media(max-width:720px){
       .calc-grid{ grid-template-columns: 1fr; }
       .tabs{ justify-content:flex-start; }
-      .brand{ min-width:unset; }
+      .tab{ width:100%; } /* ✅ en móvil se ven grandes y claras */
     }
 
     .label{
@@ -429,57 +429,52 @@
       background: rgba(255,209,166,.25);
       border: 1px solid rgba(255,191,133,.45);
       color: #3b2b20;
-      font-weight: 800;
+      font-weight: 850;
       font-size: 12.8px;
       line-height: 1.4;
     }
-
     .calc-result{
       margin-top: 12px;
       padding: 12px 14px;
       border-radius: var(--radius);
       background: rgba(37,99,235,.08);
       border: 1px solid rgba(37,99,235,.14);
-      font-weight: 900;
+      font-weight: 950;
       min-height: 44px;
       display:flex;
       align-items:center;
     }
-
-    /* ======= helpers ======= */
-    .muted{ color: var(--muted); font-weight:800; }
-    .hide{ display:none !important; }
   </style>
 </head>
 
 <body>
 
-  <!-- ✅ NAV MODERNA -->
   <div class="topbar">
     <div class="topbar-inner">
       <div class="brand">
         <div class="brand-title">MIR CARGO NICARAGUA</div>
-        <div class="brand-sub">Rastreo • Contacto • Calculadora • Citas</div>
+        <div class="brand-sub">Rastreo • Contacto • Calculadora • Agendar</div>
       </div>
+      <div></div>
+    </div>
+  </div>
 
-      <!-- ✅ ORDEN: 1 Rastreo, 2 Contacto, 3 Calcular, 4 Agendar -->
+  <header class="hero">
+    <div class="hero-inner">
+
+      <!-- ✅ Tabs ahora van AQUÍ (arriba del encabezado) -->
       <div class="tabs" role="tablist" aria-label="Secciones">
         <button class="tab active" id="tabTrack" type="button">📦 Rastreo</button>
         <button class="tab" id="tabContact" type="button">☎️ Contacto</button>
         <button class="tab" id="tabCalc" type="button">🧮 Calcular</button>
         <button class="tab" id="tabCita" type="button">📆 Agendar</button>
       </div>
-    </div>
-  </div>
 
-  <!-- HERO -->
-  <header class="hero">
-    <div class="hero-inner">
       <div class="hero-top">
         <div class="hero-copy">
-          <h1 class="hero-h1">Rastreo y envíos con <span>MiR</span></h1>
-          <p class="hero-p">
-            Consultá tu carga, calculá costos y agendá recolección. Diseño limpio, rápido y adaptado a celular.
+          <h1 class="hero-h1" id="heroTitle">Rastrea tus envíos y/o compras en <span>línea</span></h1>
+          <p class="hero-p" id="heroSub">
+            Meté tu tracking para marítimo, aéreo o compras en línea.
           </p>
         </div>
 
@@ -488,6 +483,7 @@
           <img class="flag" src="https://flagcdn.com/ni.svg" alt="Nicaragua">
         </div>
       </div>
+
     </div>
   </header>
 
@@ -498,7 +494,7 @@
       <section class="card">
         <div class="card-hd">
           <h2 class="card-title">🚢 Rastreo Marítimo</h2>
-          <span class="muted">Buscá por tracking</span>
+          <span style="color:var(--muted);font-weight:850;">Buscá por tracking</span>
         </div>
         <div class="card-body">
           <div class="row">
@@ -515,7 +511,7 @@
       <section class="card">
         <div class="card-hd">
           <h2 class="card-title">✈️ Rastreo Aéreo</h2>
-          <span class="muted">Buscá por tracking</span>
+          <span style="color:var(--muted);font-weight:850;">Buscá por tracking</span>
         </div>
         <div class="card-body">
           <div class="row">
@@ -532,7 +528,7 @@
       <section class="card">
         <div class="card-hd">
           <h2 class="card-title">🛍️ Compras en línea</h2>
-          <span class="muted">Por nombre o tracking</span>
+          <span style="color:var(--muted);font-weight:850;">Por nombre o tracking</span>
         </div>
         <div class="card-body">
           <div class="row">
@@ -552,7 +548,7 @@
       <section class="card">
         <div class="card-hd">
           <h2 class="card-title">☎️ Contacto</h2>
-          <span class="muted">Llamar • WhatsApp • Maps</span>
+          <span style="color:var(--muted);font-weight:850;">Llamar • WhatsApp • Maps</span>
         </div>
         <div class="card-body">
           <div class="contact-grid">
@@ -605,46 +601,28 @@
     <div id="viewCalc" class="grid" style="display:none;">
       <section class="card">
         <div class="card-hd">
-          <h2 class="card-title">🧮 Calcular costo</h2>
-          <span class="muted">Aéreo / Marítimo</span>
+          <h2 class="card-title">🧮 Calcular costo de tu envío</h2>
+          <span style="color:var(--muted);font-weight:850;">Marítimo / Aéreo</span>
         </div>
 
         <div class="card-body">
+          <p class="calc-head">¿Qué tipo de envío querés calcular?</p>
+
+          <!-- ✅ Orden y default: Marítimo primero -->
           <div class="calc-tabs" role="tablist" aria-label="Tipos de envío">
-            <button type="button" class="calc-tab active" id="calcTabA">✈️ Aéreo</button>
-            <button type="button" class="calc-tab" id="calcTabM">🚢 Marítimo</button>
-          </div>
-
-          <!-- AÉREO -->
-          <div class="calc-panel active" id="calcPanelA">
-            <div class="calc-grid">
-              <div>
-                <div class="label">Libras (lbs)</div>
-                <input class="input" type="number" id="calcAereoLbs" placeholder="Ej: 15" min="0" step="0.1" inputmode="decimal" />
-              </div>
-            </div>
-
-            <div class="actions" style="margin-top:12px;">
-              <button class="btn primary" type="button" id="calcBtnAereo">Calcular</button>
-              <button class="btn ghost" type="button" id="calcBtnAereoClear">Limpiar</button>
-            </div>
-
-            <div class="calc-result" id="calcResA"></div>
-
-            <div class="note">
-              Regla: hasta 20 lbs = <b>$7.00/lb</b>. Más de 20 lbs = <b>$6.50/lb</b>.
-            </div>
+            <button type="button" class="calc-tab active" id="calcTabM">🚢 Marítimo</button>
+            <button type="button" class="calc-tab" id="calcTabA">✈️ Aéreo</button>
           </div>
 
           <!-- MARÍTIMO -->
-          <div class="calc-panel" id="calcPanelM">
+          <div class="calc-panel active" id="calcPanelM">
             <div class="calc-subtabs" role="tablist" aria-label="Marítimo por peso o volumen">
               <button type="button" class="calc-subtab active" id="calcSubTabPeso">⚖️ Por peso</button>
               <button type="button" class="calc-subtab" id="calcSubTabVol">📦 Por volumen</button>
             </div>
 
             <!-- por peso -->
-            <div class="calc-panel active" id="calcMarPesoPanel" style="display:block;">
+            <div id="calcMarPesoPanel" style="display:block;">
               <div class="calc-grid">
                 <div>
                   <div class="label">Libras (lbs)</div>
@@ -669,7 +647,7 @@
             </div>
 
             <!-- por volumen -->
-            <div class="calc-panel" id="calcMarVolPanel" style="display:none;">
+            <div id="calcMarVolPanel" style="display:none;">
               <div class="calc-grid">
                 <div>
                   <div class="label">Tipo de artículo</div>
@@ -707,8 +685,29 @@
                 o si el peso es demasiado para el artículo.
               </div>
             </div>
-
           </div>
+
+          <!-- AÉREO -->
+          <div class="calc-panel" id="calcPanelA">
+            <div class="calc-grid">
+              <div>
+                <div class="label">Libras (lbs)</div>
+                <input class="input" type="number" id="calcAereoLbs" placeholder="Ej: 15" min="0" step="0.1" inputmode="decimal" />
+              </div>
+            </div>
+
+            <div class="actions" style="margin-top:12px;">
+              <button class="btn primary" type="button" id="calcBtnAereo">Calcular</button>
+              <button class="btn ghost" type="button" id="calcBtnAereoClear">Limpiar</button>
+            </div>
+
+            <div class="calc-result" id="calcResA"></div>
+
+            <div class="note">
+              Regla: hasta 20 lbs = <b>$7.00/lb</b>. Más de 20 lbs = <b>$6.50/lb</b>.
+            </div>
+          </div>
+
         </div>
       </section>
     </div>
@@ -717,11 +716,11 @@
     <div id="viewCita" class="grid" style="display:none;">
       <section class="card">
         <div class="card-hd">
-          <h2 class="card-title">📆 Agendar recolección</h2>
-          <span class="muted">WhatsApp Miami</span>
+          <h2 class="card-title">📆 Agenda la recolección de tu carga con nosotros</h2>
+          <span style="color:var(--muted);font-weight:850;">WhatsApp Miami</span>
         </div>
         <div class="card-body">
-          <p class="muted" style="margin:0 0 10px;">
+          <p style="margin:0 0 10px;color:var(--muted);font-weight:850;line-height:1.35;">
             Tocá el botón y se abre WhatsApp con el mensaje listo para completar.
           </p>
 
@@ -745,7 +744,6 @@
 
   <script>
     /* ========================= RASTREO ========================= */
-
     const urls = {
       Maritimo:[
         "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=0&single=true&output=csv",
@@ -891,7 +889,7 @@
       });
     });
 
-    /* ========================= TABS PRINCIPALES ========================= */
+    /* ========================= TABS PRINCIPALES + HERO TEXT ========================= */
     (function(){
       const tabTrack   = document.getElementById("tabTrack");
       const tabContact = document.getElementById("tabContact");
@@ -903,6 +901,9 @@
       const viewCalc    = document.getElementById("viewCalc");
       const viewCita    = document.getElementById("viewCita");
 
+      const heroTitle = document.getElementById("heroTitle");
+      const heroSub   = document.getElementById("heroSub");
+
       const tabs = [
         {btn: tabTrack,   view: viewTrack,   key:"track"},
         {btn: tabContact, view: viewContact, key:"contact"},
@@ -910,11 +911,31 @@
         {btn: tabCita,    view: viewCita,    key:"cita"},
       ];
 
+      function setHero(which){
+        if(which === "track"){
+          heroTitle.innerHTML = `Rastrea tus envíos y/o compras en <span>línea</span>`;
+          heroSub.textContent = `Meté tu tracking para marítimo, aéreo o compras en línea.`;
+        }
+        if(which === "contact"){
+          heroTitle.innerHTML = `Contactanos rápido por <span>teléfono</span> o maps`;
+          heroSub.textContent = `Miami, Managua y Chinandega: llamar, WhatsApp y ubicación.`;
+        }
+        if(which === "calc"){
+          heroTitle.innerHTML = `Calcula el costo de tu <span>envío</span>`;
+          heroSub.textContent = `Seleccioná el tipo de envío y meté libras o medidas para estimar el total.`;
+        }
+        if(which === "cita"){
+          heroTitle.innerHTML = `Agenda la recolección de tu <span>carga</span> con nosotros`;
+          heroSub.textContent = `Abrí WhatsApp con el mensaje listo y solo completás tu dirección y datos.`;
+        }
+      }
+
       function show(which){
         tabs.forEach(t=>{
           t.view.style.display = (t.key === which) ? "grid" : "none";
           t.btn.classList.toggle("active", t.key === which);
         });
+        setHero(which);
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
@@ -923,25 +944,24 @@
       tabCalc.addEventListener("click",    ()=>show("calc"));
       tabCita.addEventListener("click",    ()=>show("cita"));
 
-      // default: rastreo
-      show("track");
+      show("track"); // default
     })();
 
-    /* ========================= CALCULADORA ========================= */
+    /* ========================= CALCULADORA (default marítimo) ========================= */
     document.addEventListener("DOMContentLoaded", () => {
-      const tabA = document.getElementById("calcTabA");
       const tabM = document.getElementById("calcTabM");
-      const panelA = document.getElementById("calcPanelA");
+      const tabA = document.getElementById("calcTabA");
       const panelM = document.getElementById("calcPanelM");
+      const panelA = document.getElementById("calcPanelA");
 
       function openCalc(which){
-        [panelA, panelM].forEach(p => p.classList.remove("active"));
-        [tabA, tabM].forEach(b => b.classList.remove("active"));
-        if(which === "a"){ panelA.classList.add("active"); tabA.classList.add("active"); }
+        [panelM, panelA].forEach(p => p.classList.remove("active"));
+        [tabM, tabA].forEach(b => b.classList.remove("active"));
         if(which === "m"){ panelM.classList.add("active"); tabM.classList.add("active"); }
+        if(which === "a"){ panelA.classList.add("active"); tabA.classList.add("active"); }
       }
-      tabA.addEventListener("click", ()=>openCalc("a"));
       tabM.addEventListener("click", ()=>openCalc("m"));
+      tabA.addEventListener("click", ()=>openCalc("a"));
 
       const subPeso = document.getElementById("calcSubTabPeso");
       const subVol  = document.getElementById("calcSubTabVol");
@@ -969,8 +989,7 @@
         const out = document.getElementById("calcResA");
         if(lbs <= 0){ out.textContent = "Ingresá un peso válido."; return; }
         const rate = (lbs > 20) ? 6.5 : 7;
-        const total = lbs * rate;
-        out.innerHTML = `Total aproximado: $${money(total)}`;
+        out.textContent = `Total aproximado: $${money(lbs * rate)}`;
       });
       document.getElementById("calcBtnAereoClear").addEventListener("click", () => {
         document.getElementById("calcAereoLbs").value = "";
@@ -988,8 +1007,7 @@
         const lbs = num("calcMarLbs");
         const out = document.getElementById("calcResM");
         if(lbs <= 0){ out.textContent = "Ingresá un peso válido."; return; }
-        const total = lbs * rateMar(lbs);
-        out.innerHTML = `Total aproximado: $${money(total)}`;
+        out.textContent = `Total aproximado: $${money(lbs * rateMar(lbs))}`;
       });
       document.getElementById("calcBtnMarPesoClear").addEventListener("click", () => {
         document.getElementById("calcMarLbs").value = "";
@@ -1015,7 +1033,7 @@
         const { mult, label } = getMultiplier();
         const total = cft * mult;
 
-        out.innerHTML = `Tipo: ${label} — Total aproximado: $${money(total)}`;
+        out.textContent = `Tipo: ${label} — Total aproximado: $${money(total)}`;
       });
 
       document.getElementById("calcBtnMarVolClear").addEventListener("click", () => {
@@ -1024,8 +1042,8 @@
         document.getElementById("calcItemType").value = "mueble_10";
       });
 
-      // Defaults
-      openCalc("a");
+      // ✅ defaults
+      openCalc("m");
       openMarSub("peso");
     });
   </script>
