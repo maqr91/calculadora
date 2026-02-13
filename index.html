@@ -85,7 +85,7 @@
       font-weight:700;
     }
 
-    /* ======= TABS (ahora arriba del encabezado dentro del HERO) ======= */
+    /* ======= TABS ======= */
     .tabs{
       display:flex;
       gap:10px;
@@ -97,11 +97,11 @@
       border:1px solid var(--stroke);
       background: rgba(255,255,255,.78);
       color: var(--texto);
-      padding: 12px 16px;          /* ✅ más grandes */
+      padding: 12px 16px;
       border-radius: 999px;
       font-weight:900;
       cursor:pointer;
-      font-size:14.5px;            /* ✅ más grandes */
+      font-size:14.5px;
       user-select:none;
       transition: transform .12s ease, background .12s ease;
       white-space:nowrap;
@@ -338,7 +338,7 @@
     }
     .contact-line small{ color: var(--muted); font-weight:800; }
 
-    /* ======= CALCULADORA ======= */
+    /* ======= CALCULADORA (nuevo flow con scroll down) ======= */
     .calc-head{
       color: var(--muted);
       font-weight: 850;
@@ -346,30 +346,69 @@
       line-height:1.35;
       font-size: 13.5px;
     }
-    .calc-tabs{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom:12px;
-    }
-    .calc-tab{
-      flex:1;
-      min-width: 160px;
-      padding: 12px 12px;
+
+    .calc-step{
       border: 1px solid var(--stroke);
-      border-radius: 14px;
-      background: rgba(255,255,255,.75);
+      border-radius: var(--radius);
+      padding: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(245,247,251,.65));
+    }
+    .step-title{
+      margin:0 0 6px;
       font-weight: 950;
+      letter-spacing: -.2px;
+      font-size: 14px;
+      color: var(--texto);
+    }
+    .step-sub{
+      margin:0 0 12px;
+      color: var(--muted);
+      font-weight: 850;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .choice-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media(max-width:720px){
+      .choice-grid{ grid-template-columns: 1fr; }
+      .tabs{ justify-content:flex-start; }
+      .tab{ width:100%; }
+    }
+
+    .choice{
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.80);
+      border-radius: 16px;
+      padding: 14px;
       cursor:pointer;
-      transition: transform .12s ease;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font-weight: 950;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
     }
-    .calc-tab:hover{ transform: translateY(-1px); }
-    .calc-tab.active{
-      background: linear-gradient(90deg, var(--azulClaro), var(--azulOscuro));
-      color:#fff;
-      border-color: rgba(29,78,216,.22);
-      box-shadow: 0 10px 25px rgba(29,78,216,.18);
+    .choice:hover{ transform: translateY(-1px); background: rgba(255,255,255,.95); }
+    .choice.active{
+      background: linear-gradient(90deg, rgba(37,99,235,.12), rgba(37,99,235,.06));
+      border-color: rgba(37,99,235,.25);
+      box-shadow: 0 12px 26px rgba(29,78,216,.12);
     }
+    .choice .badge{
+      font-size:12px;
+      font-weight: 950;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(37,99,235,.10);
+      color: var(--azulOscuro);
+      border: 1px solid rgba(37,99,235,.18);
+      white-space:nowrap;
+    }
+
     .calc-panel{ display:none; }
     .calc-panel.active{ display:block; }
 
@@ -377,7 +416,7 @@
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin: 4px 0 12px;
+      margin: 10px 0 12px;
     }
     .calc-subtab{
       flex:1;
@@ -401,8 +440,6 @@
     }
     @media(max-width:720px){
       .calc-grid{ grid-template-columns: 1fr; }
-      .tabs{ justify-content:flex-start; }
-      .tab{ width:100%; } /* ✅ en móvil se ven grandes y claras */
     }
 
     .label{
@@ -444,6 +481,12 @@
       display:flex;
       align-items:center;
     }
+
+    .divider{
+      height:1px;
+      background: var(--stroke);
+      margin: 14px 0;
+    }
   </style>
 </head>
 
@@ -462,20 +505,18 @@
   <header class="hero">
     <div class="hero-inner">
 
-      <!-- ✅ Tabs ahora van AQUÍ (arriba del encabezado) -->
+      <!-- ✅ Tabs -->
       <div class="tabs" role="tablist" aria-label="Secciones">
         <button class="tab active" id="tabTrack" type="button">📦 Rastreo</button>
         <button class="tab" id="tabContact" type="button">☎️ Contacto</button>
-        <button class="tab" id="tabCalc" type="button">🧮 Calcular</button>
+        <button class="tab" id="tabCalc" type="button">🧮 Calcular envío</button>
         <button class="tab" id="tabCita" type="button">📆 Agendar</button>
       </div>
 
       <div class="hero-top">
         <div class="hero-copy">
           <h1 class="hero-h1" id="heroTitle">Rastrea tus envíos y/o compras en <span>línea</span></h1>
-          <p class="hero-p" id="heroSub">
-            Meté tu tracking para marítimo, aéreo o compras en línea.
-          </p>
+          <p class="hero-p" id="heroSub">Meté tu tracking para marítimo, aéreo o compras en línea.</p>
         </div>
 
         <div class="flags" aria-hidden="true">
@@ -597,117 +638,137 @@
       </section>
     </div>
 
-    <!-- ================== VIEW: CALCULADORA ================== -->
+    <!-- ================== VIEW: CALCULADORA (nuevo flow) ================== -->
     <div id="viewCalc" class="grid" style="display:none;">
       <section class="card">
         <div class="card-hd">
           <h2 class="card-title">🧮 Calcular costo de tu envío</h2>
-          <span style="color:var(--muted);font-weight:850;">Marítimo / Aéreo</span>
+          <span style="color:var(--muted);font-weight:850;">Elegí primero Marítimo o Aéreo</span>
         </div>
 
         <div class="card-body">
-          <p class="calc-head">¿Qué tipo de envío querés calcular?</p>
+          <p class="calc-head">¿Qué tipo de envío quieres hacer? <b>Elegí</b>.</p>
 
-          <!-- ✅ Orden y default: Marítimo primero -->
-          <div class="calc-tabs" role="tablist" aria-label="Tipos de envío">
-            <button type="button" class="calc-tab active" id="calcTabM">🚢 Marítimo</button>
-            <button type="button" class="calc-tab" id="calcTabA">✈️ Aéreo</button>
+          <!-- STEP 1: elegir tipo -->
+          <div class="calc-step" id="stepTipo">
+            <p class="step-title">1) Elegí el tipo de envío</p>
+            <p class="step-sub">Seleccioná <b>Marítimo</b> o <b>Aéreo</b>. Luego te salen las opciones de cálculo.</p>
+
+            <div class="choice-grid">
+              <button type="button" class="choice" id="chooseMar">
+                <span>🚢 Marítimo</span>
+                <span class="badge">por peso / volumen</span>
+              </button>
+
+              <button type="button" class="choice" id="chooseAir">
+                <span>✈️ Aéreo</span>
+                <span class="badge">por libras</span>
+              </button>
+            </div>
           </div>
 
-          <!-- MARÍTIMO -->
-          <div class="calc-panel active" id="calcPanelM">
-            <div class="calc-subtabs" role="tablist" aria-label="Marítimo por peso o volumen">
-              <button type="button" class="calc-subtab active" id="calcSubTabPeso">⚖️ Por peso</button>
-              <button type="button" class="calc-subtab" id="calcSubTabVol">📦 Por volumen</button>
+          <div class="divider"></div>
+
+          <!-- STEP 2: opciones (aparece luego) -->
+          <div class="calc-step" id="stepOpciones" style="display:none;">
+            <p class="step-title">2) Ahora elegí cómo querés calcular</p>
+            <p class="step-sub" id="stepHint">Seleccioná una opción para continuar.</p>
+
+            <!-- Panel MARÍTIMO -->
+            <div class="calc-panel" id="panelMar">
+              <div class="calc-subtabs" role="tablist" aria-label="Marítimo por peso o volumen">
+                <button type="button" class="calc-subtab active" id="calcSubTabPeso">⚖️ Por peso</button>
+                <button type="button" class="calc-subtab" id="calcSubTabVol">📦 Por volumen</button>
+              </div>
+
+              <!-- por peso -->
+              <div id="calcMarPesoPanel" style="display:block;">
+                <div class="calc-grid">
+                  <div>
+                    <div class="label">Libras (lbs)</div>
+                    <input class="input" type="number" id="calcMarLbs" placeholder="Ej: 120" min="0" step="0.1" inputmode="decimal" />
+                  </div>
+                </div>
+
+                <div class="actions" style="margin-top:12px;">
+                  <button class="btn primary" type="button" id="calcBtnMarPeso">Calcular</button>
+                  <button class="btn ghost" type="button" id="calcBtnMarPesoClear">Limpiar</button>
+                </div>
+
+                <div class="calc-result" id="calcResM"></div>
+
+                <div class="note">
+                  Reglas:
+                  <br>• Hasta 100 lbs: <b>$2.05/lb</b>
+                  <br>• Más de 100 lbs: <b>$2.00/lb</b>
+                  <br>• Más de 300 lbs: <b>$1.90/lb</b>
+                  <br>• Más de 500 lbs: <b>$1.80/lb</b>
+                </div>
+              </div>
+
+              <!-- por volumen -->
+              <div id="calcMarVolPanel" style="display:none;">
+                <div class="calc-grid">
+                  <div>
+                    <div class="label">Tipo de artículo</div>
+                    <select class="input" id="calcItemType">
+                      <option value="mueble_10">Mueble</option>
+                      <option value="ropa_30">Caja con ropa y artículos varios</option>
+                      <option value="refri_12">Electrodoméstico (refrigeradora)</option>
+                      <option value="lavadora_15">Electrodoméstico (lavadora / secadora / cocina)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <div class="label">Largo (in)</div>
+                    <input class="input" type="number" id="calcL" placeholder="L" min="0" step="0.1" inputmode="decimal" />
+                  </div>
+                  <div>
+                    <div class="label">Ancho (in)</div>
+                    <input class="input" type="number" id="calcW" placeholder="W" min="0" step="0.1" inputmode="decimal" />
+                  </div>
+                  <div>
+                    <div class="label">Alto (in)</div>
+                    <input class="input" type="number" id="calcH" placeholder="H" min="0" step="0.1" inputmode="decimal" />
+                  </div>
+                </div>
+
+                <div class="actions" style="margin-top:12px;">
+                  <button class="btn primary" type="button" id="calcBtnMarVol">Calcular</button>
+                  <button class="btn ghost" type="button" id="calcBtnMarVolClear">Limpiar</button>
+                </div>
+
+                <div class="calc-result" id="calcResV"></div>
+
+                <div class="note">
+                  El precio puede variar si las cantidades no están correctas, el artículo no está empacado,
+                  o si el peso es demasiado para el artículo.
+                </div>
+              </div>
             </div>
 
-            <!-- por peso -->
-            <div id="calcMarPesoPanel" style="display:block;">
+            <!-- Panel AÉREO -->
+            <div class="calc-panel" id="panelAir">
               <div class="calc-grid">
                 <div>
                   <div class="label">Libras (lbs)</div>
-                  <input class="input" type="number" id="calcMarLbs" placeholder="Ej: 120" min="0" step="0.1" inputmode="decimal" />
+                  <input class="input" type="number" id="calcAereoLbs" placeholder="Ej: 15" min="0" step="0.1" inputmode="decimal" />
                 </div>
               </div>
 
               <div class="actions" style="margin-top:12px;">
-                <button class="btn primary" type="button" id="calcBtnMarPeso">Calcular</button>
-                <button class="btn ghost" type="button" id="calcBtnMarPesoClear">Limpiar</button>
+                <button class="btn primary" type="button" id="calcBtnAereo">Calcular</button>
+                <button class="btn ghost" type="button" id="calcBtnAereoClear">Limpiar</button>
               </div>
 
-              <div class="calc-result" id="calcResM"></div>
+              <div class="calc-result" id="calcResA"></div>
 
               <div class="note">
-                Reglas:
-                <br>• Hasta 100 lbs: <b>$2.05/lb</b>
-                <br>• Más de 100 lbs: <b>$2.00/lb</b>
-                <br>• Más de 300 lbs: <b>$1.90/lb</b>
-                <br>• Más de 500 lbs: <b>$1.80/lb</b>
+                Regla: hasta 20 lbs = <b>$7.00/lb</b>. Más de 20 lbs = <b>$6.50/lb</b>.
               </div>
             </div>
 
-            <!-- por volumen -->
-            <div id="calcMarVolPanel" style="display:none;">
-              <div class="calc-grid">
-                <div>
-                  <div class="label">Tipo de artículo</div>
-                  <select class="input" id="calcItemType">
-                    <option value="mueble_10">Mueble</option>
-                    <option value="ropa_30">Caja con ropa y artículos varios</option>
-                    <option value="refri_12">Electrodoméstico (refrigeradora)</option>
-                    <option value="lavadora_15">Electrodoméstico (lavadora / secadora / cocina)</option>
-                  </select>
-                </div>
-
-                <div>
-                  <div class="label">Largo (in)</div>
-                  <input class="input" type="number" id="calcL" placeholder="L" min="0" step="0.1" inputmode="decimal" />
-                </div>
-                <div>
-                  <div class="label">Ancho (in)</div>
-                  <input class="input" type="number" id="calcW" placeholder="W" min="0" step="0.1" inputmode="decimal" />
-                </div>
-                <div>
-                  <div class="label">Alto (in)</div>
-                  <input class="input" type="number" id="calcH" placeholder="H" min="0" step="0.1" inputmode="decimal" />
-                </div>
-              </div>
-
-              <div class="actions" style="margin-top:12px;">
-                <button class="btn primary" type="button" id="calcBtnMarVol">Calcular</button>
-                <button class="btn ghost" type="button" id="calcBtnMarVolClear">Limpiar</button>
-              </div>
-
-              <div class="calc-result" id="calcResV"></div>
-
-              <div class="note">
-                El precio puede variar si las cantidades no están correctas, el artículo no está empacado,
-                o si el peso es demasiado para el artículo.
-              </div>
-            </div>
           </div>
-
-          <!-- AÉREO -->
-          <div class="calc-panel" id="calcPanelA">
-            <div class="calc-grid">
-              <div>
-                <div class="label">Libras (lbs)</div>
-                <input class="input" type="number" id="calcAereoLbs" placeholder="Ej: 15" min="0" step="0.1" inputmode="decimal" />
-              </div>
-            </div>
-
-            <div class="actions" style="margin-top:12px;">
-              <button class="btn primary" type="button" id="calcBtnAereo">Calcular</button>
-              <button class="btn ghost" type="button" id="calcBtnAereoClear">Limpiar</button>
-            </div>
-
-            <div class="calc-result" id="calcResA"></div>
-
-            <div class="note">
-              Regla: hasta 20 lbs = <b>$7.00/lb</b>. Más de 20 lbs = <b>$6.50/lb</b>.
-            </div>
-          </div>
-
         </div>
       </section>
     </div>
@@ -922,11 +983,11 @@
         }
         if(which === "calc"){
           heroTitle.innerHTML = `Calcula el costo de tu <span>envío</span>`;
-          heroSub.textContent = `Seleccioná el tipo de envío y meté libras o medidas para estimar el total.`;
+          heroSub.textContent = `Elegí primero si es Marítimo o Aéreo y luego te salen las opciones.`;
         }
         if(which === "cita"){
           heroTitle.innerHTML = `Agenda la recolección de tu <span>carga</span> con nosotros`;
-          heroSub.textContent = `Abrí WhatsApp con el mensaje listo y solo completás tu dirección y datos.`;
+          heroSub.textContent = `Abrí WhatsApp con el mensaje listo y completá tu dirección y datos.`;
         }
       }
 
@@ -947,22 +1008,40 @@
       show("track"); // default
     })();
 
-    /* ========================= CALCULADORA (default marítimo) ========================= */
+    /* ========================= CALCULADORA (nuevo flow con scroll down) ========================= */
     document.addEventListener("DOMContentLoaded", () => {
-      const tabM = document.getElementById("calcTabM");
-      const tabA = document.getElementById("calcTabA");
-      const panelM = document.getElementById("calcPanelM");
-      const panelA = document.getElementById("calcPanelA");
+      const chooseMar = document.getElementById("chooseMar");
+      const chooseAir = document.getElementById("chooseAir");
 
-      function openCalc(which){
-        [panelM, panelA].forEach(p => p.classList.remove("active"));
-        [tabM, tabA].forEach(b => b.classList.remove("active"));
-        if(which === "m"){ panelM.classList.add("active"); tabM.classList.add("active"); }
-        if(which === "a"){ panelA.classList.add("active"); tabA.classList.add("active"); }
+      const stepOpciones = document.getElementById("stepOpciones");
+      const stepHint = document.getElementById("stepHint");
+
+      const panelMar = document.getElementById("panelMar");
+      const panelAir = document.getElementById("panelAir");
+
+      function activateChoice(which){
+        const isMar = which === "mar";
+        chooseMar.classList.toggle("active", isMar);
+        chooseAir.classList.toggle("active", !isMar);
+
+        stepOpciones.style.display = "block";
+        panelMar.classList.toggle("active", isMar);
+        panelAir.classList.toggle("active", !isMar);
+
+        stepHint.textContent = isMar
+          ? "Marítimo: elegí Por peso o Por volumen."
+          : "Aéreo: ingresá las libras para estimar el total.";
+
+        // ✅ scroll down suave al step 2
+        setTimeout(()=>{
+          stepOpciones.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 60);
       }
-      tabM.addEventListener("click", ()=>openCalc("m"));
-      tabA.addEventListener("click", ()=>openCalc("a"));
 
+      chooseMar.addEventListener("click", ()=>activateChoice("mar"));
+      chooseAir.addEventListener("click", ()=>activateChoice("air"));
+
+      // Subtabs Marítimo
       const subPeso = document.getElementById("calcSubTabPeso");
       const subVol  = document.getElementById("calcSubTabVol");
       const marPesoPanel = document.getElementById("calcMarPesoPanel");
@@ -1042,8 +1121,7 @@
         document.getElementById("calcItemType").value = "mueble_10";
       });
 
-      // ✅ defaults
-      openCalc("m");
+      // ✅ defaults de subtab marítimo (si elige marítimo)
       openMarSub("peso");
     });
   </script>
