@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>MiRCargoNicaragua | Rastreo</title>
+  <title>MIR CARGO NICARAGUA | MiRCargoTrack</title>
 
   <style>
     :root{
-      /* NAVY (difuminado) */
-      --azulClaro:#3b82f6;     /* navy claro */
-      --azulOscuro:#2563eb;    /* navy profundo */
+      /* AZUL ROYAL (menos oscuro) */
+      --azulClaro:#2563eb;   /* royal */
+      --azulOscuro:#1d4ed8;  /* royal profundo */
 
       /* CELESTE (pills/acentos) */
       --celesteTxt:#4db6ff;
@@ -23,6 +23,10 @@
       /* NARANJA PASTEL */
       --amarillo:#ffd1a6;
       --amarilloH:#ffbf85;
+
+      /* WHATSAPP */
+      --wa:#25D366;
+      --waH:#1ebe57;
     }
 
     body{
@@ -35,14 +39,15 @@
     header{
       background:linear-gradient(90deg,var(--azulClaro),var(--azulOscuro));
       color:white;
-      padding:20px 12px 22px;
+      padding:20px 12px 18px;
       text-align:center;
       position:relative;
       box-shadow:0 2px 6px rgba(0,0,0,.25);
+      overflow:hidden;
     }
 
     @media(min-width:700px){
-      header{ padding:15px 12px 20px; }
+      header{ padding:16px 12px 14px; }
     }
 
     .flag-left, .flag-right{
@@ -51,26 +56,66 @@
       width:120px;
       border-radius:10px;
       box-shadow:0 0 6px rgba(0,0,0,.4);
+      z-index:1;
     }
     .flag-left{ left:12px; }
     .flag-right{ right:12px; }
 
-    .logo svg{
-      width:80%;
-      max-width:380px;
-      margin-top:20px;
-    }
-    @media(min-width:700px){
-      .logo svg{ max-width:360px; margin-top:10px; }
+    @media(max-width:700px){
+      .flag-left, .flag-right{ width:88px; top:6px; }
     }
 
+    .logo{
+      position:relative;
+      z-index:2;
+      margin-top:6px;
+      padding:0 8px;
+    }
+
+    .logo svg{
+      width:92%;
+      max-width:520px;
+      margin:0 auto;
+      display:block;
+    }
+
+    /* ======= NAV PRINCIPAL ======= */
+    .main-tabs{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin-top:12px;
+      padding:0 12px;
+      position:relative;
+      z-index:2;
+    }
+    .main-tab{
+      border:1px solid rgba(255,255,255,.35);
+      background:rgba(255,255,255,.18);
+      color:#fff;
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:900;
+      cursor:pointer;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      white-space:nowrap;
+    }
+    .main-tab.active{
+      background: var(--amarillo);
+      color: var(--texto);
+      border-color: rgba(0,0,0,.12);
+    }
+
+    /* ======= LAYOUT ======= */
     .container{
       max-width:900px;
-      margin:18px auto 24px;
+      margin:18px auto;
       padding:0 12px;
       display:flex;
       flex-direction:column;
-      gap:20px;
+      gap:18px;
     }
 
     .card{
@@ -129,6 +174,7 @@
     }
     .btn:hover{ background:var(--amarilloH); }
 
+    /* ======= RESULTADOS ======= */
     .result-block{
       padding:10px 16px;
       border-bottom:1px solid var(--gris2);
@@ -171,73 +217,57 @@
       gap:8px;
       margin-top:6px;
     }
+
     @media(min-width:620px){
       .detail-actions{ flex-direction:row; }
       .detail-actions .view-btn{ width:auto; }
     }
 
-    /* ======= NAV PRINCIPAL (Contacto / Rastreo / Calculadora / Cita) ======= */
-    .main-tabs{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:center;
-      margin-top:14px;
-      padding:0 12px;
-    }
-    .main-tab{
-      border:1px solid rgba(255,255,255,.35);
-      background:rgba(255,255,255,.18);
-      color:#fff;
-      padding:10px 14px;
-      border-radius:999px;
-      font-weight:900;
-      cursor:pointer;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-    }
-    .main-tab.active{
-      background: var(--amarillo);
-      color: var(--texto);
-      border-color: rgba(0,0,0,.12);
-    }
+    /* ======= CONTACTO (TAB) ======= */
+    .contact-wrap{ padding:12px; }
 
-    /* ======= CONTACTO (cards) ======= */
     .contact-grid{
       width:100%;
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      align-items:stretch;
+      display:grid;
+      gap:10px;
+      grid-template-columns: 1fr; /* teléfono */
     }
+    @media(min-width:620px){
+      .contact-grid{ grid-template-columns: 1fr 1fr; } /* tablet */
+    }
+    @media(min-width:980px){
+      .contact-grid{ grid-template-columns: 1.2fr 1.2fr 1fr; } /* desktop */
+    }
+
     .contact-card{
       background:#fff;
       border:1px solid var(--gris2);
       border-radius:14px;
-      box-shadow:0 3px 14px rgba(0,0,0,.08);
       padding:12px 14px;
-      flex: 1 1 260px;
-      min-width:260px;
+      text-align:left;
+      box-shadow:0 2px 10px rgba(0,0,0,.06);
     }
     .contact-title{
       font-weight:900;
       font-size:15px;
       margin-bottom:6px;
-      color:var(--texto);
+      color:var(--azulOscuro);
     }
     .contact-line{
       font-size:13.5px;
-      line-height:1.25;
-      color:#334155;
+      line-height:1.35;
+      color:#1f2937;
       word-break: break-word;
       margin:2px 0;
     }
+
     .contact-actions{
       margin-top:10px;
       display:flex;
       gap:10px;
       flex-wrap:wrap;
     }
+
     .contact-btn{
       display:inline-flex;
       align-items:center;
@@ -251,28 +281,36 @@
       cursor:pointer;
       user-select:none;
       font-size:13px;
-    }
-    .contact-btn.call{
-      background: var(--amarillo);
-      color: var(--texto);
-      border-color: rgba(0,0,0,.12);
-    }
-    .contact-btn.call:hover{ background: var(--amarilloH); }
-    .contact-btn.map{
       background:#fff;
       color:var(--texto);
+      flex:1;
+      min-width: 140px;
     }
-    .contact-btn.map:hover{ background:#f8fafc; }
 
-    /* WhatsApp verde oficial */
-    .contact-btn.wa{
-      background:#25D366;
-      border-color:#25D366;
-      color:#fff;
+    .contact-btn.call{
+      background: var(--amarillo);
+      border-color: rgba(0,0,0,.10);
     }
-    .contact-btn.wa:hover{
-      background:#1EBE57;
-      border-color:#1EBE57;
+    .contact-btn.call:hover{ background: var(--amarilloH); }
+
+    .contact-btn.map{
+      background: rgba(37,99,235,.10);
+      color: var(--azulOscuro);
+      border-color: rgba(37,99,235,.20);
+    }
+    .contact-btn.map:hover{ background: rgba(37,99,235,.16); }
+
+    .contact-btn.wa{
+      background: var(--wa);
+      color: #fff;
+      border-color: rgba(0,0,0,.10);
+    }
+    .contact-btn.wa:hover{ background: var(--waH); }
+
+    @media(max-width:700px){
+      .container{ padding:0 10px; margin-top:12px; gap:14px; }
+      .logo svg{ max-width:520px; }
+      .contact-btn{ width:100%; min-width:0; flex:unset; }
     }
 
     /* ======= CALCULADORA ======= */
@@ -327,7 +365,7 @@
     }
     .calc-subtab.active{
       background: var(--celesteBg);
-      border-color: rgba(77,182,255,.45);
+      border-color: rgba(77,182,255,.35);
       color: var(--texto);
     }
     .calc-subpanel{ display:none; }
@@ -387,7 +425,7 @@
       padding:12px 14px;
       border-radius:12px;
       background: var(--celesteBg);
-      border:1px solid rgba(77,182,255,.35);
+      border:1px solid rgba(77,182,255,.25);
       color:var(--texto);
       font-weight:700;
       line-height:1.35;
@@ -418,63 +456,6 @@
       box-sizing:border-box;
       appearance:auto;
     }
-
-    /* ======= CITA ======= */
-    .cita-wrap{
-      padding:14px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-    .cita-title{
-      font-size:18px;
-      font-weight:900;
-      margin:0;
-    }
-    .cita-text{
-      margin:0;
-      color:#334155;
-      line-height:1.35;
-      font-weight:600;
-    }
-    .cita-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .cita-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:12px 14px;
-      border-radius:12px;
-      font-weight:900;
-      text-decoration:none;
-      border:1px solid rgba(0,0,0,.06);
-      cursor:pointer;
-      user-select:none;
-      font-size:15px;
-    }
-    .cita-btn.wa{
-      background:#25D366;
-      border-color:#25D366;
-      color:#fff;
-    }
-    .cita-btn.wa:hover{
-      background:#1EBE57;
-      border-color:#1EBE57;
-    }
-
-    @media(max-width:700px){
-      .container{ padding:0 10px; margin-top:10px; gap:14px; }
-      header{ padding:14px 12px 18px; }
-      .flag-left, .flag-right{ width:88px; top:6px; }
-      .logo svg{ margin-top:6px; max-width:260px; }
-      .contact-card{ min-width:0; width:100%; }
-      .contact-btn{ width:100%; }
-      .cita-btn{ width:100%; }
-    }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
@@ -487,82 +468,41 @@
   <img class="flag-right" src="https://flagcdn.com/ni.svg" alt="Nicaragua">
 
   <div class="logo">
-    <svg viewBox="0 0 520 120">
-      <defs><linearGradient id="g" x1="0" x2="1">
-        <stop offset="0" stop-color="#38bdf8"/>
-        <stop offset="1" stop-color="#1e3a8a"/>
-      </linearGradient></defs>
-      <g font-family="Inter" text-anchor="middle">
-        <text x="260" y="54" font-size="44" font-weight="900" fill="#fff" style="letter-spacing:1px; font-style:italic;">
-  MIR CARGO <tspan fill="var(--amarillo)">NICARAGUA</tspan>
-</text>
+    <svg viewBox="0 0 520 120" aria-label="MIR CARGO NICARAGUA">
+      <defs>
+        <linearGradient id="g" x1="0" x2="1">
+          <stop offset="0" stop-color="var(--azulClaro)"/>
+          <stop offset="1" stop-color="var(--azulOscuro)"/>
+        </linearGradient>
+      </defs>
+
+      <g text-anchor="middle">
+        <!-- ✅ Texto responsive para que NO se corte -->
+        <text x="260" y="52" font-weight="900" fill="#fff"
+              style="letter-spacing:.6px; font-style:italic; font-size:38px;">
+          MIR CARGO <tspan fill="var(--amarillo)">NICARAGUA</tspan>
+        </text>
+
         <path d="M70 70 L450 70 L466 86 L70 86 Z" fill="url(#g)" opacity="0.9">
-          <animate attributeName="opacity" values="0.4;1;0.4" dur="2.5s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.45;1;0.45" dur="2.5s" repeatCount="indefinite"/>
         </path>
       </g>
     </svg>
   </div>
 
-  <!-- ✅ NAV PRINCIPAL -->
+  <!-- ✅ PESTAÑAS PRINCIPALES -->
   <div class="main-tabs" role="tablist" aria-label="Secciones">
-    <button class="main-tab" id="mainTabContacto" type="button">📞 Contacto</button>
-    <button class="main-tab active" id="mainTabTrack" type="button">📦 Rastreo de carga</button>
-    <button class="main-tab" id="mainTabCalc" type="button">🧮 Calcular costo</button>
-    <button class="main-tab" id="mainTabCita" type="button">🗓️ Agendar cita</button>
+    <button class="main-tab active" id="tabTrack" type="button">📍 Rastreo de carga</button>
+    <button class="main-tab" id="tabCalc" type="button">🧮 Calcular costo</button>
+    <button class="main-tab" id="tabContact" type="button">☎️ Contacto</button>
+    <button class="main-tab" id="tabCita" type="button">📆 Agendar cita</button>
   </div>
 </header>
 
 <main class="container">
 
-  <!-- ================== CONTACTO ================== -->
-  <div id="mainContacto" style="display:none;">
-    <section class="card">
-      <div class="card-title">📞 Contacto</div>
-      <div style="padding:14px;">
-        <div class="contact-grid">
-
-          <div class="contact-card">
-            <div class="contact-title">📍 Miami</div>
-            <div class="contact-line">2035 W Flagler St, Miami, FL 33135.</div>
-            <div class="contact-line"><b>Tel:</b> 305-631-0701 / 786-853-4444.</div>
-            <div class="contact-actions">
-              <a class="contact-btn call" href="tel:+13056310701">📞 Llamar</a>
-              <a class="contact-btn wa" target="_blank" rel="noopener"
-                 href="https://wa.me/13056310701?text=Hola%20MiR%20CargoTrack%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20env%C3%ADo.">💬 WhatsApp</a>
-              <a class="contact-btn map" target="_blank" rel="noopener"
-                 href="https://www.google.com/maps/search/?api=1&query=2035%20W%20Flagler%20St%20Miami%20FL%2033135">📍 Maps</a>
-            </div>
-          </div>
-
-          <div class="contact-card">
-            <div class="contact-title">📍 Managua</div>
-            <div class="contact-line">Comtech Altamira, 1c arriba, 2c lago, 1c abajo. Casa #698.</div>
-            <div class="contact-line"><b>Tel:</b> 8785-3842 / 8781-2066.</div>
-            <div class="contact-actions">
-              <a class="contact-btn call" href="tel:+50587853842">📞 Llamar</a>
-              <a class="contact-btn map" target="_blank" rel="noopener"
-                 href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5">📍 Maps</a>
-            </div>
-          </div>
-
-          <div class="contact-card">
-            <div class="contact-title">📍 Chinandega</div>
-            <div class="contact-line">Esquina Suroeste de la Escuela El Rosario.</div>
-            <div class="contact-line"><b>Tel:</b> 2346-8244 / 8899-9548.</div>
-            <div class="contact-actions">
-              <a class="contact-btn call" href="tel:+50523468244">📞 Llamar</a>
-              <a class="contact-btn map" target="_blank" rel="noopener"
-                 href="https://maps.app.goo.gl/PVczh5oMTN3kp53R6">📍 Maps</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- ================== RASTREO ================== -->
-  <div id="mainTrack">
+  <!-- ================== TAB: RASTREO ================== -->
+  <div id="viewTrack">
     <section class="card">
       <div class="card-title">🚢 Rastreo Marítimo</div>
       <div class="card-header">
@@ -594,13 +534,13 @@
     </section>
   </div>
 
-  <!-- ================== CALCULADORA ================== -->
-  <div id="mainCalc" style="display:none;">
+  <!-- ================== TAB: CALCULADORA ================== -->
+  <div id="viewCalc" style="display:none;">
     <section class="card">
       <div class="card-title">🧮 Calcular costo de envío</div>
 
       <div class="calc-wrap">
-        <p class="calc-title">Seleccioná un tipo de envío. Meté las libras de la caja o las medidas del artículo del que quiere calcular el precio.</p>
+        <p class="calc-title">Seleccioná un tipo de envío. Meté las libras de la caja o las medidas del artículo para calcular el precio.</p>
 
         <div class="calc-tabs" role="tablist" aria-label="Tipos de envío">
           <button type="button" class="calc-tab active" id="calcTabA">✈️ Aéreo</button>
@@ -702,25 +642,70 @@
           </div>
 
         </div>
-
       </div>
     </section>
   </div>
 
-  <!-- ================== CITA (WhatsApp directo) ================== -->
-  <div id="mainCita" style="display:none;">
+  <!-- ================== TAB: CONTACTO ================== -->
+  <div id="viewContact" style="display:none;">
     <section class="card">
-      <div class="card-title">🗓️ Agendar cita para recoger su carga</div>
-      <div class="cita-wrap">
-        <h3 class="cita-title">Agendá tu cita por WhatsApp</h3>
-        <p class="cita-text">
-          Tocá el botón y te abre WhatsApp directo con nuestra agencia en Miami (305-631-0701) para coordinar la recogida.
-        </p>
-        <div class="cita-actions">
-          <a class="cita-btn wa" target="_blank" rel="noopener"
-            https://wa.me/13056310701?text=Hola,%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n:%20_____________.%20Mi%20nombre%20es:%20____________.%20Mi%20tel%C3%A9fono%20es:%20____________.
-            💬 Escribir por WhatsApp (Miami)
-          </a>
+      <div class="card-title">☎️ Contacto</div>
+      <div class="contact-wrap">
+        <div class="contact-grid">
+
+          <div class="contact-card">
+            <div class="contact-title">📍 Miami</div>
+            <div class="contact-line">2035 W Flagler St, Miami, FL 33135.</div>
+            <div class="contact-line"><b>Tel:</b> 305-631-0701 / 786-853-4444.</div>
+            <div class="contact-actions">
+              <a class="contact-btn call" href="tel:+13056310701">📞 Llamar</a>
+              <a class="contact-btn wa" target="_blank" rel="noopener"
+                 href="https://wa.me/13056310701?text=Hola,%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n:%20_____________.%20Mi%20nombre%20es:%20____________.%20Mi%20tel%C3%A9fono%20es:%20____________.">💬 WhatsApp</a>
+              <a class="contact-btn map" target="_blank" rel="noopener"
+                 href="https://www.google.com/maps/search/?api=1&query=2035%20W%20Flagler%20St%20Miami%20FL%2033135">📍 Maps</a>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-title">📍 Managua</div>
+            <div class="contact-line">Comtech Altamira, 1c arriba, 2c lago, 1c abajo. Casa #698.</div>
+            <div class="contact-line"><b>Tel:</b> 8785-3842 / 8781-2066.</div>
+            <div class="contact-actions">
+              <a class="contact-btn call" href="tel:+50587853842">📞 Llamar</a>
+              <a class="contact-btn map" target="_blank" rel="noopener"
+                 href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5">📍 Maps</a>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-title">📍 Chinandega</div>
+            <div class="contact-line">Esquina Suroeste de la Escuela El Rosario.</div>
+            <div class="contact-line"><b>Tel:</b> 2346-8244 / 8899-9548.</div>
+            <div class="contact-actions">
+              <a class="contact-btn call" href="tel:+50523468244">📞 Llamar</a>
+              <a class="contact-btn map" target="_blank" rel="noopener"
+                 href="https://maps.app.goo.gl/PVczh5oMTN3kp53R6">📍 Maps</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================== TAB: AGENDAR CITA ================== -->
+  <div id="viewCita" style="display:none;">
+    <section class="card">
+      <div class="card-title">📆 Agendar cita para recoger tu carga</div>
+      <div class="contact-wrap">
+        <div class="contact-card">
+          <div class="contact-title">Agendar por WhatsApp (Miami)</div>
+          <div class="contact-line">Toca el botón y te abre WhatsApp con el mensaje listo para completar.</div>
+          <div class="contact-actions">
+            <a class="contact-btn wa" target="_blank" rel="noopener"
+               href="https://wa.me/13056310701?text=Hola,%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n:%20_____________.%20Mi%20nombre%20es:%20____________.%20Mi%20tel%C3%A9fono%20es:%20____________.">💬 Agendar por WhatsApp</a>
+            <a class="contact-btn call" href="tel:+13056310701">📞 Llamar</a>
+          </div>
         </div>
       </div>
     </section>
@@ -730,7 +715,6 @@
 
 <script>
 /* ========================= RASTREO ========================= */
-
 const urls = {
   Maritimo:[
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=0&single=true&output=csv",
@@ -746,7 +730,7 @@ const urls = {
 
 function normalizeImageUrl(url){
   if(!url) return "";
-  url = url.trim();
+  url = String(url).trim();
 
   let m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
   if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
@@ -760,23 +744,23 @@ function normalizeImageUrl(url){
 }
 
 function safe(r,keys){
-  for(const k of keys){ if(r[k]) return r[k]; }
+  for(const k of keys){ if(r && r[k]) return r[k]; }
   return "";
 }
 
 function parseDate(dateString){
   if(!dateString) return 0;
-  const [datePart, timePart] = dateString.split(" ");
+  const [datePart, timePart] = String(dateString).split(" ");
   if(!datePart || !timePart) return 0;
   const [day, month, year] = datePart.split("/");
   const [hour, minute, second] = timePart.split(":");
   return new Date(
-    parseInt(year),
-    parseInt(month)-1,
-    parseInt(day),
-    parseInt(hour),
-    parseInt(minute),
-    parseInt(second)
+    parseInt(year,10),
+    parseInt(month,10)-1,
+    parseInt(day,10),
+    parseInt(hour,10),
+    parseInt(minute,10),
+    parseInt(second,10)
   ).getTime();
 }
 
@@ -798,9 +782,7 @@ function renderTable(list,type){
     return db - da;
   });
 
-  if(type === "Compra"){
-    list = list.slice(0,40);
-  }
+  if(type === "Compra") list = list.slice(0,40);
 
   list.forEach(r=>{
     const fecha = safe(r,["Fecha","FECHA"]);
@@ -852,7 +834,7 @@ async function searchTracking(type){
         header:true,
         skipEmptyLines:true,
         complete:res=>{
-          data=data.concat(res.data);
+          data=data.concat(res.data || []);
           resolve();
         }
       });
@@ -860,8 +842,8 @@ async function searchTracking(type){
   }
 
   const filtered = data.filter(r=>{
-    const track=safe(r,["Tracking","Tracking #","Orden","ORDEN"]).toLowerCase();
-    const name=safe(r,["Nombre","Cliente"]).toLowerCase();
+    const track=(safe(r,["Tracking","Tracking #","Orden","ORDEN"]) || "").toLowerCase();
+    const name=(safe(r,["Nombre","Cliente"]) || "").toLowerCase();
     return track.includes(code) || name.includes(code);
   });
 
@@ -874,40 +856,37 @@ async function searchTracking(type){
   });
 });
 
-/* ========================= NAV PRINCIPAL (4 pestañas) ========================= */
+/* ========================= PESTAÑAS PRINCIPALES ========================= */
 (function(){
-  const tabContacto = document.getElementById("mainTabContacto");
-  const tabTrack    = document.getElementById("mainTabTrack");
-  const tabCalc     = document.getElementById("mainTabCalc");
-  const tabCita     = document.getElementById("mainTabCita");
+  const tabTrack = document.getElementById("tabTrack");
+  const tabCalc  = document.getElementById("tabCalc");
+  const tabContact = document.getElementById("tabContact");
+  const tabCita  = document.getElementById("tabCita");
 
-  const mainContacto = document.getElementById("mainContacto");
-  const mainTrack    = document.getElementById("mainTrack");
-  const mainCalc     = document.getElementById("mainCalc");
-  const mainCita     = document.getElementById("mainCita");
+  const viewTrack = document.getElementById("viewTrack");
+  const viewCalc  = document.getElementById("viewCalc");
+  const viewContact = document.getElementById("viewContact");
+  const viewCita  = document.getElementById("viewCita");
 
   const tabs = [
-    { key:"contacto", btn:tabContacto, panel:mainContacto },
-    { key:"track",    btn:tabTrack,    panel:mainTrack },
-    { key:"calc",     btn:tabCalc,     panel:mainCalc },
-    { key:"cita",     btn:tabCita,     panel:mainCita },
+    {btn: tabTrack, view: viewTrack, key:"track"},
+    {btn: tabCalc, view: viewCalc, key:"calc"},
+    {btn: tabContact, view: viewContact, key:"contact"},
+    {btn: tabCita, view: viewCita, key:"cita"}
   ];
 
-  function showMain(which){
+  function show(which){
     tabs.forEach(t=>{
-      t.panel.style.display = (t.key === which) ? "block" : "none";
+      t.view.style.display = (t.key === which) ? "block" : "none";
       t.btn.classList.toggle("active", t.key === which);
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  tabContacto.addEventListener("click", ()=>showMain("contacto"));
-  tabTrack.addEventListener("click",    ()=>showMain("track"));
-  tabCalc.addEventListener("click",     ()=>showMain("calc"));
-  tabCita.addEventListener("click",     ()=>showMain("cita"));
-
-  // Default
-  showMain("track");
+  tabTrack.addEventListener("click", ()=>show("track"));
+  tabCalc.addEventListener("click", ()=>show("calc"));
+  tabContact.addEventListener("click", ()=>show("contact"));
+  tabCita.addEventListener("click", ()=>show("cita"));
 })();
 
 /* ========================= CALCULADORA ========================= */
@@ -981,7 +960,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("calcResM").textContent = "";
   });
 
-  // Marítimo por volumen
+  // Marítimo por volumen (multiplicador por tipo)
   function getMultiplier(){
     const v = (document.getElementById("calcItemType").value || "");
     if(v === "mueble_10") return { mult: 10, label: "Mueble" };
