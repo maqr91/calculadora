@@ -35,14 +35,14 @@
     header{
       background:linear-gradient(90deg,var(--azulClaro),var(--azulOscuro));
       color:white;
-      padding:20px 12px 35px;
+      padding:20px 12px 22px;
       text-align:center;
       position:relative;
       box-shadow:0 2px 6px rgba(0,0,0,.25);
     }
 
     @media(min-width:700px){
-      header{ padding:15px 12px 25px; }
+      header{ padding:15px 12px 20px; }
     }
 
     .flag-left, .flag-right{
@@ -60,14 +60,13 @@
       max-width:380px;
       margin-top:20px;
     }
-
     @media(min-width:700px){
       .logo svg{ max-width:360px; margin-top:10px; }
     }
 
     .container{
       max-width:900px;
-      margin:20px auto;
+      margin:18px auto 24px;
       padding:0 12px;
       display:flex;
       flex-direction:column;
@@ -172,19 +171,18 @@
       gap:8px;
       margin-top:6px;
     }
-
     @media(min-width:620px){
       .detail-actions{ flex-direction:row; }
       .detail-actions .view-btn{ width:auto; }
     }
 
-    /* ======= NAV PRINCIPAL (Rastreo / Calculadora) ======= */
+    /* ======= NAV PRINCIPAL (Contacto / Rastreo / Calculadora / Cita) ======= */
     .main-tabs{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
       justify-content:center;
-      margin-top:12px;
+      margin-top:14px;
       padding:0 12px;
     }
     .main-tab{
@@ -204,53 +202,38 @@
       border-color: rgba(0,0,0,.12);
     }
 
-    /* ======= CONTACTO EN HEADER (✅ FORZADO HORIZONTAL EN DESKTOP) ======= */
-    .header-contact{
-      margin-top:10px;
-      padding:0 12px;
-    }
-
-    /* Usamos FLEX para que NUNCA se te vaya vertical en compu */
+    /* ======= CONTACTO (cards) ======= */
     .contact-grid{
-      max-width:900px;
-      margin:0 auto;
       width:100%;
       display:flex;
-      gap:10px;
-      justify-content:center;
-      align-items:stretch;
+      gap:12px;
       flex-wrap:wrap;
+      align-items:stretch;
     }
-
     .contact-card{
-      background: rgba(255,255,255,.14);
-      border: 1px solid rgba(255,255,255,.25);
+      background:#fff;
+      border:1px solid var(--gris2);
       border-radius:14px;
+      box-shadow:0 3px 14px rgba(0,0,0,.08);
       padding:12px 14px;
-      text-align:left;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      box-shadow: 0 2px 10px rgba(0,0,0,.15);
-
-      flex: 1 1 260px;   /* base 260px */
+      flex: 1 1 260px;
       min-width:260px;
-      max-width:420px;
     }
-
     .contact-title{
       font-weight:900;
-      font-size:14px;
-      margin-bottom:4px;
-      color:#fff;
+      font-size:15px;
+      margin-bottom:6px;
+      color:var(--texto);
     }
     .contact-line{
       font-size:13.5px;
       line-height:1.25;
-      color: rgba(255,255,255,.92);
+      color:#334155;
       word-break: break-word;
+      margin:2px 0;
     }
     .contact-actions{
-      margin-top:8px;
+      margin-top:10px;
       display:flex;
       gap:10px;
       flex-wrap:wrap;
@@ -264,7 +247,7 @@
       border-radius:12px;
       font-weight:900;
       text-decoration:none;
-      border:1px solid rgba(255,255,255,.25);
+      border:1px solid var(--gris2);
       cursor:pointer;
       user-select:none;
       font-size:13px;
@@ -275,14 +258,13 @@
       border-color: rgba(0,0,0,.12);
     }
     .contact-btn.call:hover{ background: var(--amarilloH); }
-
     .contact-btn.map{
-      background: rgba(255,255,255,.18);
-      color:#fff;
+      background:#fff;
+      color:var(--texto);
     }
-    .contact-btn.map:hover{ background: rgba(255,255,255,.28); }
+    .contact-btn.map:hover{ background:#f8fafc; }
 
-    /* ✅ WhatsApp verde oficial */
+    /* WhatsApp verde oficial */
     .contact-btn.wa{
       background:#25D366;
       border-color:#25D366;
@@ -291,12 +273,6 @@
     .contact-btn.wa:hover{
       background:#1EBE57;
       border-color:#1EBE57;
-    }
-
-    /* ✅ Desktop: 3 tarjetas en una fila, sí o sí */
-    @media(min-width:980px){
-      .contact-grid{ flex-wrap:nowrap; }
-      .contact-card{ max-width:none; }
     }
 
     /* ======= CALCULADORA ======= */
@@ -333,7 +309,6 @@
     .calc-panel{ display:none; }
     .calc-panel.active{ display:block; }
 
-    /* Subtabs (dentro de Marítimo) */
     .calc-subtabs{
       display:flex;
       gap:10px;
@@ -352,7 +327,7 @@
     }
     .calc-subtab.active{
       background: var(--celesteBg);
-      border-color: rgba(14,165,233,.35);
+      border-color: rgba(77,182,255,.45);
       color: var(--texto);
     }
     .calc-subpanel{ display:none; }
@@ -412,7 +387,7 @@
       padding:12px 14px;
       border-radius:12px;
       background: var(--celesteBg);
-      border:1px solid rgba(14,165,233,.25);
+      border:1px solid rgba(77,182,255,.35);
       color:var(--texto);
       font-weight:700;
       line-height:1.35;
@@ -444,15 +419,61 @@
       appearance:auto;
     }
 
+    /* ======= CITA ======= */
+    .cita-wrap{
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .cita-title{
+      font-size:18px;
+      font-weight:900;
+      margin:0;
+    }
+    .cita-text{
+      margin:0;
+      color:#334155;
+      line-height:1.35;
+      font-weight:600;
+    }
+    .cita-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .cita-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:12px 14px;
+      border-radius:12px;
+      font-weight:900;
+      text-decoration:none;
+      border:1px solid rgba(0,0,0,.06);
+      cursor:pointer;
+      user-select:none;
+      font-size:15px;
+    }
+    .cita-btn.wa{
+      background:#25D366;
+      border-color:#25D366;
+      color:#fff;
+    }
+    .cita-btn.wa:hover{
+      background:#1EBE57;
+      border-color:#1EBE57;
+    }
+
     @media(max-width:700px){
       .container{ padding:0 10px; margin-top:10px; gap:14px; }
-      header{ padding:14px 12px 22px; }
+      header{ padding:14px 12px 18px; }
       .flag-left, .flag-right{ width:88px; top:6px; }
       .logo svg{ margin-top:6px; max-width:260px; }
-      .header-contact{ margin-top:8px; }
-      .contact-grid{ flex-direction:column; }  /* teléfono */
       .contact-card{ min-width:0; width:100%; }
       .contact-btn{ width:100%; }
+      .cita-btn{ width:100%; }
     }
   </style>
 
@@ -482,57 +503,65 @@
     </svg>
   </div>
 
-  <!-- ✅ CONTACTOS + BOTONES -->
-  <div class="header-contact">
-    <div class="contact-grid">
-
-      <div class="contact-card">
-        <div class="contact-title">📍 Miami</div>
-        <div class="contact-line">2035 W Flagler St, Miami, FL 33135.</div>
-        <div class="contact-line"><b>Tel:</b> 305-631-0701 / 786-853-4444.</div>
-        <div class="contact-actions">
-          <a class="contact-btn call" href="tel:+13056310701">📞 Llamar</a>
-          <a class="contact-btn wa" target="_blank" rel="noopener"
-             href="https://wa.me/13056310701?text=Hola%20MiR%20CargoTrack%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20env%C3%ADo.">💬 WhatsApp</a>
-          <a class="contact-btn map" target="_blank" rel="noopener"
-             href="https://www.google.com/maps/search/?api=1&query=2035%20W%20Flagler%20St%20Miami%20FL%2033135">📍 Maps</a>
-        </div>
-      </div>
-
-      <div class="contact-card">
-        <div class="contact-title">📍 Managua</div>
-        <div class="contact-line">Comtech Altamira, 1c arriba, 2c lago, 1c abajo. Casa #698.</div>
-        <div class="contact-line"><b>Tel:</b> 8785-3842 / 8781-2066.</div>
-        <div class="contact-actions">
-          <a class="contact-btn call" href="tel:+50587853842">📞 Llamar</a>
-          <a class="contact-btn map" target="_blank" rel="noopener"
-             href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5">📍 Maps</a>
-        </div>
-      </div>
-
-      <div class="contact-card">
-        <div class="contact-title">📍 Chinandega</div>
-        <div class="contact-line">Esquina Suroeste de la Escuela El Rosario.</div>
-        <div class="contact-line"><b>Tel:</b> 2346-8244 / 8899-9548.</div>
-        <div class="contact-actions">
-          <a class="contact-btn call" href="tel:+50523468244">📞 Llamar</a>
-          <a class="contact-btn map" target="_blank" rel="noopener"
-             href="https://maps.app.goo.gl/PVczh5oMTN3kp53R6">📍 Maps</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
+  <!-- ✅ NAV PRINCIPAL -->
   <div class="main-tabs" role="tablist" aria-label="Secciones">
-    <button class="main-tab active" id="mainTabTrack" type="button">📍 Rastreo</button>
-    <button class="main-tab" id="mainTabCalc" type="button">🧮 Calcular costo de envío</button>
+    <button class="main-tab" id="mainTabContacto" type="button">📞 Contacto</button>
+    <button class="main-tab active" id="mainTabTrack" type="button">📦 Rastreo de carga</button>
+    <button class="main-tab" id="mainTabCalc" type="button">🧮 Calcular costo</button>
+    <button class="main-tab" id="mainTabCita" type="button">🗓️ Agendar cita</button>
   </div>
 </header>
 
 <main class="container">
 
-  <!-- ================== BLOQUE RASTREO ================== -->
+  <!-- ================== CONTACTO ================== -->
+  <div id="mainContacto" style="display:none;">
+    <section class="card">
+      <div class="card-title">📞 Contacto</div>
+      <div style="padding:14px;">
+        <div class="contact-grid">
+
+          <div class="contact-card">
+            <div class="contact-title">📍 Miami</div>
+            <div class="contact-line">2035 W Flagler St, Miami, FL 33135.</div>
+            <div class="contact-line"><b>Tel:</b> 305-631-0701 / 786-853-4444.</div>
+            <div class="contact-actions">
+              <a class="contact-btn call" href="tel:+13056310701">📞 Llamar</a>
+              <a class="contact-btn wa" target="_blank" rel="noopener"
+                 href="https://wa.me/13056310701?text=Hola%20MiR%20CargoTrack%2C%20quiero%20informaci%C3%B3n%20sobre%20un%20env%C3%ADo.">💬 WhatsApp</a>
+              <a class="contact-btn map" target="_blank" rel="noopener"
+                 href="https://www.google.com/maps/search/?api=1&query=2035%20W%20Flagler%20St%20Miami%20FL%2033135">📍 Maps</a>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-title">📍 Managua</div>
+            <div class="contact-line">Comtech Altamira, 1c arriba, 2c lago, 1c abajo. Casa #698.</div>
+            <div class="contact-line"><b>Tel:</b> 8785-3842 / 8781-2066.</div>
+            <div class="contact-actions">
+              <a class="contact-btn call" href="tel:+50587853842">📞 Llamar</a>
+              <a class="contact-btn map" target="_blank" rel="noopener"
+                 href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5">📍 Maps</a>
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-title">📍 Chinandega</div>
+            <div class="contact-line">Esquina Suroeste de la Escuela El Rosario.</div>
+            <div class="contact-line"><b>Tel:</b> 2346-8244 / 8899-9548.</div>
+            <div class="contact-actions">
+              <a class="contact-btn call" href="tel:+50523468244">📞 Llamar</a>
+              <a class="contact-btn map" target="_blank" rel="noopener"
+                 href="https://maps.app.goo.gl/PVczh5oMTN3kp53R6">📍 Maps</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================== RASTREO ================== -->
   <div id="mainTrack">
     <section class="card">
       <div class="card-title">🚢 Rastreo Marítimo</div>
@@ -565,7 +594,7 @@
     </section>
   </div>
 
-  <!-- ================== BLOQUE CALCULADORA ================== -->
+  <!-- ================== CALCULADORA ================== -->
   <div id="mainCalc" style="display:none;">
     <section class="card">
       <div class="card-title">🧮 Calcular costo de envío</div>
@@ -573,7 +602,6 @@
       <div class="calc-wrap">
         <p class="calc-title">Seleccioná un tipo de envío. Meté las libras de la caja o las medidas del artículo del que quiere calcular el precio.</p>
 
-        <!-- Tabs principales: Aéreo / Marítimo -->
         <div class="calc-tabs" role="tablist" aria-label="Tipos de envío">
           <button type="button" class="calc-tab active" id="calcTabA">✈️ Aéreo</button>
           <button type="button" class="calc-tab" id="calcTabM">🚢 Marítimo</button>
@@ -603,7 +631,6 @@
         <!-- MARÍTIMO -->
         <div class="calc-panel" id="calcPanelM">
 
-          <!-- Subcategorías: Peso / Volumen -->
           <div class="calc-subtabs" role="tablist" aria-label="Marítimo por peso o volumen">
             <button type="button" class="calc-subtab active" id="calcSubTabPeso">⚖️ Por peso (lbs)</button>
             <button type="button" class="calc-subtab" id="calcSubTabVol">📦 Por volumen (medidas)</button>
@@ -676,6 +703,25 @@
 
         </div>
 
+      </div>
+    </section>
+  </div>
+
+  <!-- ================== CITA (WhatsApp directo) ================== -->
+  <div id="mainCita" style="display:none;">
+    <section class="card">
+      <div class="card-title">🗓️ Agendar cita para recoger su carga</div>
+      <div class="cita-wrap">
+        <h3 class="cita-title">Agendá tu cita por WhatsApp</h3>
+        <p class="cita-text">
+          Tocá el botón y te abre WhatsApp directo con nuestra agencia en Miami (305-631-0701) para coordinar la recogida.
+        </p>
+        <div class="cita-actions">
+          <a class="cita-btn wa" target="_blank" rel="noopener"
+             href="https://wa.me/13056310701?text=Hola%20MiR%20CargoTrack%2C%20quiero%20agendar%20una%20cita%20para%20recoger%20mi%20carga.%20Mi%20tracking%20es%3A%20____%20y%20mi%20nombre%20es%3A%20____.">
+            💬 Escribir por WhatsApp (Miami)
+          </a>
+        </div>
       </div>
     </section>
   </div>
@@ -828,29 +874,44 @@ async function searchTracking(type){
   });
 });
 
-/* ========================= NAV PRINCIPAL (Rastreo / Calculadora) ========================= */
+/* ========================= NAV PRINCIPAL (4 pestañas) ========================= */
 (function(){
-  const tabTrack = document.getElementById("mainTabTrack");
-  const tabCalc  = document.getElementById("mainTabCalc");
-  const mainTrack = document.getElementById("mainTrack");
-  const mainCalc  = document.getElementById("mainCalc");
+  const tabContacto = document.getElementById("mainTabContacto");
+  const tabTrack    = document.getElementById("mainTabTrack");
+  const tabCalc     = document.getElementById("mainTabCalc");
+  const tabCita     = document.getElementById("mainTabCita");
+
+  const mainContacto = document.getElementById("mainContacto");
+  const mainTrack    = document.getElementById("mainTrack");
+  const mainCalc     = document.getElementById("mainCalc");
+  const mainCita     = document.getElementById("mainCita");
+
+  const tabs = [
+    { key:"contacto", btn:tabContacto, panel:mainContacto },
+    { key:"track",    btn:tabTrack,    panel:mainTrack },
+    { key:"calc",     btn:tabCalc,     panel:mainCalc },
+    { key:"cita",     btn:tabCita,     panel:mainCita },
+  ];
 
   function showMain(which){
-    const isTrack = which === "track";
-    mainTrack.style.display = isTrack ? "block" : "none";
-    mainCalc.style.display  = isTrack ? "none" : "block";
-    tabTrack.classList.toggle("active", isTrack);
-    tabCalc.classList.toggle("active", !isTrack);
+    tabs.forEach(t=>{
+      t.panel.style.display = (t.key === which) ? "block" : "none";
+      t.btn.classList.toggle("active", t.key === which);
+    });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  tabTrack.addEventListener("click", ()=>showMain("track"));
-  tabCalc.addEventListener("click", ()=>showMain("calc"));
+  tabContacto.addEventListener("click", ()=>showMain("contacto"));
+  tabTrack.addEventListener("click",    ()=>showMain("track"));
+  tabCalc.addEventListener("click",     ()=>showMain("calc"));
+  tabCita.addEventListener("click",     ()=>showMain("cita"));
+
+  // Default
+  showMain("track");
 })();
 
 /* ========================= CALCULADORA ========================= */
 document.addEventListener("DOMContentLoaded", () => {
-  // Tabs principales calculadora
   const tabA = document.getElementById("calcTabA");
   const tabM = document.getElementById("calcTabM");
   const panelA = document.getElementById("calcPanelA");
@@ -866,7 +927,6 @@ document.addEventListener("DOMContentLoaded", () => {
   tabA.addEventListener("click", ()=>openCalc("a"));
   tabM.addEventListener("click", ()=>openCalc("m"));
 
-  // Subtabs Marítimo: Peso / Volumen
   const subPeso = document.getElementById("calcSubTabPeso");
   const subVol  = document.getElementById("calcSubTabVol");
   const marPesoPanel = document.getElementById("calcMarPesoPanel");
