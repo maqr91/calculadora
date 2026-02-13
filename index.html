@@ -7,31 +7,25 @@
 
   <style>
     :root{
-      /* Azul (royal + navy suave) */
       --azulRoyal:#1f4fae;
       --azulNavy:#1b3a6b;
       --azulDeep:#0f2a55;
 
-      /* Acentos celeste */
       --celesteTxt:#2ea8ff;
       --celesteBg:rgba(46,168,255,.14);
 
-      /* Fondo y bordes */
       --bg:#f6f7fb;
       --card:#ffffff;
       --border:rgba(15,23,42,.10);
       --text:#0f172a;
       --muted:#64748b;
 
-      /* Naranja pastel */
       --accent:#ffd1a6;
       --accentH:#ffbf85;
 
-      /* WhatsApp */
       --wa:#25D366;
       --waH:#1ebe5d;
 
-      --shadow: 0 14px 40px rgba(2, 6, 23, .08);
       --shadowSoft: 0 10px 26px rgba(2, 6, 23, .07);
       --radius: 18px;
     }
@@ -47,7 +41,6 @@
         var(--bg);
     }
 
-    /* ===== Header / Top Bar ===== */
     header{
       position:sticky;
       top:0;
@@ -73,7 +66,7 @@
       flex-direction:column;
       align-items:flex-start;
       line-height:1.1;
-      min-width: 200px;
+      min-width: 220px;
     }
     .brand .title{
       font-weight:900;
@@ -102,7 +95,6 @@
       background:#fff;
     }
 
-    /* ===== Tabs ===== */
     .tabs{
       max-width:1100px;
       margin:0 auto;
@@ -121,7 +113,7 @@
       padding:12px 16px;
       font-weight:900;
       letter-spacing:.4px;
-      text-transform:uppercase; /* Solo tabs en mayúscula */
+      text-transform:uppercase;
       font-size:14px;
       color:var(--azulDeep);
       background: rgba(31,79,174,.08);
@@ -131,10 +123,7 @@
       gap:8px;
       transition: transform .08s ease, background .15s ease, box-shadow .15s ease;
     }
-    .tab:hover{
-      background: rgba(31,79,174,.12);
-      transform: translateY(-1px);
-    }
+    .tab:hover{ background: rgba(31,79,174,.12); transform: translateY(-1px); }
     .tab.active{
       background: linear-gradient(90deg, rgba(31,79,174,.95), rgba(27,58,107,.95));
       color:#fff;
@@ -142,7 +131,6 @@
       box-shadow: 0 10px 22px rgba(31,79,174,.20);
     }
 
-    /* ===== Layout ===== */
     main{
       max-width:1100px;
       margin:0 auto;
@@ -170,21 +158,16 @@
       letter-spacing:-.4px;
       line-height:1.06;
     }
-    .hero h1 b{
-      color: var(--azulRoyal);
-    }
+    .hero h1 b{ color: var(--azulRoyal); }
     .hero p{
       margin:10px 0 0;
-      color: var(--muted);
+      color:var(--muted);
       font-size:14.5px;
       line-height:1.35;
       max-width: 620px;
     }
 
-    .section{
-      margin-top:18px;
-      display:none;
-    }
+    .section{ margin-top:18px; display:none; }
     .section.active{ display:block; }
 
     .card{
@@ -204,15 +187,8 @@
       justify-content:space-between;
       gap:10px;
     }
-    .cardHead .title{
-      font-weight:900;
-      font-size:15px;
-    }
-    .cardHead .hint{
-      font-size:13px;
-      color:var(--muted);
-      font-weight:700;
-    }
+    .cardHead .title{ font-weight:900; font-size:15px; }
+    .cardHead .hint{ font-size:13px; color:var(--muted); font-weight:700; }
 
     .row{
       display:flex;
@@ -234,6 +210,7 @@
       font-size:15px;
       outline:none;
     }
+
     .btn{
       border:none;
       border-radius: 14px;
@@ -253,16 +230,8 @@
     }
     .btn.secondary:hover{ background: rgba(31,79,174,.12); }
 
-    .results{
-      padding:8px 16px 14px;
-    }
-    .empty{
-      display:none;
-      padding:14px 16px;
-      color:var(--muted);
-      font-weight:800;
-      text-align:center;
-    }
+    .results{ padding:8px 16px 14px; }
+    .empty{ display:none; padding:14px 16px; color:var(--muted); font-weight:800; text-align:center; }
 
     .result-block{
       border: 1px solid rgba(15,23,42,.10);
@@ -272,12 +241,8 @@
       background: #fff;
       box-shadow: 0 10px 20px rgba(2,6,23,.05);
     }
-    .result-block p{
-      margin:6px 0;
-      line-height:1.25;
-      word-break: break-word;
-      font-size:14px;
-    }
+    .result-block p{ margin:6px 0; line-height:1.25; word-break: break-word; font-size:14px; }
+
     .status-pill{
       display:inline-block;
       padding:4px 10px;
@@ -289,12 +254,7 @@
       border:1px solid rgba(46,168,255,.22);
     }
 
-    .detail-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
+    .detail-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
     .view-btn{
       border:none;
       border-radius: 14px;
@@ -307,16 +267,14 @@
     }
     .view-btn:hover{ transform: translateY(-1px); filter: brightness(1.06); }
 
-    /* ===== Contact ===== */
     .contactGrid{
       display:grid;
       grid-template-columns: 1fr;
       gap:12px;
       padding:16px;
     }
-    @media(min-width:740px){
-      .contactGrid{ grid-template-columns: 1.2fr 1.2fr 1fr; }
-    }
+    @media(min-width:740px){ .contactGrid{ grid-template-columns: 1.2fr 1.2fr 1fr; } }
+
     .contactCard{
       background: #fff;
       border:1px solid rgba(15,23,42,.10);
@@ -324,23 +282,10 @@
       padding:14px;
       box-shadow: 0 12px 26px rgba(2,6,23,.06);
     }
-    .contactCard .city{
-      font-weight:1000;
-      font-size:14px;
-      margin-bottom:8px;
-    }
-    .contactCard .line{
-      color: var(--muted);
-      font-size:13.5px;
-      line-height:1.35;
-      margin:5px 0;
-    }
-    .contactActions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
+    .contactCard .city{ font-weight:1000; font-size:14px; margin-bottom:8px; }
+    .contactCard .line{ color: var(--muted); font-size:13.5px; line-height:1.35; margin:5px 0; }
+
+    .contactActions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
     .contactBtn{
       text-decoration:none;
       display:inline-flex;
@@ -354,47 +299,20 @@
       background: rgba(2,6,23,.02);
       color: var(--text);
     }
-    .contactBtn:hover{ filter: brightness(1.02); }
-    .contactBtn.call{
-      background: var(--accent);
-      border-color: rgba(0,0,0,.08);
-    }
-    .contactBtn.map{
-      background: rgba(31,79,174,.08);
-      border-color: rgba(31,79,174,.18);
-      color: var(--azulDeep);
-    }
-    .contactBtn.wa{
-      background: var(--wa);
-      border-color: rgba(0,0,0,.10);
-      color:#fff;
-    }
+    .contactBtn.call{ background: var(--accent); border-color: rgba(0,0,0,.08); }
+    .contactBtn.map{ background: rgba(31,79,174,.08); border-color: rgba(31,79,174,.18); color: var(--azulDeep); }
+    .contactBtn.wa{ background: var(--wa); border-color: rgba(0,0,0,.10); color:#fff; }
     .contactBtn.wa:hover{ background: var(--waH); }
 
-    /* ===== Calculator ===== */
+    /* ===== CALCULADORA ===== */
     .calcWrap{ padding:16px; }
-    .calcTop{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      margin-bottom:12px;
-    }
-    .calcTop .q{
-      font-weight:1000;
-      font-size:14px;
-    }
-    .calcTop .desc{
-      color:var(--muted);
-      font-size:13.5px;
-      line-height:1.35;
-    }
+    .calcTop{ display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
 
-    .choiceRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
+    .q{ font-weight:1000; font-size:14px; }
+    .desc{ color:var(--muted); font-size:13.5px; line-height:1.35; }
+
+    /* PASO 1 */
+    .choiceRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
     .choice{
       flex:1;
       min-width:220px;
@@ -417,20 +335,16 @@
       border-color: rgba(0,0,0,.06);
     }
 
-    .calcHidden{
-      display:none;
+    /* PASO 2 (SCROLL DOWN REAL) */
+    #calcStep2{
+      display:none;               /* 🔥 OCULTO HASTA ELEGIR */
       margin-top:14px;
       padding-top:14px;
       border-top:1px solid rgba(15,23,42,.10);
     }
-    .calcHidden.active{ display:block; }
+    #calcStep2.active{ display:block; }
 
-    .subTabs{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin:10px 0 10px;
-    }
+    .subTabs{ display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 10px; }
     .subTab{
       flex:1;
       min-width:220px;
@@ -445,27 +359,12 @@
       gap:8px;
       align-items:center;
     }
-    .subTab.active{
-      background: rgba(46,168,255,.12);
-      border-color: rgba(46,168,255,.30);
-    }
+    .subTab.active{ background: rgba(46,168,255,.12); border-color: rgba(46,168,255,.30); }
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      margin-top:10px;
-    }
-    @media(max-width:720px){
-      .grid{ grid-template-columns:1fr; }
-    }
+    .grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px; }
+    @media(max-width:720px){ .grid{ grid-template-columns:1fr; } }
 
-    .label{
-      font-size:13px;
-      color: var(--muted);
-      font-weight:900;
-      margin:0 0 6px;
-    }
+    .label{ font-size:13px; color: var(--muted); font-weight:900; margin:0 0 6px; }
     .select, .field{
       width:100%;
       border:1px solid rgba(15,23,42,.12);
@@ -476,13 +375,7 @@
       outline:none;
     }
 
-    .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-
+    .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
     .result{
       margin-top:12px;
       border-radius: 16px;
@@ -507,18 +400,8 @@
       font-weight:700;
     }
 
-    /* ===== Schedule ===== */
-    .schedule{
-      padding:16px;
-      display:grid;
-      gap:12px;
-    }
-    .schedule p{
-      margin:0;
-      color: var(--muted);
-      line-height:1.45;
-      font-size:14px;
-    }
+    .schedule{ padding:16px; display:grid; gap:12px; }
+    .schedule p{ margin:0; color: var(--muted); line-height:1.45; font-size:14px; }
     .bigBtn{
       display:inline-flex;
       align-items:center;
@@ -536,7 +419,6 @@
     }
     .bigBtn:hover{ background: var(--waH); }
 
-    /* Small tweaks */
     @media(max-width:560px){
       .hero h1{ font-size:28px; }
       .tab{ padding:12px 14px; font-size:13.5px; }
@@ -555,13 +437,12 @@
       <div class="title">MIR CARGO NICARAGUA</div>
       <div class="subtitle">Rastreo • Contacto • Calculadora • Agendar</div>
     </div>
-    <div class="flags" aria-label="Banderas">
+    <div class="flags">
       <img class="flag" src="https://flagcdn.com/us.svg" alt="Usa" />
       <img class="flag" src="https://flagcdn.com/ni.svg" alt="Nicaragua" />
     </div>
   </div>
 
-  <!-- Tabs arriba del encabezado (hero) -->
   <div class="tabs" role="tablist" aria-label="Secciones">
     <button class="tab active" id="tabTrack" type="button">📦 Rastreo</button>
     <button class="tab" id="tabContact" type="button">📍 Contacto</button>
@@ -571,7 +452,7 @@
 </header>
 
 <main>
-  <div class="hero" id="hero">
+  <div class="hero">
     <div>
       <h1>Rastreo y envíos con <b>MiR</b></h1>
       <p>
@@ -585,7 +466,7 @@
     </div>
   </div>
 
-  <!-- ========================= RASTREO ========================= -->
+  <!-- RASTREO -->
   <section class="section active" id="secTrack">
     <div class="card" style="margin-top:16px;">
       <div class="cardHead">
@@ -593,7 +474,6 @@
         <div class="hint">Buscá por tracking o nombre</div>
       </div>
 
-      <!-- Marítimo -->
       <div class="row">
         <div style="min-width:160px; font-weight:1000;">🚢 Rastreo Marítimo</div>
         <input class="input" id="searchMaritimo" placeholder="Número de rastreo marítimo" />
@@ -602,7 +482,6 @@
       <div class="results" id="resultsMaritimo"></div>
       <div class="empty" id="emptyMaritimo">No encontramos ese número.</div>
 
-      <!-- Aéreo -->
       <div class="row">
         <div style="min-width:160px; font-weight:1000;">✈️ Rastreo Aéreo</div>
         <input class="input" id="searchAereo" placeholder="Número de rastreo aéreo" />
@@ -611,7 +490,6 @@
       <div class="results" id="resultsAereo"></div>
       <div class="empty" id="emptyAereo">No encontramos ese número.</div>
 
-      <!-- Compras -->
       <div class="row">
         <div style="min-width:160px; font-weight:1000;">🛍️ Compras En Línea</div>
         <input class="input" id="searchCompra" placeholder="Nombre o número de tracking" />
@@ -622,7 +500,7 @@
     </div>
   </section>
 
-  <!-- ========================= CONTACTO ========================= -->
+  <!-- CONTACTO -->
   <section class="section" id="secContact">
     <div class="card" style="margin-top:16px;">
       <div class="cardHead">
@@ -638,9 +516,9 @@
           <div class="contactActions">
             <a class="contactBtn call" href="tel:+13056310701">📞 Llamar</a>
             <a class="contactBtn wa" target="_blank" rel="noopener"
-               href="https://wa.me/13056310701?text=Hola%2C%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n%3A%20___________.%20Mi%20nombre%20es%3A%20__________.%20Y%20mi%20tel%C3%A9fono%20es%3A%20________.">💬 WhatsApp</a>
+              href="https://wa.me/13056310701?text=Hola%2C%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n%3A%20___________.%20Mi%20nombre%20es%3A%20__________.%20Y%20mi%20tel%C3%A9fono%20es%3A%20________.">💬 WhatsApp</a>
             <a class="contactBtn map" target="_blank" rel="noopener"
-               href="https://www.google.com/maps/search/?api=1&query=2035%20W%20Flagler%20St%20Miami%20FL%2033135">📍 Maps</a>
+              href="https://www.google.com/maps/search/?api=1&query=2035%20W%20Flagler%20St%20Miami%20FL%2033135">📍 Maps</a>
           </div>
         </div>
 
@@ -650,8 +528,7 @@
           <div class="line"><b>Tel:</b> 8785-3842 / 8781-2066.</div>
           <div class="contactActions">
             <a class="contactBtn call" href="tel:+50587853842">📞 Llamar</a>
-            <a class="contactBtn map" target="_blank" rel="noopener"
-               href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5">📍 Maps</a>
+            <a class="contactBtn map" target="_blank" rel="noopener" href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5">📍 Maps</a>
           </div>
         </div>
 
@@ -661,15 +538,14 @@
           <div class="line"><b>Tel:</b> 2346-8244 / 8899-9548.</div>
           <div class="contactActions">
             <a class="contactBtn call" href="tel:+50523468244">📞 Llamar</a>
-            <a class="contactBtn map" target="_blank" rel="noopener"
-               href="https://maps.app.goo.gl/PVczh5oMTN3kp53R6">📍 Maps</a>
+            <a class="contactBtn map" target="_blank" rel="noopener" href="https://maps.app.goo.gl/PVczh5oMTN3kp53R6">📍 Maps</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========================= CALCULADORA ========================= -->
+  <!-- CALCULADORA -->
   <section class="section" id="secCalc">
     <div class="card" style="margin-top:16px;">
       <div class="cardHead">
@@ -683,114 +559,116 @@
           <div class="desc">Seleccioná el tipo de envío y meté libras o medidas para estimar el total.</div>
         </div>
 
+        <!-- PASO 1 -->
         <div class="calcTop" style="margin-top:10px;">
           <div class="q">¿Qué tipo de envío querés hacer?</div>
           <div class="desc">Elegí una opción para continuar.</div>
-
-          <!-- Forzamos elección (solo uno) -->
-          <div class="choiceRow" id="shipChoice">
-            <button class="choice active" type="button" id="chooseMar">🚢 Marítimo</button>
+          <div class="choiceRow">
+            <button class="choice" type="button" id="chooseMar">🚢 Marítimo</button>
             <button class="choice" type="button" id="chooseAir">✈️ Aéreo</button>
           </div>
         </div>
 
-        <!-- CONTENIDO MARÍTIMO (Default visible) -->
-        <div class="calcHidden active" id="marBox">
-          <div class="q" style="margin-bottom:6px;">¿Cómo querés calcular?</div>
+        <!-- PASO 2 (OCULTO Y CON SCROLL DOWN AUTOMÁTICO) -->
+        <div id="calcStep2">
+          <div class="q" style="margin-bottom:6px;" id="step2Title">Continuá con tu cálculo</div>
 
-          <div class="subTabs">
-            <button class="subTab active" type="button" id="marPesoTab">⚖️ Por peso</button>
-            <button class="subTab" type="button" id="marVolTab">📦 Por volumen</button>
+          <!-- MARÍTIMO -->
+          <div id="marBox" style="display:none;">
+            <div class="q" style="margin-bottom:6px;">¿Cómo querés calcular?</div>
+
+            <div class="subTabs">
+              <button class="subTab active" type="button" id="marPesoTab">⚖️ Por peso</button>
+              <button class="subTab" type="button" id="marVolTab">📦 Por volumen</button>
+            </div>
+
+            <div id="marPesoPanel">
+              <div class="grid">
+                <div>
+                  <div class="label">Libras (Lbs)</div>
+                  <input class="field" type="number" id="calcMarLbs" placeholder="Ej: 120" min="0" step="0.1" inputmode="decimal" />
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="btn" type="button" id="calcBtnMarPeso">Calcular</button>
+                <button class="btn secondary" type="button" id="calcBtnMarPesoClear">Limpiar</button>
+              </div>
+
+              <div class="result" id="calcResM"></div>
+
+              <div class="note">
+                Reglas por libra:
+                <br>• Hasta 100 Lbs: <b>$2.05/Lb</b>
+                <br>• Más de 100 Lbs: <b>$2.00/Lb</b>
+                <br>• Más de 300 Lbs: <b>$1.90/Lb</b>
+                <br>• Más de 500 Lbs: <b>$1.80/Lb</b>
+              </div>
+            </div>
+
+            <div id="marVolPanel" style="display:none;">
+              <div class="grid">
+                <div>
+                  <div class="label">Tipo de artículo</div>
+                  <select class="select" id="calcItemType">
+                    <option value="mueble_10">Mueble</option>
+                    <option value="ropa_30">Caja con ropa y artículos varios</option>
+                    <option value="refri_12">Electrodoméstico (Refrigeradora)</option>
+                    <option value="lavadora_20">Electrodoméstico (Lavadora / Secadora / Cocina)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <div class="label">Largo (In)</div>
+                  <input class="field" type="number" id="calcL" placeholder="L" min="0" step="0.1" inputmode="decimal" />
+                </div>
+
+                <div>
+                  <div class="label">Ancho (In)</div>
+                  <input class="field" type="number" id="calcW" placeholder="W" min="0" step="0.1" inputmode="decimal" />
+                </div>
+
+                <div>
+                  <div class="label">Alto (In)</div>
+                  <input class="field" type="number" id="calcH" placeholder="H" min="0" step="0.1" inputmode="decimal" />
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="btn" type="button" id="calcBtnMarVol">Calcular</button>
+                <button class="btn secondary" type="button" id="calcBtnMarVolClear">Limpiar</button>
+              </div>
+
+              <div class="result" id="calcResV"></div>
+
+              <div class="note">
+                El precio puede variar si las cantidades no están correctas, el artículo no está empacado,
+                o si el peso es demasiado para el artículo.
+              </div>
+            </div>
           </div>
 
-          <!-- Marítimo por peso -->
-          <div id="marPesoPanel">
+          <!-- AÉREO -->
+          <div id="airBox" style="display:none;">
+            <div class="q" style="margin-bottom:6px;">Ingresá el peso para calcular</div>
+
             <div class="grid">
               <div>
                 <div class="label">Libras (Lbs)</div>
-                <input class="field" type="number" id="calcMarLbs" placeholder="Ej: 120" min="0" step="0.1" inputmode="decimal" />
+                <input class="field" type="number" id="calcAereoLbs" placeholder="Ej: 15" min="0" step="0.1" inputmode="decimal" />
               </div>
             </div>
 
             <div class="actions">
-              <button class="btn" type="button" id="calcBtnMarPeso">Calcular</button>
-              <button class="btn secondary" type="button" id="calcBtnMarPesoClear">Limpiar</button>
+              <button class="btn" type="button" id="calcBtnAereo">Calcular</button>
+              <button class="btn secondary" type="button" id="calcBtnAereoClear">Limpiar</button>
             </div>
 
-            <div class="result" id="calcResM"></div>
+            <div class="result" id="calcResA"></div>
 
             <div class="note">
-              Reglas por libra:
-              <br>• Hasta 100 Lbs: <b>$2.05/Lb</b>
-              <br>• Más de 100 Lbs: <b>$2.00/Lb</b>
-              <br>• Más de 300 Lbs: <b>$1.90/Lb</b>
-              <br>• Más de 500 Lbs: <b>$1.80/Lb</b>
+              Regla: Hasta 20 Lbs se cobra a <b>$7.00/Lb</b>. Si es <b>más de 20 Lbs</b>, se cobra a <b>$6.50/Lb</b>.
             </div>
-          </div>
-
-          <!-- Marítimo por volumen -->
-          <div id="marVolPanel" style="display:none;">
-            <div class="grid">
-              <div>
-                <div class="label">Tipo de artículo</div>
-                <select class="select" id="calcItemType">
-                  <option value="mueble_10">Mueble</option>
-                  <option value="ropa_30">Caja con ropa y artículos varios</option>
-                  <option value="refri_12">Electrodoméstico (Refrigeradora)</option>
-                  <option value="lavadora_20">Electrodoméstico (Lavadora / Secadora / Cocina)</option>
-                </select>
-              </div>
-
-              <div>
-                <div class="label">Largo (In)</div>
-                <input class="field" type="number" id="calcL" placeholder="L" min="0" step="0.1" inputmode="decimal" />
-              </div>
-
-              <div>
-                <div class="label">Ancho (In)</div>
-                <input class="field" type="number" id="calcW" placeholder="W" min="0" step="0.1" inputmode="decimal" />
-              </div>
-
-              <div>
-                <div class="label">Alto (In)</div>
-                <input class="field" type="number" id="calcH" placeholder="H" min="0" step="0.1" inputmode="decimal" />
-              </div>
-            </div>
-
-            <div class="actions">
-              <button class="btn" type="button" id="calcBtnMarVol">Calcular</button>
-              <button class="btn secondary" type="button" id="calcBtnMarVolClear">Limpiar</button>
-            </div>
-
-            <div class="result" id="calcResV"></div>
-
-            <div class="note">
-              El precio puede variar si las cantidades no están correctas, el artículo no está empacado,
-              o si el peso es demasiado para el artículo.
-            </div>
-          </div>
-        </div>
-
-        <!-- CONTENIDO AÉREO (Se muestra al elegir) -->
-        <div class="calcHidden" id="airBox">
-          <div class="q" style="margin-bottom:6px;">Ingresá el peso para calcular</div>
-
-          <div class="grid">
-            <div>
-              <div class="label">Libras (Lbs)</div>
-              <input class="field" type="number" id="calcAereoLbs" placeholder="Ej: 15" min="0" step="0.1" inputmode="decimal" />
-            </div>
-          </div>
-
-          <div class="actions">
-            <button class="btn" type="button" id="calcBtnAereo">Calcular</button>
-            <button class="btn secondary" type="button" id="calcBtnAereoClear">Limpiar</button>
-          </div>
-
-          <div class="result" id="calcResA"></div>
-
-          <div class="note">
-            Regla: Hasta 20 Lbs se cobra a <b>$7.00/Lb</b>. Si es <b>más de 20 Lbs</b>, se cobra a <b>$6.50/Lb</b>.
           </div>
         </div>
 
@@ -798,7 +676,7 @@
     </div>
   </section>
 
-  <!-- ========================= AGENDAR ========================= -->
+  <!-- AGENDAR -->
   <section class="section" id="secSchedule">
     <div class="card" style="margin-top:16px;">
       <div class="cardHead">
@@ -813,21 +691,18 @@
         </p>
 
         <a class="bigBtn" target="_blank" rel="noopener"
-           href="https://wa.me/13056310701?text=Hola%2C%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n%3A%20___________.%20Mi%20nombre%20es%3A%20__________.%20Y%20mi%20tel%C3%A9fono%20es%3A%20________.">
+          href="https://wa.me/13056310701?text=Hola%2C%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n%3A%20___________.%20Mi%20nombre%20es%3A%20__________.%20Y%20mi%20tel%C3%A9fono%20es%3A%20________.">
           💬 Escribir por WhatsApp (Miami)
         </a>
 
-        <p style="font-size:12.8px;">
-          Si preferís, también podés llamar al <b>305-631-0701</b>.
-        </p>
+        <p style="font-size:12.8px;">Si preferís, también podés llamar al <b>305-631-0701</b>.</p>
       </div>
     </div>
   </section>
 </main>
 
 <script>
-/* ========================= CSV / Rastreo ========================= */
-
+/* ========================= Rastreo ========================= */
 const urls = {
   Maritimo:[
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=0&single=true&output=csv",
@@ -844,21 +719,14 @@ const urls = {
 function normalizeImageUrl(url){
   if(!url) return "";
   url = (url + "").trim();
-
   let m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
   if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
-
   m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
   if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
-
   if(url.includes("googleusercontent")) return url;
   return url;
 }
-
-function safe(r,keys){
-  for(const k of keys){ if(r && r[k]) return r[k]; }
-  return "";
-}
+function safe(r,keys){ for(const k of keys){ if(r && r[k]) return r[k]; } return ""; }
 
 function parseDate(dateString){
   if(!dateString) return 0;
@@ -866,34 +734,17 @@ function parseDate(dateString){
   if(!datePart || !timePart) return 0;
   const [day, month, year] = datePart.split("/");
   const [hour, minute, second] = timePart.split(":");
-  return new Date(
-    parseInt(year,10),
-    parseInt(month,10)-1,
-    parseInt(day,10),
-    parseInt(hour,10),
-    parseInt(minute,10),
-    parseInt(second,10)
-  ).getTime();
+  return new Date(parseInt(year,10), parseInt(month,10)-1, parseInt(day,10), parseInt(hour,10), parseInt(minute,10), parseInt(second,10)).getTime();
 }
 
 function renderTable(list,type){
   const container = document.getElementById(`results${type}`);
   const empty = document.getElementById(`empty${type}`);
-
   container.innerHTML = "";
   empty.style.display = "none";
+  if(!list.length){ empty.style.display="block"; return; }
 
-  if(!list.length){
-    empty.style.display = "block";
-    return;
-  }
-
-  list.sort((a,b)=>{
-    const da = parseDate(safe(a,["Fecha","FECHA"]));
-    const db = parseDate(safe(b,["Fecha","FECHA"]));
-    return db - da;
-  });
-
+  list.sort((a,b)=>parseDate(safe(b,["Fecha","FECHA"])) - parseDate(safe(a,["Fecha","FECHA"])));
   if(type === "Compra") list = list.slice(0,40);
 
   list.forEach(r=>{
@@ -902,14 +753,12 @@ function renderTable(list,type){
     const nombre = safe(r,["Nombre","Cliente","CLIENTE"]);
     const status = safe(r,["Status","STATUS"]);
     const agente = safe(r,["Agente","AGENTE","Usuario"]);
-
     const foto  = normalizeImageUrl(safe(r,["Web url","Web URL"]));
     const firma = normalizeImageUrl(safe(r,["Firma url","Firma URL"]));
 
     let html = `<div class="result-block">`;
     html += `<p><strong>Fecha:</strong> ${fecha}</p>`;
     html += `<p><strong>Tracking:</strong> ${track}</p>`;
-
     if(type === "Compra"){
       html += `<p><strong>Nombre:</strong> ${nombre}</p>`;
       html += `<p><strong>Agente:</strong> ${agente}</p>`;
@@ -917,16 +766,10 @@ function renderTable(list,type){
       html += `<p><strong>Status:</strong> <span class="status-pill">${status}</span></p>`;
       html += `<p><strong>Agente:</strong> ${agente}</p>`;
     }
-
     html += `<div class="detail-actions">`;
-    if(foto){
-      html += `<button class="view-btn" type="button" onclick="window.open('${foto}','_blank')">📷 Ver foto</button>`;
-    }
-    if(type !== "Compra" && firma){
-      html += `<button class="view-btn" type="button" onclick="window.open('${firma}','_blank')">✍️ Ver firma</button>`;
-    }
+    if(foto)  html += `<button class="view-btn" type="button" onclick="window.open('${foto}','_blank')">📷 Ver foto</button>`;
+    if(type !== "Compra" && firma) html += `<button class="view-btn" type="button" onclick="window.open('${firma}','_blank')">✍️ Ver firma</button>`;
     html += `</div></div>`;
-
     container.insertAdjacentHTML("beforeend", html);
   });
 }
@@ -938,17 +781,11 @@ async function searchTracking(type){
 
   let data = [];
   const links = Array.isArray(urls[type]) ? urls[type] : [urls[type]];
-
   for(const link of links){
     await new Promise(resolve=>{
       Papa.parse(link + "&t=" + Date.now(),{
-        download:true,
-        header:true,
-        skipEmptyLines:true,
-        complete:res=>{
-          data = data.concat(res.data || []);
-          resolve();
-        }
+        download:true, header:true, skipEmptyLines:true,
+        complete:res=>{ data = data.concat(res.data || []); resolve(); }
       });
     });
   }
@@ -963,13 +800,12 @@ async function searchTracking(type){
 }
 
 ["Maritimo","Aereo","Compra"].forEach(t=>{
-  const el = document.getElementById(`search${t}`);
-  el.addEventListener("keydown", e => {
+  document.getElementById(`search${t}`).addEventListener("keydown", e=>{
     if(e.key === "Enter") searchTracking(t);
   });
 });
 
-/* ========================= Tabs (Rastreo/Contacto/Calcular/Agendar) ========================= */
+/* ========================= Tabs ========================= */
 (function(){
   const tabs = [
     { btn:"tabTrack", sec:"secTrack" },
@@ -977,7 +813,6 @@ async function searchTracking(type){
     { btn:"tabCalc", sec:"secCalc" },
     { btn:"tabSchedule", sec:"secSchedule" }
   ];
-
   function openTab(btnId){
     tabs.forEach(t=>{
       document.getElementById(t.btn).classList.toggle("active", t.btn === btnId);
@@ -985,16 +820,17 @@ async function searchTracking(type){
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
-
-  tabs.forEach(t=>{
-    document.getElementById(t.btn).addEventListener("click", ()=>openTab(t.btn));
-  });
+  tabs.forEach(t=>document.getElementById(t.btn).addEventListener("click", ()=>openTab(t.btn)));
 })();
 
-/* ========================= Calculadora (Elección -> Scroll Down) ========================= */
+/* ========================= Calculadora (Scroll Down Real) ========================= */
 document.addEventListener("DOMContentLoaded", ()=>{
   const chooseMar = document.getElementById("chooseMar");
   const chooseAir = document.getElementById("chooseAir");
+
+  const step2 = document.getElementById("calcStep2");
+  const step2Title = document.getElementById("step2Title");
+
   const marBox = document.getElementById("marBox");
   const airBox = document.getElementById("airBox");
 
@@ -1009,8 +845,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
     return Number.isFinite(v) ? v : 0;
   };
 
-  function scrollToCalc(){
-    const y = marBox.getBoundingClientRect().top + window.scrollY - 90;
+  function showStep2AndScroll(){
+    step2.classList.add("active");
+    const y = step2.getBoundingClientRect().top + window.scrollY - 90;
     window.scrollTo({ top: y, behavior: "smooth" });
   }
 
@@ -1019,11 +856,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
     chooseMar.classList.toggle("active", isMar);
     chooseAir.classList.toggle("active", !isMar);
 
-    marBox.classList.toggle("active", isMar);
-    airBox.classList.toggle("active", !isMar);
+    marBox.style.display = isMar ? "block" : "none";
+    airBox.style.display = isMar ? "none" : "block";
 
-    // Scroll down para que se sienta como “paso 2”
-    setTimeout(scrollToCalc, 80);
+    step2Title.textContent = isMar ? "Elegiste Marítimo. Ahora seleccioná peso o volumen" : "Elegiste Aéreo. Ahora ingresá el peso";
+
+    showStep2AndScroll();
   }
 
   chooseMar.addEventListener("click", ()=>setShip("mar"));
@@ -1033,11 +871,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const isPeso = which === "peso";
     marPesoTab.classList.toggle("active", isPeso);
     marVolTab.classList.toggle("active", !isPeso);
-
     marPesoPanel.style.display = isPeso ? "block" : "none";
     marVolPanel.style.display  = isPeso ? "none"  : "block";
   }
-
   marPesoTab.addEventListener("click", ()=>setMarMode("peso"));
   marVolTab.addEventListener("click", ()=>setMarMode("vol"));
 
@@ -1072,12 +908,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
     document.getElementById("calcResM").textContent = "";
   });
 
-  // Marítimo por volumen (multiplicador)
+  // Marítimo por volumen
   function getMultiplier(){
     const v = (document.getElementById("calcItemType").value || "");
-    if(v === "mueble_10")   return { mult: 10, label: "Mueble" };
-    if(v === "ropa_30")     return { mult: 30, label: "Caja con ropa y artículos varios" };
-    if(v === "refri_12")    return { mult: 12, label: "Electrodoméstico (Refrigeradora)" };
+    if(v === "mueble_10") return { mult: 10, label: "Mueble" };
+    if(v === "ropa_30") return { mult: 30, label: "Caja con ropa y artículos varios" };
+    if(v === "refri_12") return { mult: 12, label: "Electrodoméstico (Refrigeradora)" };
     if(v === "lavadora_20") return { mult: 20, label: "Electrodoméstico (Lavadora / Secadora / Cocina)" };
     return { mult: 10, label: "Mueble" };
   }
@@ -1086,12 +922,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const L = num("calcL"), W = num("calcW"), H = num("calcH");
     const out = document.getElementById("calcResV");
     if(L<=0 || W<=0 || H<=0){ out.textContent = "Ingresá las 3 medidas (en pulgadas)."; return; }
-
     const cft = (L * W * H) / 1728;
     const { mult, label } = getMultiplier();
     const total = cft * mult;
-
-    // Solo tipo + total (sin cubicaje ni tarifa)
     out.innerHTML = `Tipo: <b>${label}</b><br>Total aproximado: <b>$${money(total)}</b>`;
   });
 
@@ -1101,8 +934,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     document.getElementById("calcItemType").value = "mueble_10";
   });
 
-  // Defaults: Marítimo y por peso
-  setShip("mar");
+  // Default: NO mostrar paso 2 hasta elegir (como pediste)
   setMarMode("peso");
 });
 </script>
