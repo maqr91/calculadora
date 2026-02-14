@@ -718,6 +718,35 @@ function parseDate(dateString){
   return new Date(parseInt(year,10), parseInt(month,10)-1, parseInt(day,10), parseInt(hour,10), parseInt(minute,10), parseInt(second,10)).getTime();
 }
 
+/* ✅ NUEVO: Fecha bonita con mes en nombre + AM/PM */
+function formatFechaBonita(dateString){
+  if(!dateString) return "";
+  const raw = (dateString + "").trim();
+
+  // Espera: DD/MM/YYYY HH:MM:SS
+  const [datePart, timePart] = raw.split(" ");
+  if(!datePart || !timePart) return raw;
+
+  const [day, month, year] = datePart.split("/");
+  let [hh, mm, ss] = timePart.split(":");
+
+  const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+  const d = parseInt(day,10);
+  const m = parseInt(month,10);
+  const y = year;
+
+  let hour24 = parseInt(hh,10);
+  const ampm = hour24 >= 12 ? "PM" : "AM";
+  let hour12 = hour24 % 12;
+  if(hour12 === 0) hour12 = 12;
+
+  const mesNombre = meses[m-1] || month;
+  const min2 = String(mm).padStart(2,"0");
+  const sec2 = String(ss || "00").padStart(2,"0");
+
+  return `${d} de ${mesNombre}, ${y} ${hour12}:${min2}:${sec2} ${ampm}`;
+}
+
 function renderTable(list,type){
   const container = document.getElementById(`results${type}`);
   const empty = document.getElementById(`empty${type}`);
@@ -729,7 +758,9 @@ function renderTable(list,type){
   if(type === "Compra") list = list.slice(0,40);
 
   list.forEach(r=>{
-    const fecha = safe(r,["Fecha","FECHA"]);
+    const fechaRaw = safe(r,["Fecha","FECHA"]);
+    const fecha = formatFechaBonita(fechaRaw);
+
     const track = safe(r,["Tracking","Tracking #","Orden","ORDEN"]);
     const nombre = safe(r,["Nombre","Cliente","CLIENTE"]);
     const status = safe(r,["Status","STATUS"]);
