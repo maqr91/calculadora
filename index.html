@@ -26,206 +26,413 @@
       --wa:#25D366;
       --waH:#1ebe5d;
 
-      --shadowSoft: 0 10px 26px rgba(2,6,23,.12);
-      --radius:18px;
-      --radius2:22px;
-      --max:980px;
+      --shadowSoft: 0 10px 26px rgba(2, 6, 23, .07);
+      --radius: 18px;
     }
 
-    *{box-sizing:border-box}
+    *{ box-sizing:border-box; }
     body{
       margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 900px at 20% -10%, rgba(31,79,174,.24), transparent 55%),
-                  radial-gradient(900px 700px at 110% 10%, rgba(255,209,166,.35), transparent 45%),
-                  var(--bg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
       color:var(--text);
+      background:
+        radial-gradient(1200px 500px at 40% 0%, rgba(31,79,174,.10), transparent 60%),
+        radial-gradient(800px 400px at 75% 10%, rgba(255,209,166,.20), transparent 60%),
+        var(--bg);
     }
-    .wrap{max-width:var(--max); margin:0 auto; padding:16px 14px 40px;}
+
     header{
-      background: linear-gradient(135deg, rgba(27,58,107,.94), rgba(11,31,58,.96));
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:var(--radius2);
-      padding:16px;
-      box-shadow: var(--shadowSoft);
-      color:#fff;
       position:sticky;
-      top:10px;
-      z-index:5;
-      backdrop-filter: blur(10px);
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(255,255,255,.70);
+      border-bottom: 1px solid rgba(15,23,42,.08);
     }
-    .brandRow{display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;}
+
+    .topbar{
+      max-width:1100px;
+      margin:0 auto;
+      padding:14px 14px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
     .brand{
-      display:flex; gap:12px; align-items:center;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      line-height:1.1;
+      min-width: 220px;
     }
-    .logo{
-      width:46px; height:46px; border-radius:14px;
-      background: linear-gradient(135deg, rgba(46,168,255,.25), rgba(255,209,166,.22));
-      border:1px solid rgba(255,255,255,.12);
-      display:grid; place-items:center;
-      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+    .brand .title{
       font-weight:900;
-      letter-spacing:.5px;
+      letter-spacing:.6px;
+      font-size:15px;
+      text-transform:uppercase;
     }
-    .title h1{margin:0; font-size:18px; letter-spacing:.2px}
-    .title p{margin:2px 0 0; font-size:12px; opacity:.85}
+    .brand .subtitle{
+      font-size:12.5px;
+      color:var(--muted);
+      margin-top:4px;
+    }
 
-    .branches{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
-    .branch{
-      background: rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:999px;
-      padding:8px 10px;
-      display:flex; gap:8px; align-items:center;
-      font-size:12px;
-      white-space:nowrap;
+    .flags{
+      display:flex;
+      gap:10px;
+      align-items:center;
     }
-    .branch b{font-size:12px}
-    .branch .btn{
-      text-decoration:none;
-      background: rgba(255,209,166,.92);
-      color:#1b2a3d;
-      padding:7px 10px;
-      border-radius:999px;
-      font-weight:800;
-      border:1px solid rgba(255,255,255,.16);
+    .flag{
+      width:44px;
+      height:28px;
+      border-radius:8px;
+      object-fit:cover;
+      box-shadow: 0 8px 18px rgba(2,6,23,.12);
+      border:1px solid rgba(15,23,42,.10);
+      background:#fff;
     }
-    .branch .btn:hover{background: var(--accentH)}
-    .branch .btn.wa{background: rgba(37,211,102,.92); color:#073018}
-    .branch .btn.wa:hover{background: var(--waH)}
 
-    .grid{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: 1fr;
+    .tabs{
+      max-width:1100px;
+      margin:0 auto;
+      padding:0 14px 14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .tab{
+      border:none;
+      cursor:pointer;
+      border-radius:999px;
+      padding:12px 16px;
+      font-weight:900;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+      font-size:14px;
+      color:var(--azulDeep);
+      background: rgba(31,79,174,.08);
+      border: 1px solid rgba(31,79,174,.18);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition: transform .08s ease, background .15s ease, box-shadow .15s ease;
+    }
+    .tab:hover{ background: rgba(31,79,174,.12); transform: translateY(-1px); }
+    .tab.active{
+      background: linear-gradient(90deg, rgba(31,79,174,.95), rgba(27,58,107,.95));
+      color:#fff;
+      border-color: rgba(0,0,0,.06);
+      box-shadow: 0 10px 22px rgba(31,79,174,.20);
+    }
+
+    main{
+      max-width:1100px;
+      margin:0 auto;
+      padding:18px 14px 34px;
+    }
+
+    /* HERO (DINÁMICO) */
+    .hero{
+      border-radius: 22px;
+      background:
+        radial-gradient(900px 360px at 10% 0%, rgba(31,79,174,.20), transparent 60%),
+        radial-gradient(900px 360px at 90% 0%, rgba(255,209,166,.40), transparent 55%),
+        rgba(255,255,255,.65);
+      border: 1px solid rgba(15,23,42,.08);
+      box-shadow: var(--shadowSoft);
+      padding:22px;
+      display:flex;
+      justify-content:space-between;
       gap:14px;
+      align-items:center;
     }
-    @media (min-width: 860px){
-      .grid{grid-template-columns: 1fr 1fr;}
+
+    .hero h1{
+      margin:0;
+      font-size:34px;
+      letter-spacing:-.4px;
+      line-height:1.06;
     }
+    .hero p{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:14.5px;
+      line-height:1.35;
+      max-width: 760px;
+      white-space: pre-line;
+    }
+
+    .heroIconWrap{
+      min-width: 72px;
+      display:flex;
+      justify-content:flex-end;
+      align-items:center;
+    }
+    .heroIcon{
+      width:58px;
+      height:58px;
+      border-radius: 18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(31,79,174,.10);
+      border: 1px solid rgba(31,79,174,.18);
+      box-shadow: 0 14px 26px rgba(31,79,174,.10);
+    }
+    .heroIcon svg{ width:30px; height:30px; }
+    .heroEmoji{ font-size:26px; font-weight:900; }
+
+    .section{ margin-top:18px; display:none; }
+    .section.active{ display:block; }
 
     .card{
       background: var(--card);
-      border:1px solid var(--border);
-      border-radius: var(--radius2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
       box-shadow: var(--shadowSoft);
-      padding:14px;
       overflow:hidden;
-    }
-    .card h2{
-      margin:0 0 10px;
-      font-size:16px;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .badge{
-      font-size:12px;
-      padding:6px 10px;
-      border-radius:999px;
-      background: rgba(46,168,255,.12);
-      color: var(--azulRoyal);
-      border: 1px solid rgba(46,168,255,.18);
-      font-weight:800;
+      margin-top:16px;
     }
 
-    .searchRow{
+    .row{
       display:flex;
       gap:10px;
-      align-items:center;
       flex-wrap:wrap;
-      margin-bottom:10px;
+      align-items:center;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(15,23,42,.08);
     }
-    input[type="text"]{
-      flex:1;
-      min-width: 180px;
-      border-radius: 14px;
-      padding: 12px 12px;
-      border:1px solid rgba(15,23,42,.12);
-      outline:none;
-      font-size:14px;
-      background: #fff;
-    }
-    input[type="text"]:focus{
-      border-color: rgba(46,168,255,.55);
-      box-shadow: 0 0 0 4px rgba(46,168,255,.14);
-    }
-    .btnMain{
-      border:none;
-      background: var(--accent);
-      padding: 12px 14px;
-      border-radius: 14px;
-      font-weight:900;
-      cursor:pointer;
-      color:#1b2a3d;
-      border:1px solid rgba(15,23,42,.06);
-    }
-    .btnMain:hover{background: var(--accentH)}
-    .btnGhost{
-      border:none;
-      background: rgba(31,79,174,.10);
-      padding: 12px 14px;
-      border-radius: 14px;
-      font-weight:900;
-      cursor:pointer;
-      color: var(--azulNavy);
-      border:1px solid rgba(31,79,174,.12);
-    }
-    .btnGhost:hover{background: rgba(31,79,174,.14)}
+    .row:last-child{ border-bottom:none; }
 
-    .hint{margin:0 0 10px; font-size:12px; color:var(--muted)}
-    .empty{
-      display:none;
-      background: rgba(2,6,23,.03);
-      border:1px dashed rgba(2,6,23,.20);
-      border-radius: 16px;
-      padding: 12px;
-      color: var(--muted);
-      font-size: 13px;
+    .input{
+      flex:1;
+      min-width: 240px;
+      border: 1px solid rgba(15,23,42,.12);
+      background:#fff;
+      border-radius: 14px;
+      padding:12px 14px;
+      font-size:15px;
+      outline:none;
     }
+
+    .btn{
+      border:none;
+      border-radius: 14px;
+      padding:12px 16px;
+      font-weight:900;
+      cursor:pointer;
+      background: var(--accent);
+      color: var(--text);
+      transition: background .15s ease, transform .08s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{ background: var(--accentH); transform: translateY(-1px); }
+    .btn.secondary{
+      background: rgba(31,79,174,.08);
+      border:1px solid rgba(31,79,174,.18);
+      color: var(--azulDeep);
+    }
+    .btn.secondary:hover{ background: rgba(31,79,174,.12); }
+
+    .results{ padding:8px 16px 14px; }
+    .empty{ display:none; padding:14px 16px; color:var(--muted); font-weight:800; text-align:center; }
 
     .result-block{
-      border:1px solid rgba(15,23,42,.10);
-      border-radius: 18px;
-      padding: 12px;
-      margin-top: 10px;
-      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(246,247,251,.92));
+      border: 1px solid rgba(15,23,42,.10);
+      border-radius: 16px;
+      padding:12px 14px;
+      margin-top:10px;
+      background: #fff;
+      box-shadow: 0 10px 20px rgba(2,6,23,.05);
     }
-    .result-block p{margin:6px 0; font-size:13px}
+    .result-block p{ margin:6px 0; line-height:1.25; word-break: break-word; font-size:14px; }
+
     .status-pill{
       display:inline-block;
-      padding: 6px 10px;
+      padding:4px 10px;
       border-radius: 999px;
-      background: rgba(37,211,102,.10);
-      border: 1px solid rgba(37,211,102,.18);
-      color:#0a5a2e;
       font-weight:900;
-      font-size:12px;
+      font-size:12.5px;
+      background: var(--celesteBg);
+      color: var(--celesteTxt);
+      border:1px solid rgba(46,168,255,.22);
     }
-    .detail-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
+
+    .detail-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
     .view-btn{
       border:none;
-      background: rgba(31,79,174,.10);
-      color: var(--azulNavy);
-      border: 1px solid rgba(31,79,174,.16);
       border-radius: 14px;
-      padding: 10px 12px;
+      padding:11px 14px;
       font-weight:900;
       cursor:pointer;
-      font-size:13px;
+      background: rgba(31,79,174,.92);
+      color:#fff;
+      transition: transform .08s ease, filter .15s ease;
     }
-    .view-btn:hover{background: rgba(31,79,174,.14)}
-    footer{
-      margin-top: 16px;
-      text-align:center;
-      font-size:12px;
-      color: var(--muted);
-      opacity:.9;
+    .view-btn:hover{ transform: translateY(-1px); filter: brightness(1.06); }
+
+    /* CONTACTO */
+    .contactGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+      padding:16px;
+    }
+    @media(min-width:740px){ .contactGrid{ grid-template-columns: 1.2fr 1.2fr 1fr; } }
+
+    .contactCard{
+      background: #fff;
+      border:1px solid rgba(15,23,42,.10);
+      border-radius: 18px;
+      padding:14px;
+      box-shadow: 0 12px 26px rgba(2,6,23,.06);
+    }
+    .contactCard .city{ font-weight:1000; font-size:14px; margin-bottom:8px; }
+    .contactCard .line{ color: var(--muted); font-size:13.5px; line-height:1.35; margin:5px 0; }
+
+    .contactActions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+    .contactBtn{
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:11px 14px;
+      border-radius: 14px;
+      font-weight:900;
+      border:1px solid rgba(15,23,42,.10);
+      background: rgba(2,6,23,.02);
+      color: var(--text);
+    }
+    .contactBtn.call{ background: var(--accent); border-color: rgba(0,0,0,.08); }
+    .contactBtn.map{ background: rgba(31,79,174,.08); border-color: rgba(31,79,174,.18); color: var(--azulDeep); }
+    .contactBtn.wa{ background: var(--wa); border-color: rgba(0,0,0,.10); color:#fff; }
+    .contactBtn.wa:hover{ background: var(--waH); }
+
+    /* COTIZACIÓN */
+    .calcWrap{ padding:16px; }
+
+    .q{ font-weight:1000; font-size:14px; }
+    .desc{ color:var(--muted); font-size:13.5px; line-height:1.35; }
+
+    .choiceRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+    .choice{
+      flex:1;
+      min-width:220px;
+      border:1px solid rgba(15,23,42,.10);
+      background:#fff;
+      border-radius: 16px;
+      padding:12px 14px;
+      font-weight:1000;
+      cursor:pointer;
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      align-items:center;
+      transition: transform .08s ease, border-color .15s ease, background .15s ease;
+    }
+    .choice:hover{ transform: translateY(-1px); border-color: rgba(31,79,174,.25); }
+    .choice.active{
+      background: linear-gradient(90deg, rgba(31,79,174,.95), rgba(27,58,107,.95));
+      color:#fff;
+      border-color: rgba(0,0,0,.06);
+    }
+
+    #calcStep2{
+      display:none;
+      margin-top:14px;
+      padding-top:14px;
+      border-top:1px solid rgba(15,23,42,.10);
+    }
+    #calcStep2.active{ display:block; }
+
+    .subTabs{ display:flex; gap:10px; flex-wrap:wrap; margin:10px 0 10px; }
+    .subTab{
+      flex:1;
+      min-width:220px;
+      border:1px solid rgba(15,23,42,.10);
+      background:#fff;
+      border-radius: 16px;
+      padding:12px 14px;
+      font-weight:1000;
+      cursor:pointer;
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      align-items:center;
+    }
+    .subTab.active{ background: rgba(46,168,255,.12); border-color: rgba(46,168,255,.30); }
+
+    .grid{ display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px; }
+    @media(max-width:720px){ .grid{ grid-template-columns:1fr; } }
+
+    .label{ font-size:13px; color: var(--muted); font-weight:900; margin:0 0 6px; }
+    .select, .field{
+      width:100%;
+      border:1px solid rgba(15,23,42,.12);
+      background:#fff;
+      border-radius: 14px;
+      padding:12px 14px;
+      font-size:14.5px;
+      outline:none;
+    }
+
+    .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+    .result{
+      margin-top:12px;
+      border-radius: 16px;
+      padding:12px 14px;
+      background: rgba(46,168,255,.10);
+      border:1px solid rgba(46,168,255,.22);
+      font-weight:900;
+      min-height: 44px;
+      line-height:1.35;
+    }
+    .result b{ color: var(--azulDeep); }
+
+    .note{
+      margin-top:10px;
+      border-radius: 16px;
+      padding:12px 14px;
+      background: rgba(255,209,166,.28);
+      border: 1px solid rgba(255,191,133,.55);
+      color: rgba(15,23,42,.78);
+      font-size:12.8px;
+      line-height:1.35;
+      font-weight:700;
+    }
+
+    /* AGENDA */
+    .schedule{ padding:16px; display:grid; gap:12px; }
+    .schedule p{ margin:0; color: var(--muted); line-height:1.45; font-size:14px; }
+    .bigBtn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      text-decoration:none;
+      border-radius: 18px;
+      padding:14px 16px;
+      font-weight:1000;
+      background: var(--wa);
+      color:#fff;
+      border:1px solid rgba(0,0,0,.10);
+      width: fit-content;
+      box-shadow: 0 16px 30px rgba(37,211,102,.20);
+    }
+    .bigBtn:hover{ background: var(--waH); }
+
+    @media(max-width:560px){
+      .hero h1{ font-size:28px; }
+      .tab{ padding:12px 14px; font-size:13.5px; }
+      .flag{ width:40px; height:26px; }
+      .heroIcon{ width:54px; height:54px; border-radius:16px; }
     }
   </style>
 
@@ -233,249 +440,574 @@
 </head>
 
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brandRow">
-        <div class="brand">
-          <div class="logo">MIR</div>
-          <div class="title">
-            <h1>MiR Cargo Nicaragua</h1>
-            <p>Rastreo Aéreo y Marítimo • Fotos y firma (si aplica)</p>
-          </div>
-        </div>
 
-        <div class="branches">
-          <div class="branch">
-            <b>Miami</b>
-            <a class="btn" href="tel:+13055555555">Llamar</a>
-            <a class="btn wa" href="https://wa.me/13055555555" target="_blank" rel="noopener">WhatsApp</a>
-          </div>
-          <div class="branch">
-            <b>Managua</b>
-            <a class="btn" href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5" target="_blank" rel="noopener">Maps</a>
-          </div>
-          <div class="branch">
-            <b>Chinandega</b>
-            <a class="btn" href="https://maps.app.goo.gl/PVczh5oMTN3kp53R6" target="_blank" rel="noopener">Maps</a>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <div class="grid">
-      <!-- MARITIMO -->
-      <div class="card">
-        <h2>Marítimo <span class="badge">Contenedor</span></h2>
-        <p class="hint">Buscá por tracking u orden (también podés escribir el nombre).</p>
-        <div class="searchRow">
-          <input id="searchMaritimo" type="text" placeholder="Ej: 123456, ORDEN-88, Juan..." />
-          <button class="btnMain" onclick="searchTracking('Maritimo')">Buscar</button>
-          <button class="btnGhost" onclick="resetUI('Maritimo')">Reset</button>
-        </div>
-        <div id="emptyMaritimo" class="empty">No se encontró nada. Revisá el número y probá de nuevo.</div>
-        <div id="resultsMaritimo"></div>
-      </div>
-
-      <!-- AEREO -->
-      <div class="card">
-        <h2>Aéreo <span class="badge">Encomiendas</span></h2>
-        <p class="hint">Buscá por tracking u orden (también podés escribir el nombre).</p>
-        <div class="searchRow">
-          <input id="searchAereo" type="text" placeholder="Ej: 837025, ORDEN-22, Maria..." />
-          <button class="btnMain" onclick="searchTracking('Aereo')">Buscar</button>
-          <button class="btnGhost" onclick="resetUI('Aereo')">Reset</button>
-        </div>
-        <div id="emptyAereo" class="empty">No se encontró nada. Revisá el número y probá de nuevo.</div>
-        <div id="resultsAereo"></div>
-      </div>
-
-      <!-- CORREO -->
-      <div class="card">
-        <h2>Correo <span class="badge">USPS/UPS/FedEx</span></h2>
-        <p class="hint">Buscá por tracking u orden (también podés escribir el nombre).</p>
-        <div class="searchRow">
-          <input id="searchCorreo" type="text" placeholder="Ej: 1Z..., 9400..., ORDEN-..." />
-          <button class="btnMain" onclick="searchTracking('Correo')">Buscar</button>
-          <button class="btnGhost" onclick="resetUI('Correo')">Reset</button>
-        </div>
-        <div id="emptyCorreo" class="empty">No se encontró nada. Revisá el número y probá de nuevo.</div>
-        <div id="resultsCorreo"></div>
-      </div>
-
-      <!-- COMPRA -->
-      <div class="card">
-        <h2>Compras <span class="badge">Recibido</span></h2>
-        <p class="hint">Buscá por tracking/orden o nombre. (Muestra las últimas 40.)</p>
-        <div class="searchRow">
-          <input id="searchCompra" type="text" placeholder="Ej: ORDEN-100, Amazon, Pedro..." />
-          <button class="btnMain" onclick="searchTracking('Compra')">Buscar</button>
-          <button class="btnGhost" onclick="resetUI('Compra')">Reset</button>
-        </div>
-        <div id="emptyCompra" class="empty">No se encontró nada. Revisá el número y probá de nuevo.</div>
-        <div id="resultsCompra"></div>
-      </div>
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <div class="title">MIR CARGO NICARAGUA</div>
+      <div class="subtitle">Rastreo • Contacto • Cotización • Agendar</div>
     </div>
-
-    <footer>
-      © MiR Cargo Nicaragua • Rastreo en vivo desde Google Sheets
-    </footer>
+    <div class="flags">
+      <img class="flag" src="https://flagcdn.com/us.svg" alt="Usa" />
+      <img class="flag" src="https://flagcdn.com/ni.svg" alt="Nicaragua" />
+    </div>
   </div>
 
-  <script>
-    // ✅ PEGÁ AQUÍ TUS LINKS CSV (uno o varios por tipo)
-    // Ejemplo:
-    // const urls = {
-    //   Maritimo: ["https://docs.google.com/spreadsheets/d/e/.../pub?output=csv"],
-    //   Aereo:    ["https://docs.google.com/spreadsheets/d/e/.../pub?output=csv"],
-    //   Correo:   ["https://docs.google.com/spreadsheets/d/e/.../pub?output=csv"],
-    //   Compra:   ["https://docs.google.com/spreadsheets/d/e/.../pub?output=csv"]
-    // };
-    const urls = {
-      Maritimo: [],
-      Aereo: [],
-      Correo: [],
-      Compra: []
-    };
+  <div class="tabs" role="tablist" aria-label="Secciones">
+    <button class="tab active" id="tabTrack" type="button">📦 Rastreo</button>
+    <button class="tab" id="tabContact" type="button">📍 Contacto</button>
+    <button class="tab" id="tabCalc" type="button">🖩 Cotizar Envío</button>
+    <button class="tab" id="tabSchedule" type="button">🗓️ Agendar</button>
+  </div>
+</header>
 
-    // Helpers
-    function safe(obj, keys){
-      for(const k of keys){
-        if(obj && obj[k] != null && String(obj[k]).trim() !== "") return String(obj[k]).trim();
-      }
-      return "";
+<main>
+  <!-- HERO DINÁMICO (ÚNICO TÍTULO, SIN REPETICIÓN) -->
+  <div class="hero" id="hero">
+    <div>
+      <h1 id="heroTitle">Rastreá tus envíos y/o compras en línea</h1>
+      <p id="heroText">Buscá por tracking o nombre</p>
+    </div>
+    <div class="heroIconWrap">
+      <div class="heroIcon" id="heroIcon" aria-hidden="true">
+        <span class="heroEmoji">📦</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RASTREO -->
+  <section class="section active" id="secTrack">
+    <div class="card">
+      <div class="row">
+        <div style="min-width:160px; font-weight:1000;">🚢 Rastreo Marítimo</div>
+        <input class="input" id="searchMaritimo" placeholder="Número de rastreo marítimo" />
+        <button class="btn" type="button" onclick="searchTracking('Maritimo')">Buscar</button>
+      </div>
+      <div class="results" id="resultsMaritimo"></div>
+      <div class="empty" id="emptyMaritimo">No encontramos ese número.</div>
+
+      <div class="row">
+        <div style="min-width:160px; font-weight:1000;">✈️ Rastreo Aéreo</div>
+        <input class="input" id="searchAereo" placeholder="Número de rastreo aéreo" />
+        <button class="btn" type="button" onclick="searchTracking('Aereo')">Buscar</button>
+      </div>
+      <div class="results" id="resultsAereo"></div>
+      <div class="empty" id="emptyAereo">No encontramos ese número.</div>
+
+      <div class="row">
+        <div style="min-width:160px; font-weight:1000;">🛍️ Compras En Línea</div>
+        <input class="input" id="searchCompra" placeholder="Nombre o número de tracking" />
+        <button class="btn" type="button" onclick="searchTracking('Compra')">Buscar</button>
+      </div>
+      <div class="results" id="resultsCompra"></div>
+      <div class="empty" id="emptyCompra">Sin resultados.</div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="section" id="secContact">
+    <div class="card">
+      <div class="contactGrid">
+        <div class="contactCard">
+          <div class="city">📍 Miami</div>
+          <div class="line">2035 W Flagler St, Miami, FL 33135.</div>
+          <div class="line"><b>Tel:</b> 305-631-0701 / 786-853-4444.</div>
+          <div class="contactActions">
+            <a class="contactBtn call" href="tel:+13056310701">📞 Llamar</a>
+            <a class="contactBtn wa" target="_blank" rel="noopener"
+              href="https://wa.me/13056310701?text=Hola%2C%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n%3A%20___________.%20Mi%20nombre%20es%3A%20__________.%20Y%20mi%20tel%C3%A9fono%20es%3A%20________.">💬 WhatsApp</a>
+            <a class="contactBtn map" target="_blank" rel="noopener"
+              href="https://www.google.com/maps/search/?api=1&query=2035%20W%20Flagler%20St%20Miami%20FL%2033135">📍 Maps</a>
+          </div>
+        </div>
+
+        <div class="contactCard">
+          <div class="city">📍 Managua</div>
+          <div class="line">Comtech Altamira, 1c arriba, 2c lago, 1c abajo. Casa #698.</div>
+          <div class="line"><b>Tel:</b> 8785-3842 / 8781-2066.</div>
+          <div class="contactActions">
+            <a class="contactBtn call" href="tel:+50587853842">📞 Llamar</a>
+            <a class="contactBtn map" target="_blank" rel="noopener" href="https://maps.app.goo.gl/adbe3fBPA6vcGd8t5">📍 Maps</a>
+          </div>
+        </div>
+
+        <div class="contactCard">
+          <div class="city">📍 Chinandega</div>
+          <div class="line">Esquina Suroeste de la Escuela El Rosario.</div>
+          <div class="line"><b>Tel:</b> 2346-8244 / 8899-9548.</div>
+          <div class="contactActions">
+            <a class="contactBtn call" href="tel:+50523468244">📞 Llamar</a>
+            <a class="contactBtn map" target="_blank" rel="noopener" href="https://maps.app.goo.gl/PVczh5oMTN3kp53R6">📍 Maps</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COTIZACIÓN (SIN TÍTULOS REPETIDOS ADENTRO) -->
+  <section class="section" id="secCalc">
+    <div class="card">
+      <div class="calcWrap">
+        <div class="q">¿Qué tipo de envío querés cotizar?</div>
+        <div class="desc">Elegí una opción para continuar.</div>
+
+        <div class="choiceRow">
+          <button class="choice" type="button" id="chooseMar">🚢 Marítimo</button>
+          <button class="choice" type="button" id="chooseAir">✈️ Aéreo</button>
+        </div>
+
+        <div id="calcStep2">
+          <div class="q" style="margin-bottom:6px;" id="step2Title">Continuá con tu cotización</div>
+
+          <!-- MARÍTIMO -->
+          <div id="marBox" style="display:none;">
+            <div class="q" style="margin-bottom:6px;">¿Cómo querés cotizar?</div>
+
+            <!-- ✅ ORDEN CAMBIADO: VOLUMEN PRIMERO -->
+            <div class="subTabs">
+              <button class="subTab active" type="button" id="marVolTab">📦 Por volumen</button>
+              <button class="subTab" type="button" id="marPesoTab">⚖️ Por peso</button>
+            </div>
+
+            <!-- ✅ DEFAULT: VOLUMEN VISIBLE -->
+            <div id="marVolPanel">
+              <div class="grid">
+                <div>
+                  <div class="label">Tipo de artículo</div>
+                  <select class="select" id="calcItemType">
+                    <option value="mueble_10">Mueble</option>
+                    <option value="ropa_30">Caja con ropa y artículos varios</option>
+                    <option value="refri_12">Electrodoméstico (Refrigeradora)</option>
+                    <option value="lavadora_20">Electrodoméstico (Lavadora / Secadora / Cocina)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <div class="label">Largo (In)</div>
+                  <input class="field" type="number" id="calcL" placeholder="L" min="0" step="0.1" inputmode="decimal" />
+                </div>
+
+                <div>
+                  <div class="label">Ancho (In)</div>
+                  <input class="field" type="number" id="calcW" placeholder="W" min="0" step="0.1" inputmode="decimal" />
+                </div>
+
+                <div>
+                  <div class="label">Alto (In)</div>
+                  <input class="field" type="number" id="calcH" placeholder="H" min="0" step="0.1" inputmode="decimal" />
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="btn" type="button" id="calcBtnMarVol">Cotizar</button>
+                <button class="btn secondary" type="button" id="calcBtnMarVolClear">Limpiar</button>
+              </div>
+
+              <div class="result" id="calcResV"></div>
+
+              <div class="note">
+                El precio puede variar si las cantidades no están correctas, el artículo no está empacado,
+                o si el peso es demasiado para el artículo.
+              </div>
+            </div>
+
+            <div id="marPesoPanel" style="display:none;">
+              <div class="grid">
+                <div>
+                  <div class="label">Libras (Lbs)</div>
+                  <input class="field" type="number" id="calcMarLbs" placeholder="Ej: 120" min="0" step="0.1" inputmode="decimal" />
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="btn" type="button" id="calcBtnMarPeso">Cotizar</button>
+                <button class="btn secondary" type="button" id="calcBtnMarPesoClear">Limpiar</button>
+              </div>
+
+              <div class="result" id="calcResM"></div>
+
+              <div class="note">
+                Reglas por libra:
+                <br>• Hasta 100 Lbs: <b>$2.05/Lb</b>
+                <br>• Más de 100 Lbs: <b>$2.00/Lb</b>
+                <br>• Más de 300 Lbs: <b>$1.90/Lb</b>
+                <br>• Más de 500 Lbs: <b>$1.80/Lb</b>
+              </div>
+            </div>
+          </div>
+
+          <!-- AÉREO -->
+          <div id="airBox" style="display:none;">
+            <div class="q" style="margin-bottom:6px;">Ingresá el peso para cotizar</div>
+
+            <div class="grid">
+              <div>
+                <div class="label">Libras (Lbs)</div>
+                <input class="field" type="number" id="calcAereoLbs" placeholder="Ej: 15" min="0" step="0.1" inputmode="decimal" />
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn" type="button" id="calcBtnAereo">Cotizar</button>
+              <button class="btn secondary" type="button" id="calcBtnAereoClear">Limpiar</button>
+            </div>
+
+            <div class="result" id="calcResA"></div>
+
+            <div class="note">
+              Regla: Hasta 20 Lbs se cobra a <b>$7.00/Lb</b>. Si es <b>más de 20 Lbs</b>, se cobra a <b>$6.50/Lb</b>.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- AGENDAR -->
+  <section class="section" id="secSchedule">
+    <div class="card">
+      <div class="schedule">
+        <p>
+          Para agendar, escribinos por WhatsApp. Te dejamos un mensaje listo para que solo completés la dirección,
+          tu nombre y tu teléfono.
+        </p>
+
+        <a class="bigBtn" target="_blank" rel="noopener"
+          href="https://wa.me/13056310701?text=Hola%2C%20quiero%20que%20recojan%20una%20carga%20en%20la%20direcci%C3%B3n%3A%20___________.%20Mi%20nombre%20es%3A%20__________.%20Y%20mi%20tel%C3%A9fono%20es%3A%20________.">
+          💬 Escribir Por WhatsApp (Miami)
+        </a>
+
+        <p style="font-size:12.8px;">Si preferís, también podés llamar al <b>305-631-0701</b>.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+/* ========================= Rastreo ========================= */
+const urls = {
+  Maritimo:[
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=0&single=true&output=csv",
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=135469883&single=true&output=csv"
+  ],
+  Aereo:[
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=1149417296&single=true&output=csv",
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=1429832468&single=true&output=csv"
+  ],
+  Compra:
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2i-JMsQ4G2mXMfdEyihWcNeI8gzXDIWsSxOta60eGa-NgNDOshNojOB6mYxdHPOWkLKwGWZsdnfIL/pub?gid=532919355&single=true&output=csv"
+};
+
+function normalizeImageUrl(url){
+  if(!url) return "";
+  url = (url + "").trim();
+  let m = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
+  m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if(m) return `https://drive.google.com/uc?export=view&id=${m[1]}`;
+  if(url.includes("googleusercontent")) return url;
+  return url;
+}
+function safe(r,keys){ for(const k of keys){ if(r && r[k]) return r[k]; } return ""; }
+
+function parseDate(dateString){
+  if(!dateString) return 0;
+  const [datePart, timePart] = (dateString + "").split(" ");
+  if(!datePart || !timePart) return 0;
+  const [day, month, year] = datePart.split("/");
+  const [hour, minute, second] = timePart.split(":");
+  return new Date(parseInt(year,10), parseInt(month,10)-1, parseInt(day,10), parseInt(hour,10), parseInt(minute,10), parseInt(second,10)).getTime();
+}
+
+/* ✅ NUEVO: Fecha bonita con mes en nombre + AM/PM */
+function formatFechaBonita(dateString){
+  if(!dateString) return "";
+  const raw = (dateString + "").trim();
+
+  // Espera: DD/MM/YYYY HH:MM:SS
+  const [datePart, timePart] = raw.split(" ");
+  if(!datePart || !timePart) return raw;
+
+  const [day, month, year] = datePart.split("/");
+  let [hh, mm, ss] = timePart.split(":");
+
+  const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+  const d = parseInt(day,10);
+  const m = parseInt(month,10);
+  const y = year;
+
+  let hour24 = parseInt(hh,10);
+  const ampm = hour24 >= 12 ? "PM" : "AM";
+  let hour12 = hour24 % 12;
+  if(hour12 === 0) hour12 = 12;
+
+  const mesNombre = meses[m-1] || month;
+  const min2 = String(mm).padStart(2,"0");
+  const sec2 = String(ss || "00").padStart(2,"0");
+
+  return `${d} de ${mesNombre}, ${y} ${hour12}:${min2}:${sec2} ${ampm}`;
+}
+
+function renderTable(list,type){
+  const container = document.getElementById(`results${type}`);
+  const empty = document.getElementById(`empty${type}`);
+  container.innerHTML = "";
+  empty.style.display = "none";
+  if(!list.length){ empty.style.display="block"; return; }
+
+  list.sort((a,b)=>parseDate(safe(b,["Fecha","FECHA"])) - parseDate(safe(a,["Fecha","FECHA"])));
+  if(type === "Compra") list = list.slice(0,40);
+
+  list.forEach(r=>{
+    const fechaRaw = safe(r,["Fecha","FECHA"]);
+    const fecha = formatFechaBonita(fechaRaw);
+
+    const track = safe(r,["Tracking","Tracking #","Orden","ORDEN"]);
+    const nombre = safe(r,["Nombre","Cliente","CLIENTE"]);
+    const status = safe(r,["Status","STATUS"]);
+    const agente = safe(r,["Agente","AGENTE","Usuario"]);
+    const foto  = normalizeImageUrl(safe(r,["Web url","Web URL"]));
+    const foto2 = normalizeImageUrl(safe(r,["Web url2","Web URL2"]));
+    const foto3 = normalizeImageUrl(safe(r,["Web url3","Web URL3"]));
+    const firma = normalizeImageUrl(safe(r,["Firma url","Firma URL"]));
+
+    let html = `<div class="result-block">`;
+    html += `<p><strong>Fecha:</strong> ${fecha}</p>`;
+    html += `<p><strong>Tracking:</strong> ${track}</p>`;
+    if(type === "Compra"){
+      html += `<p><strong>Nombre:</strong> ${nombre}</p>`;
+      html += `<p><strong>Agente:</strong> ${agente}</p>`;
+    } else {
+      html += `<p><strong>Status:</strong> <span class="status-pill">${status}</span></p>`;
+      html += `<p><strong>Agente:</strong> ${agente}</p>`;
     }
+    html += `<div class="detail-actions">`;
+    if(foto)  html += `<button class="view-btn" type="button" onclick="window.open('${foto}','_blank')">📷 Ver foto</button>`;
+    if(foto2) html += `<button class="view-btn" type="button" onclick="window.open('${foto2}','_blank')">📷 Ver foto 2</button>`;
+    if(foto3) html += `<button class="view-btn" type="button" onclick="window.open('${foto3}','_blank')">📷 Ver foto 3</button>`;
+    if(type !== "Compra" && firma) html += `<button class="view-btn" type="button" onclick="window.open('${firma}','_blank')">✍️ Ver firma</button>`;
+    html += `</div></div>`;
+    container.insertAdjacentHTML("beforeend", html);
+  });
+}
 
-    function parseDate(s){
-      if(!s) return new Date(0);
-      const t = String(s).trim();
+async function searchTracking(type){
+  const input = document.getElementById(`search${type}`);
+  const code = (input.value || "").trim().toLowerCase();
+  if(!code) return;
 
-      // intenta ISO / Date.parse directo
-      const d1 = new Date(t);
-      if(!isNaN(d1.getTime())) return d1;
-
-      // intenta dd/mm/yyyy o mm/dd/yyyy con horas
-      const m = t.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)?)?$/i);
-      if(m){
-        let a = parseInt(m[1],10), b = parseInt(m[2],10), y = parseInt(m[3],10);
-        if(y < 100) y += 2000;
-        let hh = m[4] ? parseInt(m[4],10) : 0;
-        const mm = m[5] ? parseInt(m[5],10) : 0;
-        const ss = m[6] ? parseInt(m[6],10) : 0;
-        const ap = (m[7]||"").toUpperCase();
-        if(ap === "PM" && hh < 12) hh += 12;
-        if(ap === "AM" && hh === 12) hh = 0;
-
-        // heurística: si a>12 entonces es dd/mm, si b>12 entonces es mm/dd
-        let day = a, mon = b;
-        if(a <= 12 && b <= 12){
-          // si ambos <=12 asumimos mm/dd
-          mon = a; day = b;
-        } else if(a > 12){
-          day = a; mon = b;
-        } else if(b > 12){
-          mon = a; day = b;
-        }
-        return new Date(y, mon-1, day, hh, mm, ss);
-      }
-      return new Date(0);
-    }
-
-    function formatFechaBonita(s){
-      const d = parseDate(s);
-      if(isNaN(d.getTime()) || d.getTime() === 0) return (s || "");
-      const opt = { year:'numeric', month:'long', day:'numeric', hour:'numeric', minute:'2-digit' };
-      return d.toLocaleString('es-US', opt);
-    }
-
-    function normalizeImageUrl(u){
-      if(!u) return "";
-      let url = String(u).trim();
-      // limpia comillas
-      url = url.replace(/^['"]|['"]$/g,"");
-      // si es "open?id=" etc, lo deja igual; solo evita espacios
-      return url;
-    }
-
-    function resetUI(type){
-      document.getElementById(`search${type}`).value = "";
-      document.getElementById(`results${type}`).innerHTML = "";
-      document.getElementById(`empty${type}`).style.display = "none";
-    }
-
-    function renderTable(list,type){
-      const container = document.getElementById(`results${type}`);
-      const empty = document.getElementById(`empty${type}`);
-      container.innerHTML = "";
-      empty.style.display = "none";
-      if(!list.length){ empty.style.display="block"; return; }
-
-      list.sort((a,b)=>parseDate(safe(b,["Fecha","FECHA"])) - parseDate(safe(a,["Fecha","FECHA"])));
-      if(type === "Compra") list = list.slice(0,40);
-
-      list.forEach(r=>{
-        const fechaRaw = safe(r,["Fecha","FECHA"]);
-        const fecha = formatFechaBonita(fechaRaw);
-
-        const track = safe(r,["Tracking","Tracking #","Orden","ORDEN"]);
-        const nombre = safe(r,["Nombre","Cliente","CLIENTE"]);
-        const status = safe(r,["Status","STATUS"]);
-        const agente = safe(r,["Agente","AGENTE","Usuario"]);
-        const foto  = normalizeImageUrl(safe(r,["Web url","Web URL"]));
-        const foto2 = normalizeImageUrl(safe(r,["Web url2","Web URL2"]));
-        const foto3 = normalizeImageUrl(safe(r,["Web url3","Web URL3"]));
-        const firma = normalizeImageUrl(safe(r,["Firma url","Firma URL"]));
-
-        let html = `<div class="result-block">`;
-        html += `<p><strong>Fecha:</strong> ${fecha}</p>`;
-        html += `<p><strong>Tracking:</strong> ${track}</p>`;
-        if(type === "Compra"){
-          html += `<p><strong>Nombre:</strong> ${nombre}</p>`;
-          html += `<p><strong>Agente:</strong> ${agente}</p>`;
-        } else {
-          html += `<p><strong>Status:</strong> <span class="status-pill">${status}</span></p>`;
-          html += `<p><strong>Agente:</strong> ${agente}</p>`;
-        }
-        html += `<div class="detail-actions">`;
-        if(foto)  html += `<button class="view-btn" type="button" onclick="window.open('${foto}','_blank')">📷 Ver foto</button>`;
-        if(foto2) html += `<button class="view-btn" type="button" onclick="window.open('${foto2}','_blank')">📷 Ver foto 2</button>`;
-        if(foto3) html += `<button class="view-btn" type="button" onclick="window.open('${foto3}','_blank')">📷 Ver foto 3</button>`;
-        if(type !== "Compra" && firma) html += `<button class="view-btn" type="button" onclick="window.open('${firma}','_blank')">✍️ Ver firma</button>`;
-        html += `</div></div>`;
-        container.insertAdjacentHTML("beforeend", html);
-      });
-    }
-
-    async function searchTracking(type){
-      const input = document.getElementById(`search${type}`);
-      const code = (input.value || "").trim().toLowerCase();
-      if(!code) return;
-
-      let data = [];
-      const links = Array.isArray(urls[type]) ? urls[type] : [urls[type]];
-      for(const link of links){
-        await new Promise(resolve=>{
-          Papa.parse(link + "&t=" + Date.now(),{
-            download:true, header:true, skipEmptyLines:true,
-            complete:res=>{ data = data.concat(res.data || []); resolve(); }
-          });
-        });
-      }
-
-      const filtered = data.filter(r=>{
-        const track = safe(r,["Tracking","Tracking #","Orden","ORDEN"]).toLowerCase();
-        const name  = safe(r,["Nombre","Cliente"]).toLowerCase();
-        return track.includes(code) || name.includes(code);
-      });
-
-      renderTable(filtered, type);
-    }
-
-    ["Maritimo","Aereo","Correo","Compra"].forEach(type=>{
-      const el = document.getElementById(`search${type}`);
-      el.addEventListener("keydown", (e)=>{
-        if(e.key === "Enter") searchTracking(type);
+  let data = [];
+  const links = Array.isArray(urls[type]) ? urls[type] : [urls[type]];
+  for(const link of links){
+    await new Promise(resolve=>{
+      Papa.parse(link + "&t=" + Date.now(),{
+        download:true, header:true, skipEmptyLines:true,
+        complete:res=>{ data = data.concat(res.data || []); resolve(); }
       });
     });
-  </script>
+  }
+
+  const filtered = data.filter(r=>{
+    const track = safe(r,["Tracking","Tracking #","Orden","ORDEN"]).toLowerCase();
+    const name  = safe(r,["Nombre","Cliente"]).toLowerCase();
+    return track.includes(code) || name.includes(code);
+  });
+
+  renderTable(filtered, type);
+}
+
+["Maritimo","Aereo","Compra"].forEach(t=>{
+  document.getElementById(`search${t}`).addEventListener("keydown", e=>{
+    if(e.key === "Enter") searchTracking(t);
+  });
+});
+
+/* ========================= HERO DINÁMICO + Tabs ========================= */
+(function(){
+  const heroTitle = document.getElementById("heroTitle");
+  const heroText  = document.getElementById("heroText");
+  const heroIcon  = document.getElementById("heroIcon");
+
+  const calcSvg = `
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M7.5 3.75h9A2.25 2.25 0 0 1 18.75 6v12A2.25 2.25 0 0 1 16.5 20.25h-9A2.25 2.25 0 0 1 5.25 18V6A2.25 2.25 0 0 1 7.5 3.75Z" stroke="rgba(15,42,85,.95)" stroke-width="1.6"/>
+      <path d="M7.5 7.5h9" stroke="rgba(15,42,85,.95)" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M8.3 11.2h2.1M13.6 11.2h2.1M8.3 14.2h2.1M13.6 14.2h2.1M8.3 17.2h2.1M13.6 17.2h2.1"
+            stroke="rgba(15,42,85,.95)" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  `;
+
+  const tabConfig = {
+    tabTrack: {
+      title:"Rastreá tus envíos y/o compras en línea",
+      text:"Buscá por tracking o nombre",
+      iconHtml:`<span class="heroEmoji">📦</span>`
+    },
+    tabContact: {
+      title:"Contacto",
+      text:"Direcciones y teléfonos",
+      iconHtml:`<span class="heroEmoji">📍</span>`
+    },
+    tabCalc: {
+      title:"Cotizá el costo de tu envío",
+      text:"Seleccioná el tipo de envío y meté libras o medidas para estimar el total.",
+      iconHtml: calcSvg
+    },
+    tabSchedule: {
+      title:"Agendá la recolección de tu carga con nosotros",
+      text:"",
+      iconHtml:`<span class="heroEmoji">🗓️</span>`
+    }
+  };
+
+  const tabs = [
+    { btn:"tabTrack", sec:"secTrack" },
+    { btn:"tabContact", sec:"secContact" },
+    { btn:"tabCalc", sec:"secCalc" },
+    { btn:"tabSchedule", sec:"secSchedule" }
+  ];
+
+  function setHero(btnId){
+    const cfg = tabConfig[btnId];
+    if(!cfg) return;
+    heroTitle.textContent = cfg.title;
+    heroText.textContent  = cfg.text || "";
+    heroIcon.innerHTML    = cfg.iconHtml || `<span class="heroEmoji">📦</span>`;
+  }
+
+  function openTab(btnId){
+    tabs.forEach(t=>{
+      document.getElementById(t.btn).classList.toggle("active", t.btn === btnId);
+      document.getElementById(t.sec).classList.toggle("active", t.btn === btnId);
+    });
+    setHero(btnId);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  tabs.forEach(t=>document.getElementById(t.btn).addEventListener("click", ()=>openTab(t.btn)));
+
+  // default
+  setHero("tabTrack");
+})();
+
+/* ========================= Cotización (Scroll Down Real) ========================= */
+document.addEventListener("DOMContentLoaded", ()=>{
+  const chooseMar = document.getElementById("chooseMar");
+  const chooseAir = document.getElementById("chooseAir");
+
+  const step2 = document.getElementById("calcStep2");
+  const step2Title = document.getElementById("step2Title");
+
+  const marBox = document.getElementById("marBox");
+  const airBox = document.getElementById("airBox");
+
+  const marPesoTab = document.getElementById("marPesoTab");
+  const marVolTab  = document.getElementById("marVolTab");
+  const marPesoPanel = document.getElementById("marPesoPanel");
+  const marVolPanel  = document.getElementById("marVolPanel");
+
+  const money = (n) => (Number.isFinite(n) ? n.toFixed(2) : "0.00");
+  const num = (id) => {
+    const v = parseFloat(document.getElementById(id).value);
+    return Number.isFinite(v) ? v : 0;
+  };
+
+  function showStep2AndScroll(){
+    step2.classList.add("active");
+    const y = step2.getBoundingClientRect().top + window.scrollY - 90;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  }
+
+  function setShip(which){
+    const isMar = which === "mar";
+    chooseMar.classList.toggle("active", isMar);
+    chooseAir.classList.toggle("active", !isMar);
+
+    marBox.style.display = isMar ? "block" : "none";
+    airBox.style.display = isMar ? "none" : "block";
+
+    step2Title.textContent = isMar
+      ? "Elegiste Marítimo. Ahora seleccioná volumen o peso"
+      : "Elegiste Aéreo. Ahora ingresá el peso";
+
+    showStep2AndScroll();
+  }
+
+  chooseMar.addEventListener("click", ()=>setShip("mar"));
+  chooseAir.addEventListener("click", ()=>setShip("air"));
+
+  function setMarMode(which){
+    const isVol = which === "vol";
+    marVolTab.classList.toggle("active", isVol);
+    marPesoTab.classList.toggle("active", !isVol);
+    marVolPanel.style.display  = isVol ? "block" : "none";
+    marPesoPanel.style.display = isVol ? "none"  : "block";
+  }
+  marVolTab.addEventListener("click", ()=>setMarMode("vol"));
+  marPesoTab.addEventListener("click", ()=>setMarMode("peso"));
+
+  // Aéreo
+  document.getElementById("calcBtnAereo").addEventListener("click", ()=>{
+    const lbs = num("calcAereoLbs");
+    const out = document.getElementById("calcResA");
+    if(lbs <= 0){ out.textContent = "Ingresá un peso válido."; return; }
+    const rate = (lbs > 20) ? 6.5 : 7;
+    out.innerHTML = `Total aproximado: <b>$${money(lbs * rate)}</b>`;
+  });
+  document.getElementById("calcBtnAereoClear").addEventListener("click", ()=>{
+    document.getElementById("calcAereoLbs").value = "";
+    document.getElementById("calcResA").textContent = "";
+  });
+
+  // Marítimo por peso
+  function rateMar(lbs){
+    if(lbs > 500) return 1.8;
+    if(lbs > 300) return 1.9;
+    if(lbs > 100) return 2.0;
+    return 2.05;
+  }
+  document.getElementById("calcBtnMarPeso").addEventListener("click", ()=>{
+    const lbs = num("calcMarLbs");
+    const out = document.getElementById("calcResM");
+    if(lbs <= 0){ out.textContent = "Ingresá un peso válido."; return; }
+    out.innerHTML = `Total aproximado: <b>$${money(lbs * rateMar(lbs))}</b>`;
+  });
+  document.getElementById("calcBtnMarPesoClear").addEventListener("click", ()=>{
+    document.getElementById("calcMarLbs").value = "";
+    document.getElementById("calcResM").textContent = "";
+  });
+
+  // Marítimo por volumen
+  function getMultiplier(){
+    const v = (document.getElementById("calcItemType").value || "");
+    if(v === "mueble_10") return { mult: 10, label: "Mueble" };
+    if(v === "ropa_30") return { mult: 30, label: "Caja con ropa y artículos varios" };
+    if(v === "refri_12") return { mult: 12, label: "Electrodoméstico (Refrigeradora)" };
+    if(v === "lavadora_20") return { mult: 20, label: "Electrodoméstico (Lavadora / Secadora / Cocina)" };
+    return { mult: 10, label: "Mueble" };
+  }
+
+  document.getElementById("calcBtnMarVol").addEventListener("click", ()=>{
+    const L = num("calcL"), W = num("calcW"), H = num("calcH");
+    const out = document.getElementById("calcResV");
+    if(L<=0 || W<=0 || H<=0){ out.textContent = "Ingresá las 3 medidas (en pulgadas)."; return; }
+    const cft = (L * W * H) / 1728;
+    const { mult, label } = getMultiplier();
+    const total = cft * mult;
+    out.innerHTML = `Tipo: <b>${label}</b><br>Total aproximado: <b>$${money(total)}</b>`;
+  });
+
+  document.getElementById("calcBtnMarVolClear").addEventListener("click", ()=>{
+    ["calcL","calcW","calcH"].forEach(id => document.getElementById(id).value = "");
+    document.getElementById("calcResV").textContent = "";
+    document.getElementById("calcItemType").value = "mueble_10";
+  });
+
+  // Default: paso 2 oculto hasta elegir
+  setMarMode("vol"); // ✅ Default en Marítimo: Volumen
+});
+</script>
+
 </body>
 </html>
