@@ -315,7 +315,7 @@
     .contactBtn.wa{ background: var(--wa); border-color: rgba(0,0,0,.10); color:#fff; }
     .contactBtn.wa:hover{ background: var(--waH); }
 
-    /* CALCULADORA */
+    /* COTIZACIÓN */
     .calcWrap{ padding:16px; }
 
     .q{ font-weight:1000; font-size:14px; }
@@ -445,7 +445,7 @@
   <div class="topbar">
     <div class="brand">
       <div class="title">MIR CARGO NICARAGUA</div>
-      <div class="subtitle">Rastreo • Contacto • Calculadora • Agendar</div>
+      <div class="subtitle">Rastreo • Contacto • Cotización • Agendar</div>
     </div>
     <div class="flags">
       <img class="flag" src="https://flagcdn.com/us.svg" alt="Usa" />
@@ -456,7 +456,7 @@
   <div class="tabs" role="tablist" aria-label="Secciones">
     <button class="tab active" id="tabTrack" type="button">📦 Rastreo</button>
     <button class="tab" id="tabContact" type="button">📍 Contacto</button>
-    <button class="tab" id="tabCalc" type="button">🖩 Calcular Envío</button>
+    <button class="tab" id="tabCalc" type="button">🖩 Cotizar Envío</button>
     <button class="tab" id="tabSchedule" type="button">🗓️ Agendar</button>
   </div>
 </header>
@@ -544,11 +544,11 @@
     </div>
   </section>
 
-  <!-- CALCULADORA (SIN TÍTULOS REPETIDOS ADENTRO) -->
+  <!-- COTIZACIÓN (SIN TÍTULOS REPETIDOS ADENTRO) -->
   <section class="section" id="secCalc">
     <div class="card">
       <div class="calcWrap">
-        <div class="q">¿Qué tipo de envío querés hacer?</div>
+        <div class="q">¿Qué tipo de envío querés cotizar?</div>
         <div class="desc">Elegí una opción para continuar.</div>
 
         <div class="choiceRow">
@@ -557,42 +557,20 @@
         </div>
 
         <div id="calcStep2">
-          <div class="q" style="margin-bottom:6px;" id="step2Title">Continuá con tu cálculo</div>
+          <div class="q" style="margin-bottom:6px;" id="step2Title">Continuá con tu cotización</div>
 
           <!-- MARÍTIMO -->
           <div id="marBox" style="display:none;">
-            <div class="q" style="margin-bottom:6px;">¿Cómo querés calcular?</div>
+            <div class="q" style="margin-bottom:6px;">¿Cómo querés cotizar?</div>
 
+            <!-- ✅ ORDEN CAMBIADO: VOLUMEN PRIMERO -->
             <div class="subTabs">
-              <button class="subTab active" type="button" id="marPesoTab">⚖️ Por peso</button>
-              <button class="subTab" type="button" id="marVolTab">📦 Por volumen</button>
+              <button class="subTab active" type="button" id="marVolTab">📦 Por volumen</button>
+              <button class="subTab" type="button" id="marPesoTab">⚖️ Por peso</button>
             </div>
 
-            <div id="marPesoPanel">
-              <div class="grid">
-                <div>
-                  <div class="label">Libras (Lbs)</div>
-                  <input class="field" type="number" id="calcMarLbs" placeholder="Ej: 120" min="0" step="0.1" inputmode="decimal" />
-                </div>
-              </div>
-
-              <div class="actions">
-                <button class="btn" type="button" id="calcBtnMarPeso">Calcular</button>
-                <button class="btn secondary" type="button" id="calcBtnMarPesoClear">Limpiar</button>
-              </div>
-
-              <div class="result" id="calcResM"></div>
-
-              <div class="note">
-                Reglas por libra:
-                <br>• Hasta 100 Lbs: <b>$2.05/Lb</b>
-                <br>• Más de 100 Lbs: <b>$2.00/Lb</b>
-                <br>• Más de 300 Lbs: <b>$1.90/Lb</b>
-                <br>• Más de 500 Lbs: <b>$1.80/Lb</b>
-              </div>
-            </div>
-
-            <div id="marVolPanel" style="display:none;">
+            <!-- ✅ DEFAULT: VOLUMEN VISIBLE -->
+            <div id="marVolPanel">
               <div class="grid">
                 <div>
                   <div class="label">Tipo de artículo</div>
@@ -621,7 +599,7 @@
               </div>
 
               <div class="actions">
-                <button class="btn" type="button" id="calcBtnMarVol">Calcular</button>
+                <button class="btn" type="button" id="calcBtnMarVol">Cotizar</button>
                 <button class="btn secondary" type="button" id="calcBtnMarVolClear">Limpiar</button>
               </div>
 
@@ -632,11 +610,35 @@
                 o si el peso es demasiado para el artículo.
               </div>
             </div>
+
+            <div id="marPesoPanel" style="display:none;">
+              <div class="grid">
+                <div>
+                  <div class="label">Libras (Lbs)</div>
+                  <input class="field" type="number" id="calcMarLbs" placeholder="Ej: 120" min="0" step="0.1" inputmode="decimal" />
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="btn" type="button" id="calcBtnMarPeso">Cotizar</button>
+                <button class="btn secondary" type="button" id="calcBtnMarPesoClear">Limpiar</button>
+              </div>
+
+              <div class="result" id="calcResM"></div>
+
+              <div class="note">
+                Reglas por libra:
+                <br>• Hasta 100 Lbs: <b>$2.05/Lb</b>
+                <br>• Más de 100 Lbs: <b>$2.00/Lb</b>
+                <br>• Más de 300 Lbs: <b>$1.90/Lb</b>
+                <br>• Más de 500 Lbs: <b>$1.80/Lb</b>
+              </div>
+            </div>
           </div>
 
           <!-- AÉREO -->
           <div id="airBox" style="display:none;">
-            <div class="q" style="margin-bottom:6px;">Ingresá el peso para calcular</div>
+            <div class="q" style="margin-bottom:6px;">Ingresá el peso para cotizar</div>
 
             <div class="grid">
               <div>
@@ -646,7 +648,7 @@
             </div>
 
             <div class="actions">
-              <button class="btn" type="button" id="calcBtnAereo">Calcular</button>
+              <button class="btn" type="button" id="calcBtnAereo">Cotizar</button>
               <button class="btn secondary" type="button" id="calcBtnAereoClear">Limpiar</button>
             </div>
 
@@ -844,8 +846,8 @@ async function searchTracking(type){
       iconHtml:`<span class="heroEmoji">📍</span>`
     },
     tabCalc: {
-      title:"Calculá el costo de tu envío",
-      text:"Seleccioná el tipo de envío y meté libras o medidas para estimar el total.\n¿Qué tipo de envío querés hacer?\nElegí una opción para continuar.",
+      title:"Cotizá el costo de tu envío",
+      text:"Seleccioná el tipo de envío y meté libras o medidas para estimar el total.",
       iconHtml: calcSvg
     },
     tabSchedule: {
@@ -885,7 +887,7 @@ async function searchTracking(type){
   setHero("tabTrack");
 })();
 
-/* ========================= Calculadora (Scroll Down Real) ========================= */
+/* ========================= Cotización (Scroll Down Real) ========================= */
 document.addEventListener("DOMContentLoaded", ()=>{
   const chooseMar = document.getElementById("chooseMar");
   const chooseAir = document.getElementById("chooseAir");
@@ -922,7 +924,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     airBox.style.display = isMar ? "none" : "block";
 
     step2Title.textContent = isMar
-      ? "Elegiste Marítimo. Ahora seleccioná peso o volumen"
+      ? "Elegiste Marítimo. Ahora seleccioná volumen o peso"
       : "Elegiste Aéreo. Ahora ingresá el peso";
 
     showStep2AndScroll();
@@ -932,14 +934,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
   chooseAir.addEventListener("click", ()=>setShip("air"));
 
   function setMarMode(which){
-    const isPeso = which === "peso";
-    marPesoTab.classList.toggle("active", isPeso);
-    marVolTab.classList.toggle("active", !isPeso);
-    marPesoPanel.style.display = isPeso ? "block" : "none";
-    marVolPanel.style.display  = isPeso ? "none"  : "block";
+    const isVol = which === "vol";
+    marVolTab.classList.toggle("active", isVol);
+    marPesoTab.classList.toggle("active", !isVol);
+    marVolPanel.style.display  = isVol ? "block" : "none";
+    marPesoPanel.style.display = isVol ? "none"  : "block";
   }
-  marPesoTab.addEventListener("click", ()=>setMarMode("peso"));
   marVolTab.addEventListener("click", ()=>setMarMode("vol"));
+  marPesoTab.addEventListener("click", ()=>setMarMode("peso"));
 
   // Aéreo
   document.getElementById("calcBtnAereo").addEventListener("click", ()=>{
@@ -999,7 +1001,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   });
 
   // Default: paso 2 oculto hasta elegir
-  setMarMode("peso");
+  setMarMode("vol"); // ✅ Default en Marítimo: Volumen
 });
 </script>
 
