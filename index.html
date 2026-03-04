@@ -962,9 +962,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
   // Marítimo por peso
   function rateMar(lbs){
-    if(lbs > 500) return 1.8;
-    if(lbs > 300) return 1.9;
-    if(lbs > 100) return 2.0;
+    if(lbs > 499) return 1.8;
+    if(lbs > 299) return 1.9;
+    if(lbs > 99) return 2.0;
     return 2.05;
   }
   document.getElementById("calcBtnMarPeso").addEventListener("click", ()=>{
@@ -982,7 +982,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   function getMultiplier(){
     const v = (document.getElementById("calcItemType").value || "");
     if(v === "mueble_10") return { mult: 10, label: "Mueble" };
-    if(v === "ropa_30") return { mult: 30, label: "Caja con ropa y artículos varios" };
+    if(v === "ropa_30") return { mult: 23, label: "Caja con ropa y artículos varios" };
     if(v === "refri_12") return { mult: 12, label: "Electrodoméstico (Refrigeradora)" };
     if(v === "lavadora_20") return { mult: 20, label: "Electrodoméstico (Lavadora / Secadora / Cocina)" };
     return { mult: 10, label: "Mueble" };
@@ -1008,46 +1008,68 @@ document.addEventListener("DOMContentLoaded", ()=>{
   setMarMode("vol"); // ✅ Default en Marítimo: Volumen
 });
 </script>
+<hr style="margin:40px 0 20px; opacity:.2;">
 
-</body>
-</html>
-<!-- ✅ Footer fijo con Privacy/Terms (pegalo antes de </body>) -->
-<div id="legal-footer">
-  <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>
-  <span class="sep">•</span>
-  <a href="terms.html" target="_blank" rel="noopener">Terms & Conditions</a>
+<div style="max-width:900px; margin:0 auto 40px; padding:0 14px; font-size:13px; line-height:1.5; color:#64748b;">
+
+  <h3 id="privacy">Privacy Policy</h3>
+  <p>
+  Maura International Shipping & Services collects customer information in person at our Miami office when a shipment is created. 
+  This may include name, phone number, and shipment details.
+  </p>
+  <p>
+  Phone numbers are used solely to send shipment-related SMS notifications such as:
+  package received, shipment sent, ready for pickup, and delivery confirmation.
+  </p>
+  <p>
+  By providing your phone number in our office, you consent to receive SMS notifications.
+  Message and data rates may apply. Message frequency varies.
+  You may reply STOP to unsubscribe or HELP for assistance.
+  </p>
+  <p>
+  We do not sell or share personal information with third parties for marketing purposes.
+  </p>
+
+  <h3 id="terms" style="margin-top:30px;">Terms & Conditions</h3>
+  <p>
+  Maura International Shipping & Services provides air and maritime shipping services 
+  between the United States and Nicaragua.
+  </p>
+  <p>
+  Delivery times may vary due to customs inspections, weather conditions, or third-party carriers.
+  </p>
+  <p>
+  By providing your phone number at our Miami office, you agree to receive SMS updates regarding shipment status.
+  You may opt out at any time by replying STOP.
+  </p>
+
+  <p style="margin-top:20px; font-weight:600;">
+  2035 W Flagler St, Miami, FL 33135 | Phone: 305-631-0701
+  </p>
+
 </div>
+</body>
+  <footer style="margin-top:60px; padding:30px 20px; text-align:center; border-top:1px solid rgba(0,0,0,.1); font-size:14px; color:#64748b;">
 
-<style>
-  #legal-footer{
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 12px;
-    background: rgba(11,31,58,.92); /* navy */
-    backdrop-filter: blur(6px);
-    border-top: 1px solid rgba(255,255,255,.12);
-    font-family: Arial, sans-serif;
-    font-size: 13px;
-  }
-  #legal-footer a{
-    color: #ffd1a6; /* tu naranja pastel */
-    text-decoration: none;
-    font-weight: 700;
-  }
-  #legal-footer a:hover{
-    text-decoration: underline;
-  }
-  #legal-footer .sep{
-    color: rgba(255,255,255,.6);
-  }
+  <div style="margin-bottom:10px;">
+    <b>Maura International Shipping & Services</b>
+  </div>
 
-  /* Para que el footer no tape contenido al final */
-  body{ padding-bottom: 60px; }
-</style>
+  <div style="margin-bottom:20px;">
+    2035 W Flagler St, Miami, FL 33135 | Phone: 305-631-0701
+  </div>
+
+  <div>
+    <a href="privacy.html" 
+       style="margin:6px; padding:10px 16px; border-radius:10px; background:#1b3a6b; color:white; text-decoration:none; font-weight:700;">
+       Privacy Policy
+    </a>
+
+    <a href="terms.html" 
+       style="margin:6px; padding:10px 16px; border-radius:10px; background:#1b3a6b; color:white; text-decoration:none; font-weight:700;">
+       Terms & Conditions
+    </a>
+  </div>
+
+</footer>
+</html>
